@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DevEngine", "DevEngine\DevEngine.vcproj", "{33BE31DB-8161-4C33-91A9-101101FFA914}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DevGUI", "DevGUI\DevGUI.vcproj", "{7CB8C8C2-969E-40BA-A71B-CB040B1377DD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{33BE31DB-8161-4C33-91A9-101101FFA914} = {33BE31DB-8161-4C33-91A9-101101FFA914}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33BE31DB-8161-4C33-91A9-101101FFA914}.Debug|Win32.ActiveCfg = Debug|Win32
+		{33BE31DB-8161-4C33-91A9-101101FFA914}.Debug|Win32.Build.0 = Debug|Win32
+		{33BE31DB-8161-4C33-91A9-101101FFA914}.Release|Win32.ActiveCfg = Release|Win32
+		{33BE31DB-8161-4C33-91A9-101101FFA914}.Release|Win32.Build.0 = Release|Win32
+		{7CB8C8C2-969E-40BA-A71B-CB040B1377DD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7CB8C8C2-969E-40BA-A71B-CB040B1377DD}.Debug|Win32.Build.0 = Debug|Win32
+		{7CB8C8C2-969E-40BA-A71B-CB040B1377DD}.Release|Win32.ActiveCfg = Release|Win32
+		{7CB8C8C2-969E-40BA-A71B-CB040B1377DD}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
