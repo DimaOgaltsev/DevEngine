@@ -22,7 +22,7 @@ namespace DevGUI
     static LRESULT CALLBACK WindowProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
     LRESULT CALLBACK MsgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 
-    DevEngine::DevRender  _render;
+    DevEngine::DevRender* _render;
     HINSTANCE             _hInst;
     HWND                  _hWnd;
     

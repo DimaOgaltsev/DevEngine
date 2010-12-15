@@ -4,7 +4,8 @@ using namespace DevGUI;
 
 MainWindow::MainWindow() :
   _hWnd(NULL),
-  _hInst(NULL)
+  _hInst(NULL),
+  _render(NULL)
 {
 }
 
@@ -15,8 +16,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::destroy()
 {
+  if (_render)
+    _render->~DevRender();
   CloseWindow(_hWnd);
-  CloseHandle(_hWnd);
+  _render = NULL;
   _hWnd = NULL;
 }
 
@@ -54,6 +57,13 @@ bool MainWindow::Create(HINSTANCE hInst, int PosX, int PosY, int Width, int Heig
   if (!_hWnd)
   {
     MessageBox(0, "Not _hWnd (MainWindow.cpp)", "Error:", MB_ICONERROR);
+    return FALSE;
+  }
+
+  _render = new DevEngine::DevRender(_hWnd);
+  if (!_render->InitRender(0, 0, 0, true))
+  {
+    MessageBox(0, _render->GetLastError(), "Error:", MB_ICONERROR);
     return FALSE;
   }
 
