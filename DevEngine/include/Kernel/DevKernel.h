@@ -19,9 +19,16 @@ namespace DevEngine
     char* GetLastError();
 
   protected:
+    static void  startRender(LPVOID param);
+    void  runRender();
+    void  stopRender();
+
     HWND                  _hWnd;
     int                   _width, _height;
+
+    HANDLE                _renderThread;
     bool                  _stopRender;
+
     LPDIRECT3D9           _directX;
     LPDIRECT3DDEVICE9     _deviceDX;
     D3DDISPLAYMODE        _display;

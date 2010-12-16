@@ -16,7 +16,23 @@ DevRender::DevRender(HWND hWnd):
 DevRender::~DevRender()
 {
   Destroy();
+}
+
+void DevRender::Destroy()
+{
+  stopRender();
+  if (_renderThread)
+    WaitForSingleObject(_renderThread, 10000);
   _lastError = NULL;
+  if (_deviceDX)
+    _deviceDX->Release();
+  if (_directX)
+    _directX->Release();
+}
+
+char* DevRender::GetLastError()
+{
+  return _lastError;
 }
 
 bool DevRender::InitRender(int width, int height, int RefreshHz, bool FullScreenMode)
@@ -85,20 +101,33 @@ bool DevRender::InitRender(int width, int height, int RefreshHz, bool FullScreen
   _deviceDX->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
 
   DWORD RenderThreadID;
-  //_renderThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)StartRender, this, 0, &RenderThreadID);
+  _renderThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)startRender, (LPVOID)this, 0, &RenderThreadID);
 
   return true;
 }
 
-void DevRender::Destroy()
+void DevRender::startRender(LPVOID param)
 {
-  if (_deviceDX)
-    _deviceDX->Release();
-  if (_directX)
-    _directX->Release();
+  DevRender* _render = (DevRender*)param;
+  if (_render)
+    _render->runRender();
 }
 
-char* DevRender::GetLastError()
+void DevRender::runRender()
 {
-  return _lastError;
+  if (!_deviceDX)
+    return;
+  while(!_stopRender)
+  {
+    _deviceDX->Clear(0, 0, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(153, 153, 255), 1.0f, 0);
+    _deviceDX->BeginScene();
+
+    _deviceDX->EndScene();
+    _deviceDX->Present(0, 0, 0, 0);
+  }
+}
+
+void DevRender::stopRender()
+{
+  _stopRender = true;
 }
