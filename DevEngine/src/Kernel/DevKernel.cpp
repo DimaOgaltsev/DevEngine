@@ -1,41 +1,41 @@
 #include <Kernel/DevKernel.h>
 
-using namespace DevEngine;
+using namespace dev;
 
-DevRender::DevRender(HWND hWnd):
+Render::Render(HWND hWnd):
   _hWnd(hWnd),
   _directX(NULL),
   _deviceDX(NULL),
   _width(0),
   _height(0),
   _stopRender(false),
-  _lastError(NULL)
+  _lastError("")
 {
 }
 
-DevRender::~DevRender()
+Render::~Render()
 {
   Destroy();
 }
 
-void DevRender::Destroy()
+void Render::Destroy()
 {
   stopRender();
   if (_renderThread)
     WaitForSingleObject(_renderThread, 10000);
-  _lastError = NULL;
+  _lastError.clear();
   if (_deviceDX)
     _deviceDX->Release();
   if (_directX)
     _directX->Release();
 }
 
-char* DevRender::GetLastError()
+const char* Render::GetLastError()
 {
-  return _lastError;
+  return _lastError.c_str();
 }
 
-bool DevRender::InitRender(int width, int height, int RefreshHz, bool FullScreenMode)
+bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMode)
 {
   if (!_directX)
     if (!(_directX = Direct3DCreate9(D3D_SDK_VERSION)))
@@ -88,7 +88,7 @@ bool DevRender::InitRender(int width, int height, int RefreshHz, bool FullScreen
   _parametersD3D.EnableAutoDepthStencil    = true;
   _parametersD3D.AutoDepthStencilFormat    = D3DFMT_D24S8;
   _parametersD3D.PresentationInterval      = D3DPRESENT_INTERVAL_ONE;
-  _parametersD3D.MultiSampleType          = D3DMULTISAMPLE_4_SAMPLES;
+  _parametersD3D.MultiSampleType           = D3DMULTISAMPLE_NONE;
 
   if (FAILED(_directX->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _hWnd,
     D3DCREATE_HARDWARE_VERTEXPROCESSING, &_parametersD3D, &_deviceDX)))
@@ -106,14 +106,14 @@ bool DevRender::InitRender(int width, int height, int RefreshHz, bool FullScreen
   return true;
 }
 
-void DevRender::startRender(LPVOID param)
+void Render::startRender(LPVOID param)
 {
-  DevRender* _render = (DevRender*)param;
+  Render* _render = (Render*)param;
   if (_render)
     _render->runRender();
 }
 
-void DevRender::runRender()
+void Render::runRender()
 {
   if (!_deviceDX)
     return;
@@ -127,7 +127,7 @@ void DevRender::runRender()
   }
 }
 
-void DevRender::stopRender()
+void Render::stopRender()
 {
   _stopRender = true;
 }

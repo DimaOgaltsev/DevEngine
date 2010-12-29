@@ -1,6 +1,6 @@
 #include <MainWindow.h>
 
-using namespace DevGUI;
+using namespace GUI;
 
 MainWindow::MainWindow() :
   _hWnd(NULL),
@@ -16,8 +16,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::destroy()
 {
-  if (_render)
-    _render->~DevRender();
+  delete _render;
   CloseWindow(_hWnd);
   _render = NULL;
   _hWnd = NULL;
@@ -60,7 +59,7 @@ bool MainWindow::Create(HINSTANCE hInst, int PosX, int PosY, int Width, int Heig
     return FALSE;
   }
 
-  _render = new DevEngine::DevRender(_hWnd);
+  _render = new dev::Render(_hWnd);
   if (!_render->InitRender(0, 0, 0, true))
   {
     MessageBox(0, _render->GetLastError(), "Error:", MB_ICONERROR);
@@ -92,6 +91,11 @@ LRESULT CALLBACK MainWindow::MsgProc(HWND hwnd, UINT Message, WPARAM wParam, LPA
 {
   switch(Message)
   {
+  case WM_KEYDOWN:
+    {
+      PostQuitMessage(0);
+      break;
+    }
   case WM_DESTROY:
     {
       PostQuitMessage(0);

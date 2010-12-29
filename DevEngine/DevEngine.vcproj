@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="D:\Repository\DevEngine\DevEngine\include"
+				AdditionalIncludeDirectories="include"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -102,7 +102,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="D:\Repository\DevEngine\DevEngine\include"
+				AdditionalIncludeDirectories="include"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -147,11 +147,47 @@
 				RelativePath=".\src\Kernel\DevKernel.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\src\Kernel\DevMath.cpp"
+				>
+			</File>
 			<Filter
 				Name="include"
 				>
 				<File
+					RelativePath=".\include\Kernel\DevInclude.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\Kernel\DevKernel.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Kernel\DevMath.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="DevElement"
+			>
+			<File
+				RelativePath=".\src\Element\DevElement.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Element\DevProperty.cpp"
+				>
+			</File>
+			<Filter
+				Name="include"
+				>
+				<File
+					RelativePath=".\include\Element\DevElement.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Element\DevProperty.h"
 					>
 				</File>
 			</Filter>

@@ -1,22 +1,19 @@
 #ifndef DEV_KERNEL_H
 #define DEV_KERNEL_H
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#pragma comment(lib, "d3d9.lib")
-#pragma comment(lib, "d3dx9.lib")
+#include <Kernel/DevInclude.h>
 
-namespace DevEngine
+namespace dev
 {
-  class DevRender
+  class Render
   {
   public:
-    DevRender(HWND hWnd);
-    virtual ~DevRender();
+    Render(HWND hWnd);
+    virtual ~Render();
 
     bool  InitRender(int width, int height, int RefreshHz, bool FullScreenMode);
     void  Destroy();
-    char* GetLastError();
+    const char* GetLastError();
 
   protected:
     static void  startRender(LPVOID param);
@@ -33,7 +30,7 @@ namespace DevEngine
     LPDIRECT3DDEVICE9     _deviceDX;
     D3DDISPLAYMODE        _display;
     D3DPRESENT_PARAMETERS _parametersD3D;
-    char*                 _lastError;
+    std::string           _lastError;
   };
 }
 
