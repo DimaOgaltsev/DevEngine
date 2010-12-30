@@ -93,8 +93,11 @@ LRESULT CALLBACK MainWindow::MsgProc(HWND hwnd, UINT Message, WPARAM wParam, LPA
   {
   case WM_KEYDOWN:
     {
-      PostQuitMessage(0);
-      break;
+      if (wParam == VK_ESCAPE)
+      {
+        PostQuitMessage(0);
+        break;
+      }
     }
   case WM_DESTROY:
     {
