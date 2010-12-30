@@ -9,15 +9,18 @@ namespace dev
   {
     inline D3DXMATRIX Identity();
     //translate
-    inline D3DXMATRIX Translate(D3DXVECTOR3 translate);
+    inline D3DXMATRIX Translate(D3DXVECTOR3* translate);
     inline D3DXMATRIX Translate(float x, float y, float z);
     //rotation
-    inline D3DXMATRIX Rotation(D3DXVECTOR3 anglesEuler);
+    inline D3DXMATRIX Rotation(D3DXVECTOR3* anglesEuler);
     inline D3DXMATRIX Rotation(float xAngle, float yAngle, float zAngle);
-    inline D3DXMATRIX Rotation(D3DXQUATERNION quat);
+    inline D3DXMATRIX Rotation(D3DXQUATERNION* quat);
     //scale
-    inline D3DXMATRIX Scale(D3DXVECTOR3 scale);
+    inline D3DXMATRIX Scale(D3DXVECTOR3* scale);
     inline D3DXMATRIX Scale(float x, float y, float z);
+
+    inline D3DXMATRIX Look(D3DXVECTOR3* position, D3DXVECTOR3* look, D3DXVECTOR3* up);
+    inline D3DXMATRIX Projection(float width, float height, float znear, float zfar);
   }
 }
 

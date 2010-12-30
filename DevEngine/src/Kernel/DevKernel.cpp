@@ -97,7 +97,7 @@ bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMod
     return false;
   }
 
-  _deviceDX->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+  _deviceDX->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
   _deviceDX->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
 
   DWORD RenderThreadID;

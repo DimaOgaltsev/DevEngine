@@ -4,9 +4,13 @@
 
 using namespace dev;
 
-Element::Element():
-  _updatematrix(true)
+Element::Element(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale):
+  _updateMatrix(true)
 {
+  D3DXMatrixIdentity(&_matrix);
+  SetPosition(position);
+  SetRotation(rotation);
+  SetScale(scale);
 }
 
 Element::~Element()
@@ -31,7 +35,8 @@ D3DXVECTOR3 Element::GetPosition()
 void Element::SetPosition(D3DXVECTOR3 value)
 {
   _position = value;
-  _updatematrix = true;
+  _trMatrix = Matrix::Translate(&value);
+  _updateMatrix = true;
 }
 
 D3DXVECTOR3 Element::GetScale()
@@ -42,7 +47,8 @@ D3DXVECTOR3 Element::GetScale()
 void Element::SetScale(D3DXVECTOR3 value)
 {
   _scale = value;
-  _updatematrix = true;
+  _scMatrix = Matrix::Scale(&value);
+  _updateMatrix = true;
 }
 
 D3DXVECTOR3 Element::GetRotation()
@@ -53,7 +59,8 @@ D3DXVECTOR3 Element::GetRotation()
 void Element::SetRotation(D3DXVECTOR3 value)
 {
   _rotation = value;
-  _updatematrix = true;
+  _rotMatrix = Matrix::Rotation(&value);
+  _updateMatrix = true;
 }
 
 void Element::Update()
@@ -61,12 +68,10 @@ void Element::Update()
   if (!_visible())
     return;
 
-  if (_updatematrix)
+  if (_updateMatrix)
   {
-    _matrix = Matrix::Scale(_scale());
-    D3DXMatrixMultiply(&_matrix, &_matrix, &Matrix::Rotation(_rotation()));
-    D3DXMatrixMultiply(&_matrix, &_matrix, &Matrix::Translate(_position()));
-    _updatematrix = false;
+    UpdateMatrix();
+    _updateMatrix = false;
   }
 
   Draw();
@@ -75,4 +80,9 @@ void Element::Update()
 void Element::Draw()
 {
 
+}
+
+void Element::UpdateMatrix()
+{
+  _matrix = _scMatrix * _rotMatrix * _trMatrix;
 }

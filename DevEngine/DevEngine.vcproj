@@ -172,6 +172,10 @@
 			Name="DevElement"
 			>
 			<File
+				RelativePath=".\src\Element\DevCamera.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Element\DevElement.cpp"
 				>
 			</File>
@@ -182,6 +186,10 @@
 			<Filter
 				Name="include"
 				>
+				<File
+					RelativePath=".\include\Element\DevCamera.h"
+					>
+				</File>
 				<File
 					RelativePath=".\include\Element\DevElement.h"
 					>

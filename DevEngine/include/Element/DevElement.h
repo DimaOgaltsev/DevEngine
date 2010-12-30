@@ -9,7 +9,7 @@ namespace dev
   class Element
   {
   public:
-    Element();
+    Element(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale);
     virtual ~Element();
 
     bool GetVisible();
@@ -27,14 +27,16 @@ namespace dev
   protected:
     virtual void Update();
     virtual void Draw();
+    virtual void UpdateMatrix();
 
     Properties::Bool    _visible;
     Properties::Vector3 _position;
     Properties::Vector3 _scale;
     Properties::Vector3 _rotation;
 
-    bool                _updatematrix;
+    bool                _updateMatrix;
     D3DXMATRIX          _matrix;
+    D3DXMATRIX          _trMatrix, _rotMatrix, _scMatrix;
   };
 }
 
