@@ -8,11 +8,15 @@
   #include <crtdbg.h>
 #endif
 
+//directX
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <string>
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
+
+//STL
+#include <string>
+#include <vector>
 
 namespace dev
 {

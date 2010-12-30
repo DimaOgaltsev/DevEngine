@@ -24,8 +24,9 @@ namespace dev
     D3DXVECTOR3 GetRotation();
     void SetRotation(D3DXVECTOR3 value);
 
-  protected:
     virtual void Update();
+
+  protected:
     virtual void Draw();
     virtual void UpdateMatrix();
 
