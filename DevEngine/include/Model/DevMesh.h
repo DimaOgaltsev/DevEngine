@@ -4,7 +4,7 @@
 #include <Kernel/DevInclude.h>
 
 #include <Element/DevElement.h>
-#include <Element/DevVertex.h>
+#include <Model/DevVertex.h>
 
 namespace dev
 {

@@ -228,22 +228,22 @@
 			Name="DevModel"
 			>
 			<File
-				RelativePath=".\src\Element\DevMesh.cpp"
+				RelativePath=".\src\Model\DevMesh.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Element\DevVertex.cpp"
+				RelativePath=".\src\Model\DevVertex.cpp"
 				>
 			</File>
 			<Filter
 				Name="include"
 				>
 				<File
-					RelativePath=".\include\Element\DevMesh.h"
+					RelativePath=".\include\Model\DevMesh.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\Element\DevVertex.h"
+					RelativePath=".\include\Model\DevVertex.h"
 					>
 				</File>
 			</Filter>
