@@ -16,6 +16,8 @@ namespace GUI
 
     bool Create(HINSTANCE hInst, int PosX, int PosY, int Width, int Height);
 
+    void LoadScene();
+
   private:
     void destroy();
 
@@ -25,6 +27,9 @@ namespace GUI
     dev::Render* _render;
     HINSTANCE    _hInst;
     HWND         _hWnd;
+
+    int          _width;
+    int          _height;
 
   };
 }

@@ -1,11 +1,16 @@
 #include <MainWindow.h>
 
+#include <Model/DevMesh.h>
+#include <Model/DevVertex.h>
+
 using namespace GUI;
 
 MainWindow::MainWindow() :
   _hWnd(NULL),
   _hInst(NULL),
-  _render(NULL)
+  _render(NULL),
+  _width(0),
+  _height(0)
 {
 }
 
@@ -27,6 +32,8 @@ bool MainWindow::Create(HINSTANCE hInst, int PosX, int PosY, int Width, int Heig
   WNDCLASS WinClass;
 
   _hInst = hInst;
+  _width = Width;
+  _height = Height;
 
   WinClass.style          = 0;
   WinClass.lpfnWndProc    = WindowProc;
@@ -65,6 +72,10 @@ bool MainWindow::Create(HINSTANCE hInst, int PosX, int PosY, int Width, int Heig
     MessageBox(0, _render->GetLastError(), "Error:", MB_ICONERROR);
     return FALSE;
   }
+
+  LoadScene();
+
+  _render->Run();
 
   return TRUE;
 }
@@ -107,4 +118,61 @@ LRESULT CALLBACK MainWindow::MsgProc(HWND hwnd, UINT Message, WPARAM wParam, LPA
   }
 
   return DefWindowProc(hwnd, Message, wParam, lParam);
+}
+
+void MainWindow::LoadScene()
+{
+  dev::Camera* camera = 
+    new dev::Camera(D3DXVECTOR3(0, 0, -10), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0, 1, 0), 
+    D3DX_PI/4, (float)_width/_height, 1.0f, 100.0f);
+
+  dev::Scene* scene = new dev::Scene(camera);
+  _render->SetScene(scene);
+
+  dev::Mesh* mesh = new dev::Mesh();
+  dev::VertexPos arrayVertex[] = 
+  {
+    {1.0f,  0.0f,  0.0f},
+    {1.0f,  1.0f,  0.0f},
+    {0.0f,  1.0f,  0.0f},
+    {0.0f,  0.0f,  0.0f},
+
+    {0.0f,  0.0f,  0.0f},
+    {0.0f,  1.0f,  0.0f},
+    {0.0f,  1.0f,  1.0f},
+    {0.0f,  0.0f,  1.0f},
+
+    {0.0f,  0.0f,  1.0f},
+    {0.0f,  1.0f,  1.0f},
+    {1.0f,  1.0f,  1.0f},
+    {1.0f,  0.0f,  1.0f},
+
+    {1.0f,  0.0f,  1.0f},
+    {1.0f,  1.0f,  1.0f},
+    {1.0f,  1.0f,  0.0f},
+    {1.0f,  0.0f,  0.0f},
+
+    {1.0f,  0.0f,  0.0f},
+    {0.0f,  0.0f,  0.0f},
+    {0.0f,  0.0f,  1.0f},
+    {1.0f,  0.0f,  1.0f},
+
+    {1.0f,  1.0f,  1.0f},
+    {0.0f,  1.0f,  1.0f},
+    {0.0f,  1.0f,  0.0f},
+    {1.0f,  1.0f,  0.0f}
+  };
+  mesh->SetVertices((dev::Array)arrayVertex, 36, sizeof(dev::VertexPos));
+
+  const unsigned short arrayIndex[]=
+  {
+    0,1,2,    2,3,0,
+    4,5,6,    6,7,4,
+    8,9,10,   10,11,8,
+    12,13,14, 14,15,12,
+    16,17,18, 18,19,16,
+    20,21,22, 22,23,20
+  };
+  mesh->SetIndexes((dev::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
+  scene->AddElement(mesh);
 }

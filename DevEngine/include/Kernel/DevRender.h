@@ -21,6 +21,8 @@ namespace dev
     Scene* GetScene();
     void SetScene(Scene* scene);
 
+    void  Run();
+
   protected:
     static void  startRender(LPVOID param);
     void  runRender();

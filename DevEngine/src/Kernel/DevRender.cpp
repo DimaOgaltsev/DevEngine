@@ -100,9 +100,6 @@ bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMod
   _deviceDX->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
   _deviceDX->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
 
-  DWORD RenderThreadID;
-  _renderThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)startRender, (LPVOID)this, 0, &RenderThreadID);
-
   return true;
 }
 
@@ -116,6 +113,12 @@ void Render::SetScene(Scene* scene)
   _scene = scene;
 }
 
+void Render::Run()
+{
+  DWORD RenderThreadID;
+  _renderThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)startRender, (LPVOID)this, 0, &RenderThreadID);
+}
+
 void Render::startRender(LPVOID param)
 {
   Render* _render = (Render*)param;
@@ -127,62 +130,6 @@ void Render::runRender()
 {
   if (!_deviceDX)
     return;
-
-  //TODO: перенести в GUI часть
-  dev::Camera* camera = 
-    new dev::Camera(D3DXVECTOR3(0, 0, -10), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0, 1, 0), 
-                    D3DX_PI/4, (float)_width/_height, 1.0f, 100.0f);
-  dev::Scene* scene = new dev::Scene(camera);
-  SetScene(scene);
-
-  dev::Mesh* mesh = new dev::Mesh();
-  VertexPos arrayVertex[] = 
-  {
-    {1.0f,  0.0f,  0.0f},
-    {1.0f,  1.0f,  0.0f},
-    {0.0f,  1.0f,  0.0f},
-    {0.0f,  0.0f,  0.0f},
-
-    {0.0f,  0.0f,  0.0f},
-    {0.0f,  1.0f,  0.0f},
-    {0.0f,  1.0f,  1.0f},
-    {0.0f,  0.0f,  1.0f},
-
-    {0.0f,  0.0f,  1.0f},
-    {0.0f,  1.0f,  1.0f},
-    {1.0f,  1.0f,  1.0f},
-    {1.0f,  0.0f,  1.0f},
-
-    {1.0f,  0.0f,  1.0f},
-    {1.0f,  1.0f,  1.0f},
-    {1.0f,  1.0f,  0.0f},
-    {1.0f,  0.0f,  0.0f},
-
-    {1.0f,  0.0f,  0.0f},
-    {0.0f,  0.0f,  0.0f},
-    {0.0f,  0.0f,  1.0f},
-    {1.0f,  0.0f,  1.0f},
-
-    {1.0f,  1.0f,  1.0f},
-    {0.0f,  1.0f,  1.0f},
-    {0.0f,  1.0f,  0.0f},
-    {1.0f,  1.0f,  0.0f}
-  };
-  mesh->SetVertices((dev::Array)arrayVertex, 36, sizeof(VertexPos));
-  
-  const unsigned short arrayIndex[]=
-  {
-    0,1,2,    2,3,0,
-    4,5,6,    6,7,4,
-    8,9,10,   10,11,8,
-    12,13,14, 14,15,12,
-    16,17,18, 18,19,16,
-    20,21,22, 22,23,20
-  };
-  mesh->SetIndexes((dev::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
-  scene->AddElement(mesh);
-  //end gui part
-  
 
   while(!_stopRender)
   {
@@ -200,4 +147,3 @@ void Render::stopRender()
 {
   _stopRender = true;
 }
-
