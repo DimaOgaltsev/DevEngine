@@ -1,7 +1,9 @@
-#ifndef DEV_KERNEL_H
-#define DEV_KERNEL_H
+#ifndef DEV_RENDER_H
+#define DEV_RENDER_H
 
 #include <Kernel/DevInclude.h>
+
+#include <Kernel/DevScene.h>
 
 namespace dev
 {
@@ -14,6 +16,9 @@ namespace dev
     bool  InitRender(int width, int height, int RefreshHz, bool FullScreenMode);
     void  Destroy();
     const char* GetLastError();
+
+    Scene* GetScene();
+    void SetScene(Scene* scene);
 
   protected:
     static void  startRender(LPVOID param);
@@ -31,6 +36,8 @@ namespace dev
     D3DDISPLAYMODE        _display;
     D3DPRESENT_PARAMETERS _parametersD3D;
     std::string           _lastError;
+
+    Scene*                _scene;
   };
 }
 

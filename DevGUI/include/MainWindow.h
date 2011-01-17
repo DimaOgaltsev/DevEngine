@@ -2,7 +2,7 @@
 #define MAIN_WINDOW_H
 
 #include <Windows.h>
-#include <Kernel/DevKernel.h>
+#include <Kernel/DevRender.h>
 
 namespace GUI
 {

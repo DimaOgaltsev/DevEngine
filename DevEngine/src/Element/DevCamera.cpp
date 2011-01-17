@@ -5,13 +5,13 @@
 using namespace dev;
 
 Camera::Camera(D3DXVECTOR3 position, D3DXVECTOR3 look, D3DXVECTOR3 up, 
-               float width, float height, float znear, float zfar) :
+               float fovY, float aspect, float znear, float zfar) :
   _updateView(true)
 {
   SetPosition(position);
   SetLook(look);
   SetUp(up);
-  SetNewProjection(width, height, znear, zfar);
+  SetNewProjection(fovY, aspect, znear, zfar);
 }
 
 Camera::~Camera()
@@ -51,23 +51,23 @@ D3DXVECTOR3 Camera::GetUp()
   return _up();
 }
 
-void Camera::SetNewProjection(float width, float height, float znear, float zfar)
+void Camera::SetNewProjection(float fovY, float aspect, float znear, float zfar)
 {
-  _w = width;
-  _h = height;
+  _fovY = fovY;
+  _aspect = aspect;
   _zn = znear;
   _zf = zfar;
-  _projection = Matrix::Projection(width, height, znear, zfar);
+  _projection = Matrix::Projection(fovY,aspect, znear, zfar);
 }
 
 float Camera::GetWidthProjection()
 {
-  return _w();
+  return _fovY();
 }
 
 float Camera::GetHeightProjection()
 {
-  return _h();
+  return _aspect();
 }
 
 float Camera::GetZNearProjection()

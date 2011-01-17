@@ -5,7 +5,8 @@
 using namespace dev;
 
 Element::Element(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale):
-  _updateMatrix(true)
+  _updateMatrix(true),
+  _parent(NULL)
 {
   D3DXMatrixIdentity(&_matrix);
   SetPosition(position);
@@ -63,6 +64,30 @@ void Element::SetRotation(D3DXVECTOR3 value)
   _updateMatrix = true;
 }
 
+Element* Element::GetParent()
+{
+  return _parent;
+}
+
+void Element::SetParent(Element* parent)
+{
+  _parent = parent;
+}
+
+void Element::ClearParent()
+{
+  _parent = NULL;
+}
+
+D3DXMATRIX Element::GetMatrix()
+{
+  if (_parent)
+  {
+    return (_matrix * _parent->GetMatrix());
+  }
+  return _matrix;
+}
+
 void Element::Update()
 {
   if (!_visible())
@@ -73,8 +98,6 @@ void Element::Update()
     UpdateMatrix();
     _updateMatrix = false;
   }
-
-  Draw();
 }
 
 void Element::Draw()
@@ -86,3 +109,4 @@ void Element::UpdateMatrix()
 {
   _matrix = _scMatrix * _rotMatrix * _trMatrix;
 }
+

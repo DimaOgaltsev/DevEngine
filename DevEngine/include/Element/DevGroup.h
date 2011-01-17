@@ -12,7 +12,7 @@ namespace dev
     public Element
   {
   public:
-    Group(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale);
+    Group(D3DXVECTOR3 position = D3DXVECTOR3(0, 0, 0), D3DXVECTOR3 rotation = D3DXVECTOR3(0, 0, 0), D3DXVECTOR3 scale = D3DXVECTOR3(1, 1, 1));
     virtual ~Group();
 
     void ClearList();
@@ -25,8 +25,9 @@ namespace dev
     unsigned int GetElementNum(Element* element);
     Element* GetElement(unsigned int num);
 
-  protected:
     virtual void Update();
+
+  protected:
     ElementList _elements;
   };
 }

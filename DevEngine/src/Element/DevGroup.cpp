@@ -38,32 +38,47 @@ void Group::InsertElement(unsigned int num, Element* element)
   {
     _elements.insert(_elements.begin() + num, element);
   }
+  element->SetParent(this);
 }
 
 void Group::SetElement(unsigned int num, Element* element)
 {
   if (num < _elements.size())
+  {
     _elements[num] = element;
+    element->SetParent(this);
+  }
 }
 
 void Group::ReplaceElement(Element* element, Element* newElement)
 {
   unsigned int num = GetElementNum(element);
+  
   if (num != _elements.size())
+  {
     _elements[num] = newElement;
+    element->ClearParent();
+    newElement->SetParent(this);
+  }
 }
 
 void Group::RemoveElement(Element* element)
 {
   unsigned int num = GetElementNum(element);
   if (num != _elements.size())
+  {
     _elements.erase(_elements.begin() + num);
+    element->ClearParent();
+  }
 }
 
 void Group::RemoveElement(unsigned int num)
 {
   if (num < _elements.size())
+  {
+    GetElement(num)->ClearParent();
     _elements.erase(_elements.begin() + num);
+  }
 }
 
 unsigned int Group::GetElementNum(Element* element)

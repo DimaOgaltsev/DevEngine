@@ -144,11 +144,15 @@
 			Name="DevKernel"
 			>
 			<File
-				RelativePath=".\src\Kernel\DevKernel.cpp"
+				RelativePath=".\src\Kernel\DevMath.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Kernel\DevMath.cpp"
+				RelativePath=".\src\Kernel\DevRender.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Kernel\DevScene.cpp"
 				>
 			</File>
 			<Filter
@@ -159,11 +163,15 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\Kernel\DevKernel.h"
+					RelativePath=".\include\Kernel\DevMath.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\Kernel\DevMath.h"
+					RelativePath=".\include\Kernel\DevRender.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Kernel\DevScene.h"
 					>
 				</File>
 			</Filter>

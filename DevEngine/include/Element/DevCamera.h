@@ -9,7 +9,8 @@ namespace dev
   class Camera
   {
   public:
-    Camera(D3DXVECTOR3 position, D3DXVECTOR3 look, D3DXVECTOR3 up, float width, float height, float znear, float zfar);
+    Camera(D3DXVECTOR3 position, D3DXVECTOR3 look, D3DXVECTOR3 up, 
+           float fovY, float aspect, float znear, float zfar);
     virtual ~Camera();
 
     void SetPosition(D3DXVECTOR3 value);
@@ -21,7 +22,7 @@ namespace dev
     void SetUp(D3DXVECTOR3 value);
     D3DXVECTOR3 GetUp();
 
-    void  SetNewProjection(float width, float height, float znear, float zfar);
+    void  SetNewProjection(float fovY, float aspect, float znear, float zfar);
     float GetWidthProjection();
     float GetHeightProjection();
     float GetZNearProjection();
@@ -34,7 +35,7 @@ namespace dev
     D3DXMATRIX  _view, _projection;
     bool        _updateView;
 
-    Properties::Float   _w, _h, _zn, _zf;
+    Properties::Float   _fovY, _aspect, _zn, _zf;
     Properties::Vector3 _position;
     Properties::Vector3 _look;
     Properties::Vector3 _up;

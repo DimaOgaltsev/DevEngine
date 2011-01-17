@@ -60,7 +60,7 @@ bool MainWindow::Create(HINSTANCE hInst, int PosX, int PosY, int Width, int Heig
   }
 
   _render = new dev::Render(_hWnd);
-  if (!_render->InitRender(0, 0, 0, true))
+  if (!_render->InitRender(0, 0, 0, false))
   {
     MessageBox(0, _render->GetLastError(), "Error:", MB_ICONERROR);
     return FALSE;

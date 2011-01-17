@@ -9,7 +9,7 @@ namespace dev
   class Element
   {
   public:
-    Element(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale);
+    Element(D3DXVECTOR3 position = D3DXVECTOR3(0, 0, 0), D3DXVECTOR3 rotation = D3DXVECTOR3(0, 0, 0), D3DXVECTOR3 scale = D3DXVECTOR3(1, 1, 1));
     virtual ~Element();
 
     bool GetVisible();
@@ -23,6 +23,12 @@ namespace dev
 
     D3DXVECTOR3 GetRotation();
     void SetRotation(D3DXVECTOR3 value);
+
+    Element* GetParent();
+    void SetParent(Element* parent);
+    void ClearParent();
+
+    D3DXMATRIX GetMatrix();
 
     virtual void Update();
 
@@ -38,6 +44,7 @@ namespace dev
     bool                _updateMatrix;
     D3DXMATRIX          _matrix;
     D3DXMATRIX          _trMatrix, _rotMatrix, _scMatrix;
+    Element*             _parent;
   };
 }
 
