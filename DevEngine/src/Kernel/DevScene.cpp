@@ -46,8 +46,6 @@ void Scene::Update()
 {
   if (_cameraActive)
   {
-    D3DXMATRIX m1 = _cameraActive->GetViewMatrix();
-    D3DXMATRIX m2 = _cameraActive->GetProjectionMatrix();
     _device->SetTransform(D3DTS_WORLD, &Matrix::Identity());
     _device->SetTransform(D3DTS_VIEW, &_cameraActive->GetViewMatrix());
     _device->SetTransform(D3DTS_PROJECTION, &_cameraActive->GetProjectionMatrix());
