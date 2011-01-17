@@ -5,6 +5,11 @@ using namespace dev;
 Group::Group(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale) :
   Element(position, rotation, scale)
 {
+}
+
+Group::Group() :
+  Element()
+{
 
 }
 

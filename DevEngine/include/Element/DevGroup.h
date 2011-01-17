@@ -12,7 +12,8 @@ namespace dev
     public Element
   {
   public:
-    Group(D3DXVECTOR3 position = D3DXVECTOR3(0, 0, 0), D3DXVECTOR3 rotation = D3DXVECTOR3(0, 0, 0), D3DXVECTOR3 scale = D3DXVECTOR3(1, 1, 1));
+    Group(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale);
+    Group();
     virtual ~Group();
 
     void ClearList();
