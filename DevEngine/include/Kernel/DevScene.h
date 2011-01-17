@@ -8,7 +8,8 @@
 
 namespace dev
 {
-  class Scene
+  class Scene :
+    public Object
   {
   public:
     Scene();
@@ -17,9 +18,6 @@ namespace dev
 
     void SetActivCamera(Camera* camera);
     Camera* GetActivCamera();
-
-    LPDIRECT3DDEVICE9 GetDevice();
-    void SetDevice(LPDIRECT3DDEVICE9 device);
 
     void AddElement(Element* element);
     void RemoveElement(Element* element);

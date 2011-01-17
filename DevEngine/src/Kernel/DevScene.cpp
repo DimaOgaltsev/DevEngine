@@ -32,23 +32,12 @@ Camera* Scene::GetActivCamera()
   return _cameraActive;
 }
 
-LPDIRECT3DDEVICE9 Scene::GetDevice()
-{
-  return _device;
-}
-
-void Scene::SetDevice(LPDIRECT3DDEVICE9 device)
-{
-  _device = device;
-}
-
 void Scene::Update()
 {
   if (_cameraActive)
   {
-    _device->SetTransform(D3DTS_WORLD, &Matrix::Identity());
-    _device->SetTransform(D3DTS_VIEW, &_cameraActive->GetViewMatrix());
-    _device->SetTransform(D3DTS_PROJECTION, &_cameraActive->GetProjectionMatrix());
+    _deviceDX->SetTransform(D3DTS_VIEW,       &_cameraActive->GetViewMatrix());
+    _deviceDX->SetTransform(D3DTS_PROJECTION, &_cameraActive->GetProjectionMatrix());
   }
   _mainGroup->Update();
 }

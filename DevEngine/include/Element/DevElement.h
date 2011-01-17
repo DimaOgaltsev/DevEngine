@@ -3,10 +3,12 @@
 
 #include <Kernel/DevInclude.h>
 #include <Element/DevProperty.h>
+#include <Element/DevObject.h>
 
 namespace dev
 {
-  class Element
+  class Element : 
+    public Object
   {
   public:
     Element(D3DXVECTOR3 position = D3DXVECTOR3(0, 0, 0), D3DXVECTOR3 rotation = D3DXVECTOR3(0, 0, 0), D3DXVECTOR3 scale = D3DXVECTOR3(1, 1, 1));

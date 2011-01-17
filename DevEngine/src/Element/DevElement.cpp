@@ -4,11 +4,12 @@
 
 using namespace dev;
 
-Element::Element(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale):
+Element::Element(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale) :
   _updateMatrix(true),
   _parent(NULL)
 {
   D3DXMatrixIdentity(&_matrix);
+  SetVisible(true);
   SetPosition(position);
   SetRotation(rotation);
   SetScale(scale);
@@ -98,15 +99,16 @@ void Element::Update()
     UpdateMatrix();
     _updateMatrix = false;
   }
+
+  Draw();
 }
 
 void Element::Draw()
 {
-
+  _deviceDX->SetTransform(D3DTS_WORLD, &_matrix);
 }
 
 void Element::UpdateMatrix()
 {
   _matrix = _scMatrix * _rotMatrix * _trMatrix;
 }
-

@@ -1,11 +1,11 @@
 #include <Kernel/DevRender.h>
 
+#include <Element/DevMesh.h>
+
 using namespace dev;
 
-Render::Render(HWND hWnd):
+Render::Render(HWND hWnd) :
   _hWnd(hWnd),
-  _directX(NULL),
-  _deviceDX(NULL),
   _width(0),
   _height(0),
   _stopRender(false),
@@ -113,7 +113,6 @@ Scene* Render::GetScene()
 
 void Render::SetScene(Scene* scene)
 {
-  scene->SetDevice(_deviceDX);
   _scene = scene;
 }
 
@@ -136,78 +135,53 @@ void Render::runRender()
   dev::Scene* scene = new dev::Scene(camera);
   SetScene(scene);
 
+  dev::Mesh* mesh = new dev::Mesh();
+  VertexPos arrayVertex[] = 
+  {
+    {1.0f,  0.0f,  0.0f},
+    {1.0f,  1.0f,  0.0f},
+    {0.0f,  1.0f,  0.0f},
+    {0.0f,  0.0f,  0.0f},
+
+    {0.0f,  0.0f,  0.0f},
+    {0.0f,  1.0f,  0.0f},
+    {0.0f,  1.0f,  1.0f},
+    {0.0f,  0.0f,  1.0f},
+
+    {0.0f,  0.0f,  1.0f},
+    {0.0f,  1.0f,  1.0f},
+    {1.0f,  1.0f,  1.0f},
+    {1.0f,  0.0f,  1.0f},
+
+    {1.0f,  0.0f,  1.0f},
+    {1.0f,  1.0f,  1.0f},
+    {1.0f,  1.0f,  0.0f},
+    {1.0f,  0.0f,  0.0f},
+
+    {1.0f,  0.0f,  0.0f},
+    {0.0f,  0.0f,  0.0f},
+    {0.0f,  0.0f,  1.0f},
+    {1.0f,  0.0f,  1.0f},
+
+    {1.0f,  1.0f,  1.0f},
+    {0.0f,  1.0f,  1.0f},
+    {0.0f,  1.0f,  0.0f},
+    {1.0f,  1.0f,  0.0f}
+  };
+  mesh->SetVertices((dev::Array)arrayVertex, 36, sizeof(VertexPos));
   
-  
-  
-  LPDIRECT3DVERTEXBUFFER9 pBufferVershin				=	NULL;
-    LPDIRECT3DINDEXBUFFER9	pBufferIndex				=	NULL;
-    struct CUSTOMVERTEX
-    {
-      FLOAT X,Y,Z;
-      FLOAT nx,ny,nz;
-      FLOAT tu,tv;
-    };
-  #define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX1)
-    const unsigned short Index[]=
-    {
-      0,1,2,		2,3,0,
-      4,5,6,		6,7,4,
-      8,9,10,		10,11,8,
-      12,13,14,	14,15,12,
-      16,17,18,	18,19,16,
-      20,21,22,	22,23,20
-    };
-  
-    CUSTOMVERTEX Vershin[] =
-    {
-      {1.0f,	0.0f,		0.0f,		0.0f,		0.0f,		-1.0f,	1.0f,		1.0f},
-      {1.0f,	1.0f,		0.0f,		0.0f,		0.0f,		-1.0f,	0.0f,		1.0f},
-      {0.0f,	1.0f,		0.0f,		0.0f,		0.0f,		-1.0f,	0.0f,		0.0f},
-      {0.0f,	0.0f,		0.0f,		0.0f,		0.0f,		-1.0f,	1.0f,		0.0f},
-  
-      {0.0f,	0.0f,		0.0f,		-1.0f,	0.0f,		0.0f,		1.0f,		1.0f},
-      {0.0f,	1.0f,		0.0f,		-1.0f,	0.0f,		0.0f,		0.0f,		1.0f},
-      {0.0f,	1.0f,		1.0f,		-1.0f,	0.0f,		0.0f,		0.0f,		0.0f},
-      {0.0f,	0.0f,		1.0f,		-1.0f,	0.0f,		0.0f,		1.0f,		0.0f},
-  
-      {0.0f,	0.0f,		1.0f,		0.0f,		0.0f,		1.0f,		1.0f,		1.0f},
-      {0.0f,	1.0f,		1.0f,		0.0f,		0.0f,		1.0f,		0.0f,		1.0f},
-      {1.0f,	1.0f,		1.0f,		0.0f,		0.0f,		1.0f,		0.0f,		0.0f},
-      {1.0f,	0.0f,		1.0f,		0.0f,		0.0f,		1.0f,		1.0f,		0.0f},
-  
-      {1.0f,	0.0f,		1.0f,		1.0f,		0.0f,		0.0f,		1.0f,		1.0f},
-      {1.0f,	1.0f,		1.0f,		1.0f,		0.0f,		0.0f,		0.0f,		1.0f},
-      {1.0f,	1.0f,		0.0f,		1.0f,		0.0f,		0.0f,		0.0f,		0.0f},
-      {1.0f,	0.0f,		0.0f,		1.0f,		0.0f,		0.0f,		1.0f,		0.0f},
-  
-      {1.0f,	0.0f,		0.0f,		0.0f,		-1.0f,	0.0f,		1.0f,		1.0f},
-      {0.0f,	0.0f,		0.0f,		0.0f,		-1.0f,	0.0f,		0.0f,		1.0f},
-      {0.0f,	0.0f,		1.0f,		0.0f,		-1.0f,	0.0f,		0.0f,		0.0f},
-      {1.0f,	0.0f,		1.0f,		0.0f,		-1.0f,	0.0f,		1.0f,		0.0f},
-  
-      {1.0f,	1.0f,		1.0f,		0.0f,		1.0f,		0.0f,		1.0f,		1.0f},
-      {0.0f,	1.0f,		1.0f,		0.0f,		1.0f,		0.0f,		0.0f,		1.0f},
-      {0.0f,	1.0f,		0.0f,		0.0f,		1.0f,		0.0f,		0.0f,		0.0f},
-      {1.0f,	1.0f,		0.0f,		0.0f,		1.0f,		0.0f,		1.0f,		0.0f}
-    };
-  
-    (_deviceDX->CreateVertexBuffer(		36*sizeof(CUSTOMVERTEX),0,
-      D3DFVF_CUSTOMVERTEX,
-      D3DPOOL_DEFAULT,
-      &pBufferVershin, NULL));
-    (_deviceDX->CreateIndexBuffer(		36*sizeof(Index),0,
-      D3DFMT_INDEX16,
-      D3DPOOL_DEFAULT,
-      &pBufferIndex,NULL));
-    void* pBV;
-    void* pBI;
-    FAILED(pBufferVershin->Lock (0, sizeof(Vershin), (void**)&pBV, 0));
-    memcpy(pBV,Vershin,sizeof(Vershin));
-    pBufferVershin->Unlock();
-  
-    FAILED(pBufferIndex->Lock (0, sizeof(Index), (void**)&pBI, 0));
-    memcpy(pBI,Index,sizeof(Index));
-    pBufferIndex->Unlock();
+  const unsigned short arrayIndex[]=
+  {
+    0,1,2,    2,3,0,
+    4,5,6,    6,7,4,
+    8,9,10,   10,11,8,
+    12,13,14, 14,15,12,
+    16,17,18, 18,19,16,
+    20,21,22, 22,23,20
+  };
+  mesh->SetIndexes((dev::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
+  scene->AddElement(mesh);
+  //end gui part
   
 
   while(!_stopRender)
@@ -216,13 +190,6 @@ void Render::runRender()
     _deviceDX->BeginScene();
 
     _scene->Update();
-
-    
-    _deviceDX->SetStreamSource(0,pBufferVershin,0,sizeof(CUSTOMVERTEX));
-    _deviceDX->SetFVF(D3DFVF_CUSTOMVERTEX);
-    _deviceDX->SetIndices(pBufferIndex);
-    _deviceDX->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,0,0,36,0,12);
-    
 
     _deviceDX->EndScene();
     _deviceDX->Present(0, 0, 0, 0);

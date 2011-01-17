@@ -7,7 +7,8 @@
 
 namespace dev
 {
-  class Render
+  class Render : 
+    public Object
   {
   public:
     Render(HWND hWnd);
@@ -31,8 +32,6 @@ namespace dev
     HANDLE                _renderThread;
     bool                  _stopRender;
 
-    LPDIRECT3D9           _directX;
-    LPDIRECT3DDEVICE9     _deviceDX;
     D3DDISPLAYMODE        _display;
     D3DPRESENT_PARAMETERS _parametersD3D;
     std::string           _lastError;

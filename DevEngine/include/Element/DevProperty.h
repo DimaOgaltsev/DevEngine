@@ -22,7 +22,7 @@ namespace dev
       public Property
     {
     public:
-      Bool(): Property(), _value(FALSE) {}
+      Bool() : Property(), _value(FALSE) {}
       virtual ~Bool() {}
 
       void operator = (const bool& value);
@@ -37,7 +37,7 @@ namespace dev
       public Property
     {
     public:
-      Float(): Property(), _value(0) {}
+      Float() : Property(), _value(0) {}
       virtual ~Float() {}
 
       void operator = (const float& value);
@@ -52,7 +52,7 @@ namespace dev
       public Property
     {
     public:
-      Vector2(): Property(), _value(0, 0) {}
+      Vector2() : Property(), _value(0, 0) {}
       virtual ~Vector2() {}
 
       void operator = (const D3DXVECTOR2& value);
@@ -67,7 +67,7 @@ namespace dev
       public Property
     {
     public:
-      Vector3(): Property(), _value(0, 0, 0) {}
+      Vector3() : Property(), _value(0, 0, 0) {}
       virtual ~Vector3() {}
 
       void operator = (const D3DXVECTOR3& value);
@@ -82,7 +82,7 @@ namespace dev
       public Property
     {
     public:
-      Vector4(): Property(), _value(0, 0, 0, 0) {}
+      Vector4() : Property(), _value(0, 0, 0, 0) {}
       virtual ~Vector4() {}
 
       void operator = (const D3DXVECTOR4& value);
@@ -96,7 +96,7 @@ namespace dev
       public Property
     {
     public:
-      Path(): Property() {}
+      Path() : Property() {}
       virtual ~Path() {}
 
       void operator = (const char* value);
