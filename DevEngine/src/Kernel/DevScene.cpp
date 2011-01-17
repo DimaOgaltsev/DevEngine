@@ -54,3 +54,13 @@ void Scene::Update()
   }
   _mainGroup->Update();
 }
+
+void Scene::AddElement(Element* element)
+{
+  _mainGroup->AddElement(element);
+}
+
+void Scene::RemoveElement(Element* element)
+{
+  _mainGroup->RemoveElement(element);
+}

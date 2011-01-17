@@ -21,6 +21,9 @@ namespace dev
     LPDIRECT3DDEVICE9 GetDevice();
     void SetDevice(LPDIRECT3DDEVICE9 device);
 
+    void AddElement(Element* element);
+    void RemoveElement(Element* element);
+
     void Update();
 
   protected:
