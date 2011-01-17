@@ -192,15 +192,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Element\DevMesh.cpp"
+				RelativePath=".\src\Element\DevObject.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\src\Element\DevProperty.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Element\DevVertex.cpp"
 				>
 			</File>
 			<Filter
@@ -219,11 +215,31 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\Element\DevMesh.h"
+					RelativePath=".\include\Element\DevObject.h"
 					>
 				</File>
 				<File
 					RelativePath=".\include\Element\DevProperty.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="DevModel"
+			>
+			<File
+				RelativePath=".\src\Element\DevMesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Element\DevVertex.cpp"
+				>
+			</File>
+			<Filter
+				Name="include"
+				>
+				<File
+					RelativePath=".\include\Element\DevMesh.h"
 					>
 				</File>
 				<File
