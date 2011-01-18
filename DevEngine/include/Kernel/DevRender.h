@@ -11,7 +11,9 @@ namespace dev
     public Object
   {
   public:
+    Render();
     Render(HWND hWnd);
+    Render(HINSTANCE hInstance, int PosX, int PosY, int Width, int Height);
     virtual ~Render();
 
     bool  InitRender(int width, int height, int RefreshHz, bool FullScreenMode);

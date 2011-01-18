@@ -1,8 +1,25 @@
 #include <Kernel/DevRender.h>
 
 #include <Model/DevMesh.h>
+#include <GUI/DevWindow.h>
 
 using namespace dev;
+
+Render::Render() :
+  _width(0),
+  _height(0),
+  _stopRender(false),
+  _lastError("")
+{
+  Window* wnd = new Window();
+  _hWnd = wnd->Create(GetModuleHandle(0), CW_USEDEFAULT, CW_USEDEFAULT, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN));
+
+  if (!_hWnd)
+  {
+    MessageBox(0, "Not _hWnd (DevRender.cpp)", "Error:", MB_ICONERROR);
+    //TODO: log file
+  }
+}
 
 Render::Render(HWND hWnd) :
   _hWnd(hWnd),
@@ -11,6 +28,22 @@ Render::Render(HWND hWnd) :
   _stopRender(false),
   _lastError("")
 {
+}
+
+Render::Render(HINSTANCE hInstance, int PosX, int PosY, int Width, int Height) :
+  _width(Width),
+  _height(Height),
+  _stopRender(false),
+  _lastError("")
+{
+  Window* wnd = new Window();
+  _hWnd = wnd->Create(hInstance, PosX, PosY, Width, Height);
+
+  if (!_hWnd)
+  {
+    MessageBox(0, "Not _hWnd (DevRender.cpp)", "Error:", MB_ICONERROR);
+    //TODO: log file
+  }
 }
 
 Render::~Render()
@@ -100,6 +133,9 @@ bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMod
   _deviceDX->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
   _deviceDX->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
 
+  if (!FullScreenMode)
+    ShowWindow(_hWnd, SW_SHOW);
+
   return true;
 }
 
@@ -117,6 +153,13 @@ void Render::Run()
 {
   DWORD RenderThreadID;
   _renderThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)startRender, (LPVOID)this, 0, &RenderThreadID);
+  
+  MSG msg = {0};
+  while (GetMessage(&msg, NULL, 0, 0))
+  {
+    TranslateMessage(&msg);
+    DispatchMessage(&msg);
+  }
 }
 
 void Render::startRender(LPVOID param)

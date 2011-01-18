@@ -248,6 +248,22 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="GUI"
+			>
+			<File
+				RelativePath=".\src\GUI\DevWindow.cpp"
+				>
+			</File>
+			<Filter
+				Name="include"
+				>
+				<File
+					RelativePath=".\include\GUI\DevWindow.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
