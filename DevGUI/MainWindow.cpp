@@ -164,7 +164,7 @@ void MainWindow::LoadScene()
   };
   mesh->SetVertices((dev::Vertex::Array)arrayVertex, 36, dev::Vertex::VertexType::VT_PC32);
 
-  const unsigned short arrayIndex[]=
+  const unsigned short arrayIndex[] =
   {
     0,1,2,    2,3,0,
     4,5,6,    6,7,4,

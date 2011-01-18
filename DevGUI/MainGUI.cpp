@@ -1,4 +1,4 @@
-#include <Kernel/DevRender.h>
+/*#include <Kernel/DevRender.h>
 #include <Model/DevMesh.h>
 #include <Model/DevVertex.h>
 
@@ -73,9 +73,8 @@ void main(HINSTANCE hInstance, HINSTANCE, LPSTR lpszCmdLine, int nCmdShow)
   delete camera;
   delete mesh;
   delete render;
-}
+}*/
 
-/*
 #include <MainWindow.h>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpszCmdLine, int nCmdShow)
@@ -98,4 +97,4 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpszCmdLine, int nCmdSh
   }
 
   return (UINT)msg.wParam;
-}*/
+}
