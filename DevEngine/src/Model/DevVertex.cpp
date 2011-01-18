@@ -1,6 +1,6 @@
 #include <Model/DevVertex.h>
 
-using namespace dev;
+using namespace dev::Vertex;
 
 //ArrayVertices
 ArrayVertices::ArrayVertices() :
@@ -115,7 +115,7 @@ void ArrayIndexes::SetAsSource()
   _deviceDX->SetIndices(_bufferIndexes);
 }
 
-int dev::GetSizeVertex(VertexType VT_type)
+int dev::Vertex::GetSizeVertex(VertexType VT_type)
 {
   switch(VT_type)
   {

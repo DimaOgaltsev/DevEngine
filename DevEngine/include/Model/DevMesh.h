@@ -16,14 +16,14 @@ namespace dev
     Mesh();
     virtual ~Mesh();
 
-    void SetVertices(Array vertices, int numberVertex, VertexType VT_Type);
-    void SetIndexes(Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX);
+    void SetVertices(Vertex::Array vertices, int numberVertex, Vertex::VertexType VT_Type);
+    void SetIndexes(Vertex::Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX);
     
     virtual void Draw();
 
   protected:
-    ArrayVertices*  _vertices;
-    ArrayIndexes*   _indexes;
+    Vertex::ArrayVertices*  _vertices;
+    Vertex::ArrayIndexes*   _indexes;
   };
 }
 

@@ -7,98 +7,101 @@
 
 namespace dev
 {
-  enum VertexType
+  namespace Vertex
   {
-    VT_P,
-    VT_PC32,
-    VT_PC128,
-    VT_PT,
-    VT_PN,
-    VT_PNT
-  };
-
-  typedef void* Array;
-
-  struct VertexP
-  {
-    float x, y, z;
-  };
-
-  struct VertexPC32
-  {
-    float    x, y, z;
-    D3DCOLOR color;
-  };
-
-  struct VertexPC128
-  {
-    float         x, y, z;
-    D3DCOLORVALUE color;
-  };
-
-  struct VertexPT
-  {
-    float x, y, z;
-    float tu, tv;
-  };
-
-  struct VertexPN
-  {
-    float x, y, z;
-    float nx, ny, nz;
-  };
-
-  struct VertexPNT
-  {
-    float x, y, z;
-    float nx, ny, nz;
-    float tu, tv;
-  };
-
-  class ArrayVertices :
-    public Object
-  {
-  public:
-    ArrayVertices(Array vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration);
-    ArrayVertices();
-    virtual ~ArrayVertices();
-    void Destroy();
-
-    void SetVertices(Array vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration);
-    void SetAsSource();
-    inline int GetNumberVertices()
+    enum VertexType
     {
-      return _numberVertices;
+      VT_P,
+      VT_PC32,
+      VT_PC128,
+      VT_PT,
+      VT_PN,
+      VT_PNT
+    };
+
+    typedef void* Array;
+
+    struct VertexP
+    {
+      float x, y, z;
+    };
+
+    struct VertexPC32
+    {
+      float    x, y, z;
+      D3DCOLOR color;
+    };
+
+    struct VertexPC128
+    {
+      float         x, y, z;
+      D3DCOLORVALUE color;
+    };
+
+    struct VertexPT
+    {
+      float x, y, z;
+      float tu, tv;
+    };
+
+    struct VertexPN
+    {
+      float x, y, z;
+      float nx, ny, nz;
+    };
+
+    struct VertexPNT
+    {
+      float x, y, z;
+      float nx, ny, nz;
+      float tu, tv;
+    };
+
+    class ArrayVertices :
+      public Object
+    {
+    public:
+      ArrayVertices(Array vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration);
+      ArrayVertices();
+      virtual ~ArrayVertices();
+      void Destroy();
+
+      void SetVertices(Array vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration);
+      void SetAsSource();
+      inline int GetNumberVertices()
+      {
+        return _numberVertices;
+      }
+
+    protected:
+      int                          _numberVertices;
+      int                          _sizeVertices;
+      LPDIRECT3DVERTEXDECLARATION9 _declaration;
+      LPDIRECT3DVERTEXBUFFER9      _bufferVertices;
+    };
+
+    class ArrayIndexes :
+      public Object
+    {
+    public:
+      ArrayIndexes(Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX);
+      ArrayIndexes();
+      virtual ~ArrayIndexes();
+      void Destroy();
+
+      void SetIndexes(Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX);
+      void SetAsSource();
+
+    protected:
+      LPDIRECT3DINDEXBUFFER9  _bufferIndexes;
+    };
+
+    int GetSizeVertex(VertexType VT_type);
+
+    namespace Declaration
+    {
+      D3DVERTEXELEMENT9* GetDeclaration(VertexType VT_type);
     }
-
-  protected:
-    int                          _numberVertices;
-    int                          _sizeVertices;
-    LPDIRECT3DVERTEXDECLARATION9 _declaration;
-    LPDIRECT3DVERTEXBUFFER9      _bufferVertices;
-  };
-
-  class ArrayIndexes :
-    public Object
-  {
-  public:
-    ArrayIndexes(Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX);
-    ArrayIndexes();
-    virtual ~ArrayIndexes();
-    void Destroy();
-
-    void SetIndexes(Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX);
-    void SetAsSource();
-
-  protected:
-    LPDIRECT3DINDEXBUFFER9	_bufferIndexes;
-  };
-
-  int GetSizeVertex(VertexType VT_type);
-
-  namespace Declaration
-  {
-    D3DVERTEXELEMENT9* GetDeclaration(VertexType VT_type);
   }
 }
 
