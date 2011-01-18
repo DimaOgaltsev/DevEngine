@@ -130,39 +130,39 @@ void MainWindow::LoadScene()
   _render->SetScene(scene);
 
   dev::Mesh* mesh = new dev::Mesh();
-  dev::VertexPos arrayVertex[] = 
+  dev::VertexPC32 arrayVertex[] = 
   {
-    {1.0f,  0.0f,  0.0f},
-    {1.0f,  1.0f,  0.0f},
-    {0.0f,  1.0f,  0.0f},
-    {0.0f,  0.0f,  0.0f},
+    {1.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(255,   0,    0)},
+    {1.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(255, 255,    0)},
+    {0.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(  0, 255,    0)},
+    {0.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(  0,   0,    0)},
 
-    {0.0f,  0.0f,  0.0f},
-    {0.0f,  1.0f,  0.0f},
-    {0.0f,  1.0f,  1.0f},
-    {0.0f,  0.0f,  1.0f},
+    {0.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(  0,   0,    0)},
+    {0.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(  0, 255,    0)},
+    {0.0f,  1.0f,  1.0f, D3DCOLOR_XRGB(  0, 255,  255)},
+    {0.0f,  0.0f,  1.0f, D3DCOLOR_XRGB(  0,   0,  255)},
 
-    {0.0f,  0.0f,  1.0f},
-    {0.0f,  1.0f,  1.0f},
-    {1.0f,  1.0f,  1.0f},
-    {1.0f,  0.0f,  1.0f},
+    {0.0f,  0.0f,  1.0f, D3DCOLOR_XRGB(  0,   0,  255)},
+    {0.0f,  1.0f,  1.0f, D3DCOLOR_XRGB(  0, 255,  255)},
+    {1.0f,  1.0f,  1.0f, D3DCOLOR_XRGB(255, 255,  255)},
+    {1.0f,  0.0f,  1.0f, D3DCOLOR_XRGB(255,   0,  255)},
 
-    {1.0f,  0.0f,  1.0f},
-    {1.0f,  1.0f,  1.0f},
-    {1.0f,  1.0f,  0.0f},
-    {1.0f,  0.0f,  0.0f},
+    {1.0f,  0.0f,  1.0f, D3DCOLOR_XRGB(255,   0,  255)},
+    {1.0f,  1.0f,  1.0f, D3DCOLOR_XRGB(255, 255,  255)},
+    {1.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(255, 255,    0)},
+    {1.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(255,   0,    0)},
 
-    {1.0f,  0.0f,  0.0f},
-    {0.0f,  0.0f,  0.0f},
-    {0.0f,  0.0f,  1.0f},
-    {1.0f,  0.0f,  1.0f},
+    {1.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(255,   0,    0)},
+    {0.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(0,     0,    0)},
+    {0.0f,  0.0f,  1.0f, D3DCOLOR_XRGB(255, 255,  255)},
+    {1.0f,  0.0f,  1.0f, D3DCOLOR_XRGB(255,   0,  255)},
 
-    {1.0f,  1.0f,  1.0f},
-    {0.0f,  1.0f,  1.0f},
-    {0.0f,  1.0f,  0.0f},
-    {1.0f,  1.0f,  0.0f}
+    {1.0f,  1.0f,  1.0f, D3DCOLOR_XRGB(255, 255,  255)},
+    {0.0f,  1.0f,  1.0f, D3DCOLOR_XRGB(  0, 255,  255)},
+    {0.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(  0, 255,    0)},
+    {1.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(255, 255,    0)}
   };
-  mesh->SetVertices((dev::Array)arrayVertex, 36, sizeof(dev::VertexPos));
+  mesh->SetVertices((dev::Array)arrayVertex, 36, dev::VertexType::VT_PC32);
 
   const unsigned short arrayIndex[]=
   {
@@ -175,4 +175,5 @@ void MainWindow::LoadScene()
   };
   mesh->SetIndexes((dev::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
   scene->AddElement(mesh);
+  mesh->SetRotation(D3DXVECTOR3(45, 45, 0));
 }

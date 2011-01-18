@@ -2,12 +2,6 @@
 
 using namespace dev;
 
-static D3DVERTEXELEMENT9 vertexElement[] =
-{
-  {0, 0,  D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
-    D3DDECL_END()
-};
-
 Mesh::Mesh(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale) :
   Element(position, rotation, scale)
 {
@@ -26,9 +20,9 @@ Mesh::~Mesh()
 {
 }
 
-void Mesh::SetVertices(Array vertices, int numberVertex, int sizeVertex)
+void Mesh::SetVertices(Array vertices, int numberVertex, VertexType VT_Type)
 {
-  _vertices->SetVertices(vertices, numberVertex, sizeVertex, vertexElement);
+  _vertices->SetVertices(vertices, numberVertex, GetSizeVertex(VT_Type), Declaration::GetDeclaration(VT_Type));
 }
 
 void Mesh::SetIndexes(Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX)

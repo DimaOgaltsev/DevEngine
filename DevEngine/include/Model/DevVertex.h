@@ -7,56 +7,52 @@
 
 namespace dev
 {
+  enum VertexType
+  {
+    VT_P,
+    VT_PC32,
+    VT_PC128,
+    VT_PT,
+    VT_PN,
+    VT_PNT
+  };
+
   typedef void* Array;
 
-  struct VertexPos
+  struct VertexP
   {
     float x, y, z;
   };
 
-  struct VertexNormal
+  struct VertexPC32
   {
+    float    x, y, z;
+    D3DCOLOR color;
+  };
+
+  struct VertexPC128
+  {
+    float         x, y, z;
+    D3DCOLORVALUE color;
+  };
+
+  struct VertexPT
+  {
+    float x, y, z;
+    float tu, tv;
+  };
+
+  struct VertexPN
+  {
+    float x, y, z;
     float nx, ny, nz;
   };
 
-  struct VertexTexCoord
+  struct VertexPNT
   {
-    float tv, tu;
-  };
-
-  struct VertexColor32
-  {
-    byte r, g, b, a;
-  };
-
-  struct VertexColor128
-  {
-    float r, g, b, a;
-  };
-
-  struct VertexPC32 :
-    public VertexPos,
-    public VertexColor32
-  {
-  };
-
-  struct VertexPC128 :
-    public VertexPos,
-    public VertexColor128
-  {
-  };
-
-  struct VertexPN :
-    public VertexPos,
-    public VertexNormal
-  {
-  };
-
-  struct VertexPNT :
-    public VertexPos,
-    public VertexNormal,
-    public VertexTexCoord
-  {
+    float x, y, z;
+    float nx, ny, nz;
+    float tu, tv;
   };
 
   class ArrayVertices :
@@ -97,6 +93,13 @@ namespace dev
   protected:
     LPDIRECT3DINDEXBUFFER9	_bufferIndexes;
   };
+
+  int GetSizeVertex(VertexType VT_type);
+
+  namespace Declaration
+  {
+    D3DVERTEXELEMENT9* GetDeclaration(VertexType VT_type);
+  }
 }
 
 #endif
