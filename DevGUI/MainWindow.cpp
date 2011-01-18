@@ -106,9 +106,10 @@ LRESULT CALLBACK MainWindow::MsgProc(HWND hwnd, UINT Message, WPARAM wParam, LPA
     {
       if (wParam == VK_ESCAPE)
       {
-        PostQuitMessage(0);
+        SendMessage(hwnd, WM_DESTROY, 0, 0);
         break;
       }
+      break;
     }
   case WM_DESTROY:
     {
@@ -162,7 +163,7 @@ void MainWindow::LoadScene()
     {0.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(  0, 255,    0)},
     {1.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(255, 255,    0)}
   };
-  mesh->SetVertices((dev::Vertex::Array)arrayVertex, 36, dev::Vertex::VertexType::VT_PC32);
+  mesh->SetVertices((dev::Vertex::Array)arrayVertex, 36, dev::Vertex::VT_PC32);
 
   const unsigned short arrayIndex[] =
   {

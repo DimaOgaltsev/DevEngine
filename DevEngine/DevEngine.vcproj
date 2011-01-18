@@ -144,6 +144,10 @@
 			Name="DevKernel"
 			>
 			<File
+				RelativePath=".\src\Kernel\DevInput.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Kernel\DevMath.cpp"
 				>
 			</File>
@@ -160,6 +164,10 @@
 				>
 				<File
 					RelativePath=".\include\Kernel\DevInclude.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Kernel\DevInput.h"
 					>
 				</File>
 				<File

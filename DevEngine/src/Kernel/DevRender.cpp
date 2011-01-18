@@ -156,12 +156,15 @@ void Render::Run()
   DWORD RenderThreadID;
   _renderThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)startRender, (LPVOID)this, 0, &RenderThreadID);
   
-  MSG msg = {0};
-  while (GetMessage(&msg, NULL, 0, 0))
+  if (_wnd)
   {
-    TranslateMessage(&msg);
-    DispatchMessage(&msg);
-  }
+    MSG msg = {0};
+    while (GetMessage(&msg, NULL, 0, 0))
+    {
+      TranslateMessage(&msg);
+      DispatchMessage(&msg);
+    }
+  } 
 }
 
 void Render::startRender(LPVOID param)
