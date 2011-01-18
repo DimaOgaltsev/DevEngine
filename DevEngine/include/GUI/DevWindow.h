@@ -6,8 +6,6 @@
 
 namespace dev
 {
-  #define NAME_WINDOWCLASS "DevWindow"
-
   class Window
   {
   public:

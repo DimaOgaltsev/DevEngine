@@ -1,7 +1,6 @@
 #include <Kernel/DevRender.h>
 
 #include <Model/DevMesh.h>
-#include <GUI/DevWindow.h>
 
 using namespace dev;
 
@@ -11,8 +10,8 @@ Render::Render() :
   _stopRender(false),
   _lastError("")
 {
-  Window* wnd = new Window();
-  _hWnd = wnd->Create(GetModuleHandle(0), CW_USEDEFAULT, CW_USEDEFAULT, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN));
+  _wnd = new Window();
+  _hWnd = _wnd->Create(GetModuleHandle(0), CW_USEDEFAULT, CW_USEDEFAULT, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN));
 
   if (!_hWnd)
   {
@@ -26,7 +25,8 @@ Render::Render(HWND hWnd) :
   _width(0),
   _height(0),
   _stopRender(false),
-  _lastError("")
+  _lastError(""),
+  _wnd(NULL)
 {
 }
 
@@ -36,8 +36,8 @@ Render::Render(HINSTANCE hInstance, int PosX, int PosY, int Width, int Height) :
   _stopRender(false),
   _lastError("")
 {
-  Window* wnd = new Window();
-  _hWnd = wnd->Create(hInstance, PosX, PosY, Width, Height);
+  _wnd = new Window();
+  _hWnd = _wnd->Create(hInstance, PosX, PosY, Width, Height);
 
   if (!_hWnd)
   {
@@ -61,6 +61,8 @@ void Render::Destroy()
     _deviceDX->Release();
   if (_directX)
     _directX->Release();
+  if (_wnd)
+    delete _wnd;
 }
 
 const char* Render::GetLastError()

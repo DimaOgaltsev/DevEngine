@@ -38,7 +38,7 @@ HWND Window::Create(HINSTANCE hInst, int PosX, int PosY, int Width, int Height)
   WinClass.hCursor        = LoadCursor(NULL, MAKEINTRESOURCE(IDC_ARROW));
   WinClass.hbrBackground  = (HBRUSH)0;
   WinClass.lpszMenuName   = 0;
-  WinClass.lpszClassName  = NAME_WINDOWCLASS;
+  WinClass.lpszClassName  = "DevWindow";
 
   if (!RegisterClass(&WinClass))
   {
@@ -48,7 +48,7 @@ HWND Window::Create(HINSTANCE hInst, int PosX, int PosY, int Width, int Height)
 
   _hWnd = 
     CreateWindowEx( 
-    WS_EX_CLIENTEDGE, NAME_WINDOWCLASS, NAME_WINDOWCLASS, 
+    WS_EX_CLIENTEDGE, "DevWindow", "", 
     WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
     PosX, PosY, Width, Height, 
     NULL, NULL, _hInst, (LPVOID)this

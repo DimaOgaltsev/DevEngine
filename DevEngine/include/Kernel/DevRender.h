@@ -4,6 +4,7 @@
 #include <Kernel/DevInclude.h>
 
 #include <Kernel/DevScene.h>
+#include <GUI/DevWindow.h>
 
 namespace dev
 {
@@ -30,6 +31,7 @@ namespace dev
     void  runRender();
     void  stopRender();
 
+    Window*               _wnd;
     HWND                  _hWnd;
     int                   _width, _height;
 
