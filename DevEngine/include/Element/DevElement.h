@@ -35,8 +35,8 @@ namespace dev
     virtual void Update();
 
   protected:
-    virtual void Draw();
-    virtual void UpdateMatrix();
+    virtual void draw();
+    virtual void updateMatrix();
 
     Properties::Bool    _visible;
     Properties::Vector3 _position;

@@ -19,7 +19,7 @@ namespace dev
       VT_PNT
     };
 
-    typedef void* Array;
+    typedef LPVOID Array;
 
     struct VertexP
     {

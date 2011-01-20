@@ -19,7 +19,7 @@ namespace dev
     void SetVertices(Vertex::Array vertices, int numberVertex, Vertex::VertexType VT_Type);
     void SetIndexes(Vertex::Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX);
     
-    virtual void Draw();
+    virtual void draw();
 
   protected:
     Vertex::ArrayVertices*  _vertices;

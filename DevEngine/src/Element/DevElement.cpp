@@ -96,19 +96,19 @@ void Element::Update()
 
   if (_updateMatrix)
   {
-    UpdateMatrix();
+    updateMatrix();
     _updateMatrix = false;
   }
 
-  Draw();
+  draw();
 }
 
-void Element::Draw()
+void Element::draw()
 {
   _deviceDX->SetTransform(D3DTS_WORLD, &_matrix);
 }
 
-void Element::UpdateMatrix()
+void Element::updateMatrix()
 {
   _matrix = _scMatrix * _rotMatrix * _trMatrix;
 }

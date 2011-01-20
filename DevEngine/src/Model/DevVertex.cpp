@@ -52,8 +52,8 @@ void ArrayVertices::SetVertices(Array vertices, int numberVertex, int sizeVertex
     return;
   }
 
-  void* buffer;
-  _bufferVertices->Lock(0, 0, (void**)&buffer, 0);
+  LPVOID buffer;
+  _bufferVertices->Lock(0, 0, (LPVOID*)&buffer, 0);
   memcpy(buffer, vertices, numberVertex * sizeVertex);
   _bufferVertices->Unlock();
 
@@ -104,8 +104,8 @@ void ArrayIndexes::SetIndexes(Array indexes, int sizeArray, D3DFORMAT D3DFMT_IND
     return;
   }
 
-  void* buffer;
-  _bufferIndexes->Lock(0, 0, (void**)&buffer, 0);
+  LPVOID buffer;
+  _bufferIndexes->Lock(0, 0, (LPVOID*)&buffer, 0);
   memcpy(buffer, indexes, sizeArray);
   _bufferIndexes->Unlock();
 }

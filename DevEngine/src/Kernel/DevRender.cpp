@@ -8,7 +8,8 @@ Render::Render() :
   _width(0),
   _height(0),
   _stopRender(false),
-  _lastError("")
+  _lastError(""),
+  _renderThread(NULL)
 {
   _wnd = new Window();
   _hWnd = _wnd->Create(GetModuleHandle(0), CW_USEDEFAULT, CW_USEDEFAULT, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN));
@@ -26,7 +27,8 @@ Render::Render(HWND hWnd) :
   _height(0),
   _stopRender(false),
   _lastError(""),
-  _wnd(NULL)
+  _wnd(NULL),
+  _renderThread(NULL)
 {
 }
 
@@ -34,7 +36,8 @@ Render::Render(HINSTANCE hInstance, int PosX, int PosY, int Width, int Height) :
   _width(Width),
   _height(Height),
   _stopRender(false),
-  _lastError("")
+  _lastError(""),
+  _renderThread(NULL)
 {
   _wnd = new Window();
   _hWnd = _wnd->Create(hInstance, PosX, PosY, Width, Height);
@@ -55,7 +58,11 @@ void Render::Destroy()
 {
   stopRender();
   if (_renderThread)
+  {
     WaitForSingleObject(_renderThread, 10000);
+    CloseHandle(_renderThread);
+    _renderThread = NULL;
+  }
   _lastError.clear();
   if (_deviceDX)
     _deviceDX->Release();

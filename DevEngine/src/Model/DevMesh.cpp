@@ -30,9 +30,9 @@ void Mesh::SetIndexes(Vertex::Array indexes, int sizeArray, D3DFORMAT D3DFMT_IND
   _indexes->SetIndexes(indexes, sizeArray, D3DFMT_INDEX);
 }
 
-void Mesh::Draw()
+void Mesh::draw()
 {
-  Element::Draw();
+  Element::draw();
   _vertices->SetAsSource();
   _indexes->SetAsSource();
   _deviceDX->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, _vertices->GetNumberVertices(), 0, _vertices->GetNumberVertices()/3);
