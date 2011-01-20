@@ -159,6 +159,10 @@
 				RelativePath=".\src\Kernel\DevScene.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\src\Kernel\DevTimer.cpp"
+				>
+			</File>
 			<Filter
 				Name="include"
 				>
@@ -180,6 +184,10 @@
 				</File>
 				<File
 					RelativePath=".\include\Kernel\DevScene.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Kernel\DevTimer.h"
 					>
 				</File>
 			</Filter>
