@@ -183,6 +183,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\Kernel\DevScanCodes.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\Kernel\DevScene.h"
 					>
 				</File>

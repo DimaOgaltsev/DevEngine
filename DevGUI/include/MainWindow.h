@@ -2,7 +2,10 @@
 #define MAIN_WINDOW_H
 
 #include <Windows.h>
+#include <Kernel/DevInput.h>
 #include <Kernel/DevRender.h>
+#include <Model/DevMesh.h>
+#include <Model/DevVertex.h>
 
 namespace GUI
 {
@@ -18,13 +21,22 @@ namespace GUI
 
     void LoadScene();
 
+    void InputFunc(double deltaTime);
+
   private:
     void destroy();
+
+    static void Func(LPVOID param, double deltaTime);
 
     static LRESULT CALLBACK WindowProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
     LRESULT CALLBACK MsgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 
     dev::Render* _render;
+    dev::Input*  _input;
+    dev::Camera* _camera;
+    dev::Scene*  _scene;
+    dev::Mesh*   _mesh;
+
     HINSTANCE    _hInst;
     HWND         _hWnd;
 

@@ -1,14 +1,15 @@
 #include <MainWindow.h>
 
-#include <Model/DevMesh.h>
-#include <Model/DevVertex.h>
-
 using namespace GUI;
 
 MainWindow::MainWindow() :
   _hWnd(NULL),
   _hInst(NULL),
   _render(NULL),
+  _input(NULL),
+  _camera(NULL),
+  _scene(NULL),
+  _mesh(NULL),
   _width(0),
   _height(0)
 {
@@ -123,14 +124,7 @@ LRESULT CALLBACK MainWindow::MsgProc(HWND hwnd, UINT Message, WPARAM wParam, LPA
 
 void MainWindow::LoadScene()
 {
-  dev::Camera* camera = 
-    new dev::Camera(D3DXVECTOR3(0, 0, -10), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0, 1, 0), 
-    D3DX_PI/4, (float)_width/_height, 1.0f, 100.0f);
-
-  dev::Scene* scene = new dev::Scene(camera);
-  _render->SetScene(scene);
-
-  dev::Mesh* mesh = new dev::Mesh();
+  dev::Mesh* _mesh = new dev::Mesh();
   dev::Vertex::VertexPC32 arrayVertex[] = 
   {
     {1.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(255,   0,    0)},
@@ -163,7 +157,7 @@ void MainWindow::LoadScene()
     {0.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(  0, 255,    0)},
     {1.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(255, 255,    0)}
   };
-  mesh->SetVertices((dev::Vertex::Array)arrayVertex, 36, dev::Vertex::VT_PC32);
+  _mesh->SetVertices((dev::Vertex::Array)arrayVertex, 36, dev::Vertex::VT_PC32);
 
   const unsigned short arrayIndex[] =
   {
@@ -174,7 +168,41 @@ void MainWindow::LoadScene()
     16,17,18, 18,19,16,
     20,21,22, 22,23,20
   };
-  mesh->SetIndexes((dev::Vertex::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
-  scene->AddElement(mesh);
-  mesh->SetRotation(D3DXVECTOR3(45, 45, 0));
+  _mesh->SetIndexes((dev::Vertex::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
+  _mesh->SetRotation(D3DXVECTOR3(45, 45, 0));
+
+  _camera = 
+    new dev::Camera(D3DXVECTOR3(0, 0, -10), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0, 1, 0), 
+    D3DX_PI/4, (float)_width/_height, 1.0f, 250.0f);
+
+  _scene = new dev::Scene(_camera);
+  _render->SetScene(_scene);
+  _scene->AddElement(_mesh);
+  
+  _input = new dev::Input(true, true);
+  _input->StartInputThread(10, MainWindow::Func, this);
+  ShowCursor(FALSE);
+}
+
+void MainWindow::Func(LPVOID param, double deltaTime)
+{
+  MainWindow* mw = (MainWindow*)param;
+  if (mw)
+    mw->InputFunc(deltaTime);
+}
+
+void MainWindow::InputFunc(double deltaTime)
+{
+  double mouseX = _input->GetMouseDeltaX() * deltaTime;
+  double mouseY = _input->GetMouseDeltaY() * deltaTime;
+  double mouseZ = _input->GetMouseDeltaY() * deltaTime;
+
+  if (_input->GetKeyPressed(SC_W))
+    _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(0, 0, 1));
+  if (_input->GetKeyPressed(SC_S))
+    _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(0, 0, -1));
+  if (_input->GetKeyPressed(SC_D))
+    _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(1, 0, 0));
+  if (_input->GetKeyPressed(SC_A))
+    _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(-1, 0, 0));
 }
