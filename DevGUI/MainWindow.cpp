@@ -124,7 +124,7 @@ LRESULT CALLBACK MainWindow::MsgProc(HWND hwnd, UINT Message, WPARAM wParam, LPA
 
 void MainWindow::LoadScene()
 {
-  dev::Mesh* _mesh = new dev::Mesh();
+  _mesh = new dev::Mesh();
   dev::Vertex::VertexPC32 arrayVertex[] = 
   {
     {1.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(255,   0,    0)},
@@ -205,4 +205,16 @@ void MainWindow::InputFunc(double deltaTime)
     _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(1, 0, 0));
   if (_input->GetKeyPressed(SC_A))
     _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(-1, 0, 0));
+  if (_input->GetKeyPressed(SC_Q))
+    _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(0, 1, 0));
+  if (_input->GetKeyPressed(SC_Z))
+    _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(0, -1, 0));
+  if (_input->GetKeyPressed(SC_NUMPAD4))
+    _mesh->SetPosition(_mesh->GetPosition() + D3DXVECTOR3(-1, 0, 0));
+  if (_input->GetKeyPressed(SC_NUMPAD2))
+    _mesh->SetPosition(_mesh->GetPosition() + D3DXVECTOR3(0, 0, -1));
+  if (_input->GetKeyPressed(SC_NUMPAD6))
+    _mesh->SetPosition(_mesh->GetPosition() + D3DXVECTOR3(1, 0, 0));
+  if (_input->GetKeyPressed(SC_NUMPAD8))
+    _mesh->SetPosition(_mesh->GetPosition() + D3DXVECTOR3(0, 0, 1));
 }
