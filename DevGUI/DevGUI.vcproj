@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\DevEngine\include;include"
+				AdditionalIncludeDirectories="..\DevEngine\include;include;$(DXSDK_DIR)\Include"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -58,7 +58,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="$(DXSDK_DIR)\Lib\x86"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
