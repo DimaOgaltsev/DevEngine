@@ -26,9 +26,7 @@ namespace dev
 
   protected:
     Camera* _cameraActive;
-    Group*  _mainGroup; 
-
-    LPDIRECT3DDEVICE9 _device;
+    Group*  _mainGroup;
   };
 }
 

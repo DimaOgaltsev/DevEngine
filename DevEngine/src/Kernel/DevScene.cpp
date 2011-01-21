@@ -5,8 +5,7 @@
 using namespace dev;
 
 Scene::Scene() :
-  _cameraActive(NULL),
-  _device(NULL)
+  _cameraActive(NULL)
 {
   _mainGroup = new Group();
 }
