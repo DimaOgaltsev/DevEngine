@@ -1,6 +1,6 @@
 #include <Kernel/DevInput.h>
 
-#include <Kernel/DevTimer.h>
+#include <Kernel/DevInsideLib.h>
 #pragma comment(lib, "winmm.lib")
 
 #ifndef HID_USAGE_PAGE_GENERIC
@@ -238,10 +238,10 @@ void Input::inputThreadRun(LPVOID param)
 void Input::inputThread()
 {
   timeBeginPeriod(1);
-  Timer::GetTimer(true)->Reset(0);
+  SystemTimer::GetTimer()->Reset(0);
   while(!_stopInputThread)
   {
-    _func(_param, Timer::GetTimer(true)->GetDeltaTimeMS(0));
+    _func(_param, SystemTimer::GetTimer()->GetDeltaTimeMS(0));
     Sleep(_requestTime);
   }
 }

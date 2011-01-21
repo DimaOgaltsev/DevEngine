@@ -13,12 +13,8 @@ Timer::~Timer()
 {
 }
 
-Timer* Timer::GetTimer(bool systemTimer)
+Timer* Timer::GetTimer()
 {
-  static Timer sysTimer;
-  if (systemTimer)
-    return &sysTimer;
-
   static Timer timer;
   return &timer;
 }

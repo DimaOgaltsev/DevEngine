@@ -175,6 +175,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\Kernel\DevInsideLib.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\Kernel\DevMath.h"
 					>
 				</File>

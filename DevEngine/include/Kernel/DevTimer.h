@@ -13,7 +13,7 @@ namespace dev
 
     void Reset(byte numTimer);
 
-    static Timer* GetTimer(bool systemTimer = false);
+    static Timer* GetTimer();
 
     double GetTimeNS(byte numTimer);
     double GetTimeMkS(byte numTimer);
