@@ -1,3 +1,6 @@
+#ifndef DEV_SC_H
+#define DEV_SC_H
+
 #define SC_ESCAPE          0x01
 #define SC_1               0x02
 #define SC_2               0x03
@@ -166,3 +169,5 @@
  *  Alternate names for keys originally not used on US keyboards.
  */
 #define SC_CIRCUMFLEX      SC_PREVTRACK       /* Japanese keyboard */
+
+#endif
