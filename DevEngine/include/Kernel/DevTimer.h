@@ -13,7 +13,7 @@ namespace dev
 
     void Reset(byte numTimer);
 
-    static Timer* GetTimer();
+    static Timer* GetTimer(bool systemTimer = false);
 
     double GetTimeNS(byte numTimer);
     double GetTimeMkS(byte numTimer);
@@ -41,14 +41,14 @@ namespace dev
     DWORD_PTR     _numProc;
     LARGE_INTEGER _counter;
 
-    double        _startTime[255];
+    double        _startTime[256];
     double        _freq;
 
-    double        _tickTime[255];
-    double        _prevTickTime[255];
+    double        _tickTime[256];
+    double        _prevTickTime[256];
 
-    double        _deltaTime[255];
-    double        _prevDeltaTime[255];
+    double        _deltaTime[256];
+    double        _prevDeltaTime[256];
   };
 }
 

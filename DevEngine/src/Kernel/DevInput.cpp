@@ -223,6 +223,7 @@ void Input::StopInputThread()
     _stopInputThread = true;
     WaitForSingleObject(_inputThread, 10000);
     CloseHandle(_inputThread);
+    timeEndPeriod(1);
     _inputThread = NULL;
   }
 }
@@ -237,11 +238,10 @@ void Input::inputThreadRun(LPVOID param)
 void Input::inputThread()
 {
   timeBeginPeriod(1);
-  Timer::GetTimer()->Reset(0);
+  Timer::GetTimer(true)->Reset(0);
   while(!_stopInputThread)
   {
-    _func(_param, Timer::GetTimer()->GetDeltaTimeMS(0));
+    _func(_param, Timer::GetTimer(true)->GetDeltaTimeMS(0));
     Sleep(_requestTime);
   }
-  timeEndPeriod(1);
 }
