@@ -4,6 +4,7 @@
 #include <Kernel/DevInclude.h>
 #include <Element/DevProperty.h>
 #include <Element/DevObject.h>
+#include <Math/DevMatrix.h>
 
 namespace dev
 {
@@ -11,26 +12,26 @@ namespace dev
     public Object
   {
   public:
-    Element(D3DXVECTOR3 position = D3DXVECTOR3(0, 0, 0), D3DXVECTOR3 rotation = D3DXVECTOR3(0, 0, 0), D3DXVECTOR3 scale = D3DXVECTOR3(1, 1, 1));
+    Element(Vec3 position = Vec3(0, 0, 0), Vec3 rotation = Vec3(0, 0, 0), Vec3 scale = Vec3(1, 1, 1));
     virtual ~Element();
 
     bool GetVisible();
     void SetVisible(bool value);
 
-    D3DXVECTOR3 GetPosition();
-    void SetPosition(D3DXVECTOR3 value);
+    Vec3 GetPosition();
+    void SetPosition(Vec3 value);
 
-    D3DXVECTOR3 GetScale();
-    void SetScale(D3DXVECTOR3 value);
+    Vec3 GetScale();
+    void SetScale(Vec3 value);
 
-    D3DXVECTOR3 GetRotation();
-    void SetRotation(D3DXVECTOR3 value);
+    Vec3 GetRotation();
+    void SetRotation(Vec3 value);
 
     Element* GetParent();
     void SetParent(Element* parent);
     void ClearParent();
 
-    D3DXMATRIX GetMatrix();
+    Matrix GetMatrix();
 
     virtual void Update();
 
@@ -44,9 +45,8 @@ namespace dev
     Properties::Vector3 _rotation;
 
     bool                _updateMatrix;
-    D3DXMATRIX          _matrix;
-    D3DXMATRIX          _trMatrix, _rotMatrix, _scMatrix;
-    Element*             _parent;
+    Matrix              _matrix;
+    Element*            _parent;
   };
 }
 

@@ -1,6 +1,6 @@
 #include <Kernel/DevScene.h>
 
-#include <Kernel/DevMath.h>
+#include <Math/DevMatrix.h>
 
 using namespace dev;
 
@@ -35,8 +35,8 @@ void Scene::Update()
 {
   if (_cameraActive)
   {
-    _deviceDX->SetTransform(D3DTS_VIEW,       &_cameraActive->GetViewMatrix());
-    _deviceDX->SetTransform(D3DTS_PROJECTION, &_cameraActive->GetProjectionMatrix());
+    _deviceDX->SetTransform(D3DTS_VIEW,       (D3DMATRIX*)&_cameraActive->GetViewMatrix());
+    _deviceDX->SetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&_cameraActive->GetProjectionMatrix());
   }
   _mainGroup->Update();
 }

@@ -12,7 +12,7 @@ namespace dev
     public Element
   {
   public:
-    Group(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale);
+    Group(Vec3 position, Vec3 rotation, Vec3 scale);
     Group();
     virtual ~Group();
 

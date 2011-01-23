@@ -148,10 +148,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Kernel\DevMath.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Kernel\DevRender.cpp"
 				>
 			</File>
@@ -176,10 +172,6 @@
 				</File>
 				<File
 					RelativePath=".\include\Kernel\DevInsideLib.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\Kernel\DevMath.h"
 					>
 				</File>
 				<File
@@ -284,6 +276,34 @@
 				>
 				<File
 					RelativePath=".\include\GUI\DevWindow.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Math"
+			>
+			<Filter
+				Name="include"
+				>
+				<File
+					RelativePath=".\include\Math\DevMath.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Math\DevMatrix.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Math\DevVec2.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Math\DevVec3.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Math\DevVec4.h"
 					>
 				</File>
 			</Filter>

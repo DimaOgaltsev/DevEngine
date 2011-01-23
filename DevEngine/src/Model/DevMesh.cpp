@@ -2,7 +2,7 @@
 
 using namespace dev;
 
-Mesh::Mesh(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale) :
+Mesh::Mesh(Vec3 position, Vec3 rotation, Vec3 scale) :
   Element(position, rotation, scale)
 {
   _vertices = new Vertex::ArrayVertices();

@@ -1,10 +1,10 @@
 #include <Element/DevCamera.h>
 
-#include <Kernel/DevMath.h>
+#include <Math/DevMatrix.h>
 
 using namespace dev;
 
-Camera::Camera(D3DXVECTOR3 position, D3DXVECTOR3 look, D3DXVECTOR3 up, 
+Camera::Camera(Vec3 position, Vec3 look, Vec3 up, 
                float fovY, float aspect, float znear, float zfar) :
   _updateView(true)
 {
@@ -18,37 +18,53 @@ Camera::~Camera()
 {
 }
 
-void Camera::SetPosition(D3DXVECTOR3 value)
+void Camera::SetPosition(Vec3 value)
 {
+  _look = value + GetDirection();
   _position = value;
   _updateView = true;
 }
 
-D3DXVECTOR3 Camera::GetPosition()
+Vec3 Camera::GetPosition()
 {
   return _position();
 }
 
-void Camera::SetLook(D3DXVECTOR3 value)
+void Camera::SetLook(Vec3 value)
 {
   _look = value;
   _updateView = true;
 }
 
-D3DXVECTOR3 Camera::GetLook()
+Vec3 Camera::GetLook()
 {
   return _look();
 }
 
-void Camera::SetUp(D3DXVECTOR3 value)
+void Camera::SetUp(Vec3 value)
 {
+  value.Normalize();
   _up = value;
   _updateView = true;
 }
 
-D3DXVECTOR3 Camera::GetUp()
+Vec3 Camera::GetUp()
 {
   return _up();
+}
+
+void Camera::SetDirection(Vec3 value)
+{
+  value.Normalize();
+  _look = _position() + value;
+  _updateView = true;
+}
+
+Vec3 Camera::GetDirection()
+{
+  Vec3 direction = (_look() - _position());
+  direction.Normalize();
+  return direction;
 }
 
 void Camera::SetNewProjection(float fovY, float aspect, float znear, float zfar)
@@ -57,15 +73,15 @@ void Camera::SetNewProjection(float fovY, float aspect, float znear, float zfar)
   _aspect = aspect;
   _zn = znear;
   _zf = zfar;
-  _projection = Matrix::Projection(fovY,aspect, znear, zfar);
+  _projection = Matrix::Projection(fovY, aspect, znear, zfar);
 }
 
-float Camera::GetWidthProjection()
+float Camera::GetFovYProjection()
 {
   return _fovY();
 }
 
-float Camera::GetHeightProjection()
+float Camera::GetAspectProjection()
 {
   return _aspect();
 }
@@ -80,17 +96,17 @@ float Camera::GetZFarProjection()
   return _zf();
 }
 
-D3DXMATRIX Camera::GetViewMatrix()
+Matrix Camera::GetViewMatrix()
 {
   if (_updateView)
   {
-    _view = Matrix::Look(&GetPosition(), &GetLook(), &GetUp());
+    _view = Matrix::Look(GetPosition(), GetLook(), GetUp());
     _updateView = false;
   }
   return _view;
 }
 
-D3DXMATRIX Camera::GetProjectionMatrix()
+Matrix Camera::GetProjectionMatrix()
 {
   return _projection;
 }

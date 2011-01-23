@@ -169,11 +169,11 @@ void MainWindow::LoadScene()
     20,21,22, 22,23,20
   };
   _mesh->SetIndexes((dev::Vertex::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
-  _mesh->SetRotation(D3DXVECTOR3(45, 45, 0));
+  _mesh->SetRotation(dev::Vec3(533, 566, 7));
 
   _camera = 
-    new dev::Camera(D3DXVECTOR3(0, 0, -10), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0, 1, 0), 
-    D3DX_PI/4, (float)_width/_height, 1.0f, 250.0f);
+    new dev::Camera(dev::Vec3(0, 0, -10), dev::Vec3(0, 0, 0), dev::Vec3(0, 1, 0), 
+    dev::PI_4, (float)_width/_height, 1.0f, 250.0f);
 
   _scene = new dev::Scene(_camera);
   _render->SetScene(_scene);
@@ -193,28 +193,34 @@ void MainWindow::Func(LPVOID param, double deltaTime)
 
 void MainWindow::InputFunc(double deltaTime)
 {
-  double mouseX = _input->GetMouseDeltaX() * deltaTime;
-  double mouseY = _input->GetMouseDeltaY() * deltaTime;
-  double mouseZ = _input->GetMouseDeltaY() * deltaTime;
+  double mouseX = _input->GetMouseDeltaX();
+  double mouseY = _input->GetMouseDeltaY();
+  double mouseZ = _input->GetMouseDeltaY();
+
+  if (mouseX)
+  {
+    dev::Vec3 direction = _camera->GetDirection();
+    _camera->SetDirection(direction);
+  }
 
   if (_input->GetKeyPressed(SC_W))
-    _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(0, 0, 1));
+    _camera->SetPosition(_camera->GetPosition() + _camera->GetDirection());
   if (_input->GetKeyPressed(SC_S))
-    _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(0, 0, -1));
+    _camera->SetPosition(_camera->GetPosition() - _camera->GetDirection());
   if (_input->GetKeyPressed(SC_D))
-    _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(1, 0, 0));
+    _camera->SetPosition(_camera->GetPosition() + dev::Vec3(1, 0, 0));
   if (_input->GetKeyPressed(SC_A))
-    _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(-1, 0, 0));
+    _camera->SetPosition(_camera->GetPosition() + dev::Vec3(-1, 0, 0));
   if (_input->GetKeyPressed(SC_Q))
-    _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(0, 1, 0));
+    _camera->SetPosition(_camera->GetPosition() + _camera->GetUp());
   if (_input->GetKeyPressed(SC_Z))
-    _camera->SetPosition(_camera->GetPosition() + D3DXVECTOR3(0, -1, 0));
+    _camera->SetPosition(_camera->GetPosition() - _camera->GetUp());
   if (_input->GetKeyPressed(SC_NUMPAD4))
-    _mesh->SetPosition(_mesh->GetPosition() + D3DXVECTOR3(-1, 0, 0));
+    _mesh->SetPosition(_mesh->GetPosition() + dev::Vec3(-1, 0, 0));
   if (_input->GetKeyPressed(SC_NUMPAD2))
-    _mesh->SetPosition(_mesh->GetPosition() + D3DXVECTOR3(0, 0, -1));
+    _mesh->SetPosition(_mesh->GetPosition() + dev::Vec3(0, 0, -1));
   if (_input->GetKeyPressed(SC_NUMPAD6))
-    _mesh->SetPosition(_mesh->GetPosition() + D3DXVECTOR3(1, 0, 0));
+    _mesh->SetPosition(_mesh->GetPosition() + dev::Vec3(1, 0, 0));
   if (_input->GetKeyPressed(SC_NUMPAD8))
-    _mesh->SetPosition(_mesh->GetPosition() + D3DXVECTOR3(0, 0, 1));
+    _mesh->SetPosition(_mesh->GetPosition() + dev::Vec3(0, 0, 1));
 }

@@ -1,5 +1,6 @@
 #include <Element/DevProperty.h>
 
+using namespace dev;
 using namespace dev::Properties;
 
 void Property::Save() 
@@ -33,34 +34,34 @@ const float& Float::operator () () const
 }
 
 //Vector2
-void Vector2::operator = (const D3DXVECTOR2& value)
+void Vector2::operator = (const Vec2& value)
 {
   _value = value;
 }
 
-const D3DXVECTOR2& Vector2::operator () () const
+const Vec2& Vector2::operator () () const
 {
   return _value;
 }
 
 //Vector3
-void Vector3::operator = (const D3DXVECTOR3& value)
+void Vector3::operator = (const Vec3& value)
 {
   _value = value;
 }
 
-const D3DXVECTOR3& Vector3::operator () () const
+const Vec3& Vector3::operator () () const
 {
   return _value;
 }
 
 //Vector4
-void Vector4::operator = (const D3DXVECTOR4& value)
+void Vector4::operator = (const Vec4& value)
 {
   _value = value;
 }
 
-const D3DXVECTOR4& Vector4::operator () () const
+const Vec4& Vector4::operator () () const
 {
   return _value;
 }

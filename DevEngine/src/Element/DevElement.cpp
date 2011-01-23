@@ -1,14 +1,13 @@
 #include <Element/DevElement.h>
 
-#include <Kernel/DevMath.h>
+#include <Math/DevMatrix.h>
 
 using namespace dev;
 
-Element::Element(D3DXVECTOR3 position, D3DXVECTOR3 rotation, D3DXVECTOR3 scale) :
+Element::Element(Vec3 position, Vec3 rotation, Vec3 scale) :
   _updateMatrix(true),
   _parent(NULL)
 {
-  D3DXMatrixIdentity(&_matrix);
   SetVisible(true);
   SetPosition(position);
   SetRotation(rotation);
@@ -29,39 +28,36 @@ void Element::SetVisible(bool value)
   _visible = value;
 }
 
-D3DXVECTOR3 Element::GetPosition()
+Vec3 Element::GetPosition()
 {
   return _position();
 }
 
-void Element::SetPosition(D3DXVECTOR3 value)
+void Element::SetPosition(Vec3 value)
 {
   _position = value;
-  _trMatrix = Matrix::Translate(&value);
   _updateMatrix = true;
 }
 
-D3DXVECTOR3 Element::GetScale()
+Vec3 Element::GetScale()
 {
   return _scale();
 }
 
-void Element::SetScale(D3DXVECTOR3 value)
+void Element::SetScale(Vec3 value)
 {
   _scale = value;
-  _scMatrix = Matrix::Scale(&value);
   _updateMatrix = true;
 }
 
-D3DXVECTOR3 Element::GetRotation()
+Vec3 Element::GetRotation()
 {
   return _rotation();
 }
 
-void Element::SetRotation(D3DXVECTOR3 value)
+void Element::SetRotation(Vec3 value)
 {
   _rotation = value;
-  _rotMatrix = Matrix::Rotation(&value);
   _updateMatrix = true;
 }
 
@@ -80,7 +76,7 @@ void Element::ClearParent()
   _parent = NULL;
 }
 
-D3DXMATRIX Element::GetMatrix()
+Matrix Element::GetMatrix()
 {
   if (_parent)
   {
@@ -105,10 +101,10 @@ void Element::Update()
 
 void Element::draw()
 {
-  _deviceDX->SetTransform(D3DTS_WORLD, &_matrix);
+  _deviceDX->SetTransform(D3DTS_WORLD, (D3DMATRIX*)&_matrix);
 }
 
 void Element::updateMatrix()
 {
-  _matrix = _scMatrix * _rotMatrix * _trMatrix;
+  _matrix.MakeTransform(_position(), _rotation(), _scale());
 }

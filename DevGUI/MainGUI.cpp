@@ -13,7 +13,7 @@ void main(HINSTANCE hInstance, HINSTANCE, LPSTR lpszCmdLine, int nCmdShow)
   }
 
   dev::Camera* camera = 
-    new dev::Camera(D3DXVECTOR3(0, 0, -10), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0, 1, 0), 
+    new dev::Camera(dev::Vec3(0, 0, -10), dev::Vec3(0, 0, 0), dev::Vec3(0, 1, 0), 
     D3DX_PI/4, (float)1.333f, 1.0f, 100.0f);
 
   dev::Scene* scene = new dev::Scene(camera);
@@ -65,7 +65,7 @@ void main(HINSTANCE hInstance, HINSTANCE, LPSTR lpszCmdLine, int nCmdShow)
   };
   mesh->SetIndexes((dev::Vertex::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
   scene->AddElement(mesh);
-  mesh->SetRotation(D3DXVECTOR3(45, 45, 0));
+  mesh->SetRotation(dev::Vec3(45, 45, 0));
 
   render->Run();
 

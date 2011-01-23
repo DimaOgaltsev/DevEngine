@@ -2,6 +2,7 @@
 #define DEV_PROPERTY_H
 
 #include <Kernel/DevInclude.h>
+#include <Math/DevMatrix.h>
 
 namespace dev
 {
@@ -55,11 +56,11 @@ namespace dev
       Vector2() : Property(), _value(0, 0) {}
       virtual ~Vector2() {}
 
-      void operator = (const D3DXVECTOR2& value);
-      const D3DXVECTOR2& operator () () const;
+      void operator = (const Vec2& value);
+      const Vec2& operator () () const;
 
     protected:
-      D3DXVECTOR2 _value;
+      Vec2 _value;
     };
 
     //Vector3
@@ -70,11 +71,11 @@ namespace dev
       Vector3() : Property(), _value(0, 0, 0) {}
       virtual ~Vector3() {}
 
-      void operator = (const D3DXVECTOR3& value);
-      const D3DXVECTOR3& operator () () const;
+      void operator = (const Vec3& value);
+      const Vec3& operator () () const;
 
     protected:
-      D3DXVECTOR3 _value;
+      Vec3 _value;
     };
 
     //Vector4
@@ -85,10 +86,10 @@ namespace dev
       Vector4() : Property(), _value(0, 0, 0, 0) {}
       virtual ~Vector4() {}
 
-      void operator = (const D3DXVECTOR4& value);
-      const D3DXVECTOR4& operator () () const;
+      void operator = (const Vec4& value);
+      const Vec4& operator () () const;
     protected:
-      D3DXVECTOR4 _value;
+      Vec4 _value;
     };
 
     //path
