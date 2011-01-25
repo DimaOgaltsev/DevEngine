@@ -233,6 +233,38 @@ namespace dev
       return out;
     }
 
+    inline void MakeRotate(const Vec3& Axis, float Angle)
+    {
+      float length = Axis.Length();
+
+      float x = Axis.x;
+      float y = Axis.y;
+      float z = Axis.z;
+      float x2 = pow(Axis.x, 2);
+      float y2 = pow(Axis.y, 2);
+      float z2 = pow(Axis.z, 2);
+      float xy = Axis.x * Axis.y;
+      float xz = Axis.x * Axis.z;
+      float yz = Axis.y * Axis.z;
+
+      float cosa = cosf(Angle);
+      float sina = sinf(Angle);
+
+      ROW(0,               x2 + (y2 + z2) * cosa,  xy - xy * cosa - z * length * sina,   xz - xz * cosa + y * length * sina,   0);
+      ROW(1,  xy - xy * cosa + z * length * sina,               y2 + (x2 + z2) * cosa,   yz - yz * cosa - x * length * sina,   0);
+      ROW(2,  xz - xz * cosa - y * length * sina,  yz - yz * cosa + x * length * sina,                z2 + (x2 + y2) * cosa,   0);
+      ROW(3,                                    0,                                  0,                                    0,   1);
+
+      operator *= (1 / Axis.Length2());
+    }
+
+    inline static Matrix Rotate(const Vec3& Axis, float Angle)
+    {
+      Matrix out;
+      out.MakeRotate(Axis, Angle);
+      return out;
+    }
+
     //scale
     inline void MakeScale(const Vec3& scale)
     {
