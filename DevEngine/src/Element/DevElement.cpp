@@ -23,15 +23,33 @@ void Element::SetVisible(bool value)
   _visible = value;
 }
 
+void Element::SetPosition(const float& x, const float& y, const float& z)
+{
+  _position = Vec3(x, y, z);
+  _updateMatrix = true;
+}
+
 void Element::SetPosition(const Vec3& value)
 {
   _position = value;
   _updateMatrix = true;
 }
 
+void Element::SetScale(const float& sx, const float& sy, const float& sz)
+{
+  _scale = Vec3(sx, sy, sz);
+  _updateMatrix = true;
+}
+
 void Element::SetScale(const Vec3& value)
 {
   _scale = value;
+  _updateMatrix = true;
+}
+
+void Element::SetRotation(const float& angleX, const float& angleY, const float& angleZ)
+{
+  _rotation = Vec3(angleX, angleY, angleZ);
   _updateMatrix = true;
 }
 

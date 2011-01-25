@@ -21,18 +21,21 @@ namespace dev
       return _visible();
     }
 
+    void SetPosition(const float& x, const float& y, const float& z);
     void SetPosition(const Vec3& value);
     inline const Vec3& GetPosition() const
     {
       return _position();
     }
 
+    void SetScale(const float& sx, const float& sy, const float& sz);
     void SetScale(const Vec3& value);
     inline const Vec3& GetScale() const
     {
       return _scale();
     }
 
+    void SetRotation(const float& angleX, const float& angleY, const float& angleZ);
     void SetRotation(const Vec3& value);
     inline const Vec3& GetRotation() const
     {
