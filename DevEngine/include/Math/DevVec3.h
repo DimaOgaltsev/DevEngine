@@ -31,7 +31,7 @@ namespace dev
       v[2] = z;
     };
 
-    Vec3(const Vec2& vec, float z)
+    Vec3(const Vec2& vec, float z = 0)
     {
       v[0] = vec.x;
       v[1] = vec.y;
@@ -43,6 +43,11 @@ namespace dev
       v[0] = vec.x;
       v[1] = vec.y;
       v[2] = vec.z;
+    }
+
+    inline Vec2 AsVec2()
+    {
+      return Vec2(x, y);
     }
 
     //operators

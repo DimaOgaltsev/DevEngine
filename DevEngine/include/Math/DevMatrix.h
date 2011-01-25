@@ -23,12 +23,19 @@ namespace dev
                    +(m[(row)][2] * (mat2).m[2][(column)]) \
                    +(m[(row)][3] * (mat2).m[3][(column)])
 
-  #define RESULT_MV(vec1, vec2, row) \
-                   (vec1).v[(row)] = \
-                    (m[(row)][0] * (vec).v[0]) \
-                   +(m[(row)][1] * (vec).v[1]) \
-                   +(m[(row)][2] * (vec).v[2]) \
-                   +(m[(row)][3] * (vec).v[3])
+  #define RESULT_MV4(vec1, vec2, row) \
+                    (vec1).v[(row)] = \
+                     (m[(row)][0] * (vec).v[0]) \
+                    +(m[(row)][1] * (vec).v[1]) \
+                    +(m[(row)][2] * (vec).v[2]) \
+                    +(m[(row)][3] * (vec).v[3])
+
+  #define RESULT_MV3(vec1, vec2, row) \
+                    (vec1).v[(row)] = \
+                     (m[(row)][0] * (vec).v[0]) \
+                    +(m[(row)][1] * (vec).v[1]) \
+                    +(m[(row)][2] * (vec).v[2]) \
+                    +(m[(row)][3])
 
   inline static float
     MINOR(const Matrix& mat, const int r0, const int r1, const int r2, 
@@ -206,10 +213,10 @@ namespace dev
       float cosb = cosf(yAngle); float sinb = sinf(yAngle);
       float cosc = cosf(zAngle); float sinc = sinf(zAngle);
 
-      ROW(0,  sina * sinb * sinc + cosa * cosc,  cosb * sinc,  cosa * sinb * sinc - sina * cosc,   0);
-      ROW(1,  sina * sinb * cosc - cosa * sinc,  cosb * cosc,  cosa * sinb * cosc + sina * sinc,   0);
-      ROW(2,                       sina * cosb,        -sinb,                       cosa * cosb,   0);
-      ROW(3,                                 0,            0,                                 0,   1);
+      ROW(0,                       cosb * cosc,                       cosb * sinc,  cosa * sinb * cosc + sina * sinc,   0);
+      ROW(1,  sina * sinb * cosc - cosa * sinc,  sina * sinb * sinc + cosa * cosc,  cosa * sinb * sinc - sina * cosc,   0);
+      ROW(2,                             -sinb,                       sina * cosb,                       cosa * cosb,   0);
+      ROW(3,                                 0,                                 0,                                 0,   1);
     }
 
     inline static Matrix Rotate(const Vec3& anglesEuler)
@@ -261,10 +268,10 @@ namespace dev
       float cosb = cosf(anglesEuler.y); float sinb = sinf(anglesEuler.y);
       float cosc = cosf(anglesEuler.z); float sinc = sinf(anglesEuler.z);
 
-      ROW(0,  scale.x * (sina * sinb * sinc + cosa * cosc),  scale.y * (cosb * sinc),  scale.z * (cosa * sinb * sinc - sina * cosc),   0);
-      ROW(1,  scale.x * (sina * sinb * cosc - cosa * sinc),  scale.y * (cosb * cosc),  scale.z * (cosa * sinb * cosc + sina * sinc),   0);
-      ROW(2,                       scale.x * (sina * cosb),        scale.y * (-sinb),                       scale.z * (cosa * cosb),   0);
-      ROW(3,                                   translate.x,              translate.y,                                   translate.z,   1);
+      ROW(0,                       scale.x * (cosb * cosc),                       scale.y * (cosb * sinc),  scale.z * (cosa * sinb * cosc + sina * sinc),   0);
+      ROW(1,  scale.x * (sina * sinb * cosc - cosa * sinc),  scale.y * (sina * sinb * sinc + cosa * cosc),  scale.z * (cosa * sinb * sinc - sina * cosc),   0);
+      ROW(2,                             scale.x * (-sinb),                       scale.y * (sina * cosb),                       scale.z * (cosa * cosb),   0);
+      ROW(3,                                   translate.x,                                   translate.y,                                   translate.z,   1);
     }
 
     inline static Matrix Transform(const Vec3& translate, const Vec3& anglesEuler, const Vec3& scale)
@@ -404,10 +411,25 @@ namespace dev
     {
       Vec4 r;
 
-      RESULT_MV(r, vec, 0);
-      RESULT_MV(r, vec, 1);
-      RESULT_MV(r, vec, 2);
-      RESULT_MV(r, vec, 3);
+      RESULT_MV4(r, vec, 0);
+      RESULT_MV4(r, vec, 1);
+      RESULT_MV4(r, vec, 2);
+      RESULT_MV4(r, vec, 3);
+
+      return r;
+    }
+
+    inline const Vec3 operator * (const Vec3& vec) const
+    {
+      Vec3 r;
+
+      RESULT_MV3(r, vec, 0);
+      RESULT_MV3(r, vec, 1);
+      RESULT_MV3(r, vec, 2);
+      
+      r.v[0] += m30;
+      r.v[1] += m31;
+      r.v[2] += m32;
 
       return r;
     }

@@ -49,6 +49,11 @@ namespace dev
       v[3] = vec.w;
     }
 
+    inline Vec3 AsVec3()
+    {
+      return Vec3(x, y, z);
+    }
+
     //operators
     inline bool operator == (const Vec4& vec) const 
     { 
