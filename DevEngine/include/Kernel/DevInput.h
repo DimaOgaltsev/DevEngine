@@ -17,13 +17,13 @@ namespace dev
     void OffInput();
 
     //mouse
-    bool GetClickMouseButton(int button);
-    double GetMouseDeltaX();
-    double GetMouseDeltaY();
-    double GetMouseDeltaZ();
+    bool GetClickMouseButton(int button) const;
+    double GetMouseDeltaX() const;
+    double GetMouseDeltaY() const;
+    double GetMouseDeltaZ() const;
 
     //keyboard
-    bool GetKeyPressed(byte SC_KEY);
+    bool GetKeyPressed(byte SC_KEY) const;
 
     typedef void (*InputFunc)(LPVOID param, double deltaTimeMS);
 

@@ -72,11 +72,6 @@ void Render::Destroy()
     delete _wnd;
 }
 
-const char* Render::GetLastError()
-{
-  return _lastError.c_str();
-}
-
 bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMode)
 {
   if (!_directX)
@@ -146,11 +141,6 @@ bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMod
     ShowWindow(_hWnd, SW_SHOW);
 
   return true;
-}
-
-Scene* Render::GetScene()
-{
-  return _scene;
 }
 
 void Render::SetScene(Scene* scene)

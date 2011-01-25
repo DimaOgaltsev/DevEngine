@@ -19,10 +19,16 @@ namespace dev
 
     bool  InitRender(int width, int height, int RefreshHz, bool FullScreenMode);
     void  Destroy();
-    const char* GetLastError();
+    inline const char* GetLastError() const
+    {
+      return _lastError.c_str();
+    }
 
-    Scene* GetScene();
     void SetScene(Scene* scene);
+    inline Scene* GetScene() const
+    {
+      return _scene;
+    }
 
     void  Run();
 

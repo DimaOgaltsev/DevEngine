@@ -86,23 +86,6 @@ void Group::RemoveElement(unsigned int num)
   }
 }
 
-unsigned int Group::GetElementNum(Element* element)
-{
-  for (unsigned int i = 0; i < _elements.size(); ++i)
-  {
-    if (_elements[i] == element) 
-      return i;
-  }
-  return static_cast<unsigned int>(_elements.size());
-}
-
-Element* Group::GetElement(unsigned int num)
-{
-  if (num < _elements.size())
-    return (*(_elements.begin() + num));
-  return NULL;
-}
-
 void Group::Update()
 {
   for (unsigned int i = 0; i < _elements.size(); ++i)

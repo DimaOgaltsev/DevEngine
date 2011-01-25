@@ -4,7 +4,7 @@
 
 using namespace dev;
 
-Element::Element(Vec3 position, Vec3 rotation, Vec3 scale) :
+Element::Element(const Vec3& position, const Vec3& rotation, const Vec3& scale) :
   _updateMatrix(true),
   _parent(NULL)
 {
@@ -18,52 +18,27 @@ Element::~Element()
 {
 }
 
-bool Element::GetVisible()
-{
-  return _visible();
-}
-
 void Element::SetVisible(bool value)
 {
   _visible = value;
 }
 
-Vec3 Element::GetPosition()
-{
-  return _position();
-}
-
-void Element::SetPosition(Vec3 value)
+void Element::SetPosition(const Vec3& value)
 {
   _position = value;
   _updateMatrix = true;
 }
 
-Vec3 Element::GetScale()
-{
-  return _scale();
-}
-
-void Element::SetScale(Vec3 value)
+void Element::SetScale(const Vec3& value)
 {
   _scale = value;
   _updateMatrix = true;
 }
 
-Vec3 Element::GetRotation()
-{
-  return _rotation();
-}
-
-void Element::SetRotation(Vec3 value)
+void Element::SetRotation(const Vec3& value)
 {
   _rotation = value;
   _updateMatrix = true;
-}
-
-Element* Element::GetParent()
-{
-  return _parent;
 }
 
 void Element::SetParent(Element* parent)
@@ -74,15 +49,6 @@ void Element::SetParent(Element* parent)
 void Element::ClearParent()
 {
   _parent = NULL;
-}
-
-Matrix Element::GetMatrix()
-{
-  if (_parent)
-  {
-    return (_matrix * _parent->GetMatrix());
-  }
-  return _matrix;
 }
 
 void Element::Update()

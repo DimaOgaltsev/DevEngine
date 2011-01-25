@@ -170,26 +170,26 @@ void Input::OffInput()
 }
 
 //mouse
-bool Input::GetClickMouseButton(int button)
+bool Input::GetClickMouseButton(int button) const
 {
   return Button[button];
 }
 
-double Input::GetMouseDeltaX()
+double Input::GetMouseDeltaX() const
 {
   double mx = MouseX;
   MouseX = 0;
   return mx;
 }
 
-double Input::GetMouseDeltaY()
+double Input::GetMouseDeltaY() const
 {
   double my = MouseY;
   MouseY = 0;
   return my;
 }
 
-double Input::GetMouseDeltaZ()
+double Input::GetMouseDeltaZ() const
 {
   double mz = MouseZ;
   MouseZ = 0;
@@ -197,7 +197,7 @@ double Input::GetMouseDeltaZ()
 }
 
 //KeyBoard
-bool Input::GetKeyPressed(byte SC_KEY)
+bool Input::GetKeyPressed(byte SC_KEY) const
 {
   return Keys[SC_KEY];
 }

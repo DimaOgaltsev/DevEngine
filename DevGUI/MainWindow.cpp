@@ -169,7 +169,7 @@ void MainWindow::LoadScene()
     20,21,22, 22,23,20
   };
   _mesh->SetIndexes((dev::Vertex::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
-  _mesh->SetRotation(dev::Vec3(533, 566, 7));
+  _mesh->SetRotation(dev::Vec3(45, 45, 45));
 
   _camera = 
     new dev::Camera(dev::Vec3(0, 0, -10), dev::Vec3(0, 0, 0), dev::Vec3(0, 1, 0), 
@@ -208,9 +208,9 @@ void MainWindow::InputFunc(double deltaTime)
   if (_input->GetKeyPressed(SC_S))
     _camera->SetPosition(_camera->GetPosition() - _camera->GetDirection());
   if (_input->GetKeyPressed(SC_D))
-    _camera->SetPosition(_camera->GetPosition() + dev::Vec3(1, 0, 0));
+    _camera->SetPosition(_camera->GetPosition() + _camera->GetRight());
   if (_input->GetKeyPressed(SC_A))
-    _camera->SetPosition(_camera->GetPosition() + dev::Vec3(-1, 0, 0));
+    _camera->SetPosition(_camera->GetPosition() - _camera->GetRight());
   if (_input->GetKeyPressed(SC_Q))
     _camera->SetPosition(_camera->GetPosition() + _camera->GetUp());
   if (_input->GetKeyPressed(SC_Z))

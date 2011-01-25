@@ -21,6 +21,10 @@ namespace dev
 
     void AddElement(Element* element);
     void RemoveElement(Element* element);
+    inline Element* GetElement(unsigned int num)
+    {
+      return _mainGroup->GetElement(num);
+    }
 
     void Update();
 

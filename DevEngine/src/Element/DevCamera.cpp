@@ -4,6 +4,15 @@
 
 using namespace dev;
 
+dev::Camera::Camera() :
+  _updateView(true)
+{
+  SetPosition(Vec3(0, 0, -10));
+  SetLook(Vec3(0, 0, 0));
+  SetUp(Vec3(0, 1, 0));
+  SetNewProjection(dev::PI_4, 1.333f, 1.0f, 250.0f);
+}
+
 Camera::Camera(Vec3 position, Vec3 look, Vec3 up, 
                float fovY, float aspect, float znear, float zfar) :
   _updateView(true)
@@ -18,53 +27,35 @@ Camera::~Camera()
 {
 }
 
-void Camera::SetPosition(Vec3 value)
+void Camera::SetPosition(const Vec3& value)
 {
   _look = value + GetDirection();
   _position = value;
+  updateDirectionAndRight();
   _updateView = true;
 }
 
-Vec3 Camera::GetPosition()
-{
-  return _position();
-}
-
-void Camera::SetLook(Vec3 value)
+void Camera::SetLook(const Vec3& value)
 {
   _look = value;
+  updateDirectionAndRight();
   _updateView = true;
 }
 
-Vec3 Camera::GetLook()
+void Camera::SetUp(const Vec3& value)
 {
-  return _look();
-}
-
-void Camera::SetUp(Vec3 value)
-{
-  value.Normalize();
-  _up = value;
+  Vec3 buf(value);
+  buf.Normalize();
+  _up = buf;
+  updateDirectionAndRight();
   _updateView = true;
 }
 
-Vec3 Camera::GetUp()
+void Camera::SetDirection(const Vec3& value)
 {
-  return _up();
-}
-
-void Camera::SetDirection(Vec3 value)
-{
-  value.Normalize();
   _look = _position() + value;
+  updateDirectionAndRight();
   _updateView = true;
-}
-
-Vec3 Camera::GetDirection()
-{
-  Vec3 direction = (_look() - _position());
-  direction.Normalize();
-  return direction;
 }
 
 void Camera::SetNewProjection(float fovY, float aspect, float znear, float zfar)
@@ -76,37 +67,20 @@ void Camera::SetNewProjection(float fovY, float aspect, float znear, float zfar)
   _projection = Matrix::Projection(fovY, aspect, znear, zfar);
 }
 
-float Camera::GetFovYProjection()
-{
-  return _fovY();
-}
-
-float Camera::GetAspectProjection()
-{
-  return _aspect();
-}
-
-float Camera::GetZNearProjection()
-{
-  return _zn();
-}
-
-float Camera::GetZFarProjection()
-{
-  return _zf();
-}
-
-Matrix Camera::GetViewMatrix()
+void Camera::Update()
 {
   if (_updateView)
   {
     _view = Matrix::Look(GetPosition(), GetLook(), GetUp());
     _updateView = false;
   }
-  return _view;
 }
 
-Matrix Camera::GetProjectionMatrix()
+
+void dev::Camera::updateDirectionAndRight()
 {
-  return _projection;
+  _direction = (_look() - _position());
+  _direction.Normalize();
+  _right = _up() ^ _direction;
+  _right.Normalize();
 }

@@ -12,26 +12,48 @@ namespace dev
     public Object
   {
   public:
-    Element(Vec3 position = Vec3(0, 0, 0), Vec3 rotation = Vec3(0, 0, 0), Vec3 scale = Vec3(1, 1, 1));
+    Element(const Vec3& position = Vec3(0, 0, 0), const Vec3& rotation = Vec3(0, 0, 0), const Vec3& scale = Vec3(1, 1, 1));
     virtual ~Element();
 
-    bool GetVisible();
     void SetVisible(bool value);
+    inline bool GetVisible() const
+    {
+      return _visible();
+    }
 
-    Vec3 GetPosition();
-    void SetPosition(Vec3 value);
+    void SetPosition(const Vec3& value);
+    inline const Vec3& GetPosition() const
+    {
+      return _position();
+    }
 
-    Vec3 GetScale();
-    void SetScale(Vec3 value);
+    void SetScale(const Vec3& value);
+    inline const Vec3& GetScale() const
+    {
+      return _scale();
+    }
 
-    Vec3 GetRotation();
-    void SetRotation(Vec3 value);
+    void SetRotation(const Vec3& value);
+    inline const Vec3& GetRotation() const
+    {
+      return _rotation();
+    }
 
-    Element* GetParent();
     void SetParent(Element* parent);
+    inline const Element* GetParent() const
+    {
+      return _parent;
+    }
     void ClearParent();
 
-    Matrix GetMatrix();
+    inline Matrix GetMatrix() const
+    {
+      if (_parent)
+      {
+        return (_matrix * _parent->GetMatrix());
+      }
+      return _matrix;
+    }
 
     virtual void Update();
 
