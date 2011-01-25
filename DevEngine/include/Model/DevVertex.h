@@ -68,7 +68,7 @@ namespace dev
 
       void SetVertices(Array vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration);
       void SetAsSource();
-      inline int GetNumberVertices()
+      inline int GetNumberVertices() const
       {
         return _numberVertices;
       }

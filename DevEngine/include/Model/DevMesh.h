@@ -12,7 +12,7 @@ namespace dev
     public Element
   {
   public:
-    Mesh(Vec3 position, Vec3 rotation, Vec3 scale);
+    Mesh(const Vec3& position, const Vec3& rotation, const Vec3& scale);
     Mesh();
     virtual ~Mesh();
 
