@@ -242,6 +242,6 @@ void Input::inputThread()
   while(!_stopInputThread)
   {
     _func(_param, SystemTimer::GetTimer()->GetDeltaTimeMS(0));
-    Sleep(_requestTime);
+    WaitForSingleObject(_inputThread, _requestTime);
   }
 }
