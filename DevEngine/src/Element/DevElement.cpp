@@ -23,6 +23,18 @@ void Element::SetVisible(bool value)
   _visible = value;
 }
 
+void Element::SetMove(const float& x, const float& y, const float& z)
+{
+  _position += Vec3(x, y, z);
+  _updateMatrix = true;
+}
+
+void Element::SetMove(const Vec3& value)
+{
+  _position = value;
+  _updateMatrix = true;
+}
+
 void Element::SetPosition(const float& x, const float& y, const float& z)
 {
   _position = Vec3(x, y, z);

@@ -14,24 +14,31 @@ namespace dev
            float fovY, float aspect, float znear, float zfar);
     virtual ~Camera();
 
+    void SetMove(const float& x, const float& y, const float& z);
+    void SetMove(const Vec3& value);
+
+    void SetPosition(const float& x, const float& y, const float& z);
     void SetPosition(const Vec3& value);
     inline const Vec3& GetPosition() const
     {
       return _position();
     }
 
+    void SetLook(const float& x, const float& y, const float& z);
     void SetLook(const Vec3& value);
     inline const Vec3& GetLook() const
     {
       return _look();
     }
 
+    void SetUp(const float& x, const float& y, const float& z);
     void SetUp(const Vec3& value);
     inline const Vec3& GetUp() const
     {
       return _up();
     }
 
+    void SetDirection(const float& x, const float& y, const float& z);
     void SetDirection(const Vec3& value);
     inline const Vec3& GetDirection() const
     {

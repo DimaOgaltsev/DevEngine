@@ -21,6 +21,9 @@ namespace dev
       return _visible();
     }
 
+    void SetMove(const float& x, const float& y, const float& z);
+    void SetMove(const Vec3& value);
+
     void SetPosition(const float& x, const float& y, const float& z);
     void SetPosition(const Vec3& value);
     inline const Vec3& GetPosition() const

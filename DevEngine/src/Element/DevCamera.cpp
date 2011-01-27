@@ -27,6 +27,21 @@ Camera::~Camera()
 {
 }
 
+void Camera::SetMove(const float& x, const float& y, const float& z)
+{
+  SetPosition(_position() + Vec3(x, y, z));
+}
+
+void Camera::SetMove(const Vec3& value)
+{
+  SetPosition(_position() + value);
+}
+
+void Camera::SetPosition(const float& x, const float& y, const float& z)
+{
+  SetPosition(Vec3(x, y, z));
+}
+
 void Camera::SetPosition(const Vec3& value)
 {
   _look = value + GetDirection();
@@ -35,11 +50,21 @@ void Camera::SetPosition(const Vec3& value)
   _updateView = true;
 }
 
+void Camera::SetLook(const float& x, const float& y, const float& z)
+{
+  SetLook(Vec3(x, y, z));
+}
+
 void Camera::SetLook(const Vec3& value)
 {
   _look = value;
   updateDirectionAndRight();
   _updateView = true;
+}
+
+void Camera::SetUp(const float& x, const float& y, const float& z)
+{
+  SetUp(Vec3(x, y, z));
 }
 
 void Camera::SetUp(const Vec3& value)
@@ -50,6 +75,12 @@ void Camera::SetUp(const Vec3& value)
   updateDirectionAndRight();
   _updateView = true;
 }
+
+void Camera::SetDirection(const float& x, const float& y, const float& z)
+{
+  SetDirection(Vec3(x, y, z));
+}
+
 
 void Camera::SetDirection(const Vec3& value)
 {
