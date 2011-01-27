@@ -1,5 +1,7 @@
 #include <GUI/DevWindow.h>
 
+#include <Kernel/DevLog.h>
+
 using namespace dev;
 
 Window::Window() :
@@ -42,7 +44,7 @@ HWND Window::Create(HINSTANCE hInst, int PosX, int PosY, int Width, int Height)
 
   if (!RegisterClass(&WinClass))
   {
-    MessageBox(0, "Error registration window (MainWindow.cpp)", "Error:", MB_ICONERROR);
+    Log::GetLog()->WriteToLog("Error registration window (MainWindow.cpp)");
     return FALSE;
   }
 

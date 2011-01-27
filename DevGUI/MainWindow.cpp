@@ -70,7 +70,7 @@ bool MainWindow::Create(HINSTANCE hInst, int PosX, int PosY, int Width, int Heig
   _render = new dev::Render(_hWnd);
   if (!_render->InitRender(0, 0, 0, false))
   {
-    MessageBox(0, _render->GetLastError(), "Error:", MB_ICONERROR);
+    MessageBox(0, "Error init DirectX!", "Error:", MB_ICONERROR);
     return FALSE;
   }
 
@@ -173,7 +173,7 @@ void MainWindow::LoadScene()
   _mesh->SetIndexes((dev::Vertex::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
   _meshCopy->SetIndexes((dev::Vertex::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
   _mesh->SetRotation(0, 0, 45);
-  _meshCopy->SetPosition(0, 0, -20);
+  _meshCopy->SetPosition(-2, 0, 0);
 
   _camera = 
     new dev::Camera(dev::Vec3(0, 0, -10), dev::Vec3(0, 0, 0), dev::Vec3(0, 1, 0), 
@@ -201,8 +201,8 @@ void MainWindow::InputFunc(double deltaTime)
   float sens = 0.2f;
   float speed = 0.3f;
 
-  float mouseX = ToRadian((float)_input->GetMouseDeltaX()) * sens;
-  float mouseY = ToRadian((float)_input->GetMouseDeltaY()) * sens;
+  float mouseX = (float)_input->GetMouseDeltaX() * sens;
+  float mouseY = (float)_input->GetMouseDeltaY() * sens;
   float mouseZ = (float)_input->GetMouseDeltaY();
 
   if (mouseX)
@@ -211,23 +211,23 @@ void MainWindow::InputFunc(double deltaTime)
     _camera->SetDirection(dev::Matrix::Rotate(_camera->GetRight(), mouseY) * _camera->GetDirection());
 
   if (_input->GetKeyPressed(SC_W))
-    _camera->SetPosition(_camera->GetPosition() + _camera->GetDirection() * speed);
+    _camera->SetMove(_camera->GetDirection() * speed);
   if (_input->GetKeyPressed(SC_S))
-    _camera->SetPosition(_camera->GetPosition() - _camera->GetDirection() * speed);
+    _camera->SetMove(-_camera->GetDirection() * speed);
   if (_input->GetKeyPressed(SC_D))
-    _camera->SetPosition(_camera->GetPosition() + _camera->GetRight() * speed);
+    _camera->SetMove(_camera->GetRight() * speed);
   if (_input->GetKeyPressed(SC_A))
-    _camera->SetPosition(_camera->GetPosition() - _camera->GetRight() * speed);
+    _camera->SetMove(-_camera->GetRight() * speed);
   if (_input->GetKeyPressed(SC_Q))
-    _camera->SetPosition(_camera->GetPosition() + _camera->GetUp() * speed);
+    _camera->SetMove(_camera->GetUp() * speed);
   if (_input->GetKeyPressed(SC_Z))
-    _camera->SetPosition(_camera->GetPosition() - _camera->GetUp() * speed);
+    _camera->SetMove(-_camera->GetUp() * speed);
   if (_input->GetKeyPressed(SC_NUMPAD4))
-    _mesh->SetPosition(_mesh->GetPosition() + dev::Vec3(-1, 0, 0));
+    _mesh->SetMove(-1, 0, 0);
   if (_input->GetKeyPressed(SC_NUMPAD2))
-    _mesh->SetPosition(_mesh->GetPosition() + dev::Vec3(0, 0, -1));
+    _mesh->SetMove(0, 0, -1);
   if (_input->GetKeyPressed(SC_NUMPAD6))
-    _mesh->SetPosition(_mesh->GetPosition() + dev::Vec3(1, 0, 0));
+    _mesh->SetMove(1, 0, 0);
   if (_input->GetKeyPressed(SC_NUMPAD8))
-    _mesh->SetPosition(_mesh->GetPosition() + dev::Vec3(0, 0, 1));
+    _mesh->SetMove(0, 0, 1);
 }

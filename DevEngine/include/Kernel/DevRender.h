@@ -19,10 +19,6 @@ namespace dev
 
     bool  InitRender(int width, int height, int RefreshHz, bool FullScreenMode);
     void  Destroy();
-    inline const char* GetLastError() const
-    {
-      return _lastError.c_str();
-    }
 
     void SetScene(Scene* scene);
     inline Scene* GetScene() const
@@ -46,7 +42,6 @@ namespace dev
 
     D3DDISPLAYMODE        _display;
     D3DPRESENT_PARAMETERS _parametersD3D;
-    std::string           _lastError;
 
     Scene*                _scene;
   };

@@ -1,5 +1,6 @@
 #include <Kernel/DevRender.h>
 
+#include <Kernel/DevLog.h>
 #include <Model/DevMesh.h>
 
 using namespace dev;
@@ -8,7 +9,6 @@ Render::Render() :
   _width(0),
   _height(0),
   _stopRender(false),
-  _lastError(""),
   _renderThread(NULL)
 {
   _wnd = new Window();
@@ -16,8 +16,7 @@ Render::Render() :
 
   if (!_hWnd)
   {
-    MessageBox(0, "Not _hWnd (DevRender.cpp)", "Error:", MB_ICONERROR);
-    //TODO: log file
+    Log::GetLog()->WriteToLog("Not _hWnd (DevRender.cpp)");
   }
 }
 
@@ -26,7 +25,6 @@ Render::Render(HWND hWnd) :
   _width(0),
   _height(0),
   _stopRender(false),
-  _lastError(""),
   _wnd(NULL),
   _renderThread(NULL)
 {
@@ -36,7 +34,6 @@ Render::Render(HINSTANCE hInstance, int PosX, int PosY, int Width, int Height) :
   _width(Width),
   _height(Height),
   _stopRender(false),
-  _lastError(""),
   _renderThread(NULL)
 {
   _wnd = new Window();
@@ -44,8 +41,7 @@ Render::Render(HINSTANCE hInstance, int PosX, int PosY, int Width, int Height) :
 
   if (!_hWnd)
   {
-    MessageBox(0, "Not _hWnd (DevRender.cpp)", "Error:", MB_ICONERROR);
-    //TODO: log file
+    Log::GetLog()->WriteToLog("Not _hWnd (DevRender.cpp)");
   }
 }
 
@@ -63,7 +59,6 @@ void Render::Destroy()
     CloseHandle(_renderThread);
     _renderThread = NULL;
   }
-  _lastError.clear();
   if (_deviceDX)
     _deviceDX->Release();
   if (_directX)
@@ -77,14 +72,14 @@ bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMod
   if (!_directX)
     if (!(_directX = Direct3DCreate9(D3D_SDK_VERSION)))
     {
-      _lastError = "Failed init Direct3D (DevRender.cpp)";
+      Log::GetLog()->WriteToLog("Failed init Direct3D (DevRender.cpp)");
       return false;
     }
 
   ZeroMemory(&_display ,sizeof(_display));
   if (FAILED(_directX->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &_display)))
   {
-    _lastError = "Failed init DisplayMode (DevRender.cpp)";
+    Log::GetLog()->WriteToLog("Failed init DisplayMode (DevRender.cpp)");
     return false;
   }
 
@@ -130,7 +125,7 @@ bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMod
   if (FAILED(_directX->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _hWnd,
     D3DCREATE_HARDWARE_VERTEXPROCESSING, &_parametersD3D, &_deviceDX)))
   {
-    _lastError = "Failed device Direct3D (DirectMain.cpp)";
+    Log::GetLog()->WriteToLog("Failed device Direct3D (DirectMain.cpp)");
     return false;
   }
 

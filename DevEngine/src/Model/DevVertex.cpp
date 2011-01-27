@@ -1,5 +1,7 @@
 #include <Model/DevVertex.h>
 
+#include <Kernel/DevLog.h>
+
 using namespace dev::Vertex;
 
 //ArrayVertices
@@ -47,8 +49,7 @@ void ArrayVertices::SetVertices(Array vertices, int numberVertex, int sizeVertex
        _deviceDX->CreateVertexBuffer(numberVertex * sizeVertex, 0, 0, D3DPOOL_MANAGED, &_bufferVertices, NULL) != D3D_OK ||
        _deviceDX->CreateVertexDeclaration(declaration, &_declaration) != D3D_OK)
   {
-    MessageBox(0, "Array vertices not created!", "Error", MB_ICONERROR);
-    //TODO : write to log file, if error
+    Log::GetLog()->WriteToLog("Array vertices not created!");
     return;
   }
 
@@ -99,8 +100,7 @@ void ArrayIndexes::SetIndexes(Array indexes, int sizeArray, D3DFORMAT D3DFMT_IND
   if (!_deviceDX ||
        _deviceDX->CreateIndexBuffer(sizeArray, 0, D3DFMT_INDEX, D3DPOOL_MANAGED, &_bufferIndexes, NULL) != D3D_OK)
   {
-    MessageBox(0, "Array vertices not created!", "Error", MB_ICONERROR);
-    //TODO : write to log file, if error
+    Log::GetLog()->WriteToLog("Array vertices not created!");
     return;
   }
 

@@ -175,6 +175,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\Kernel\DevLog.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\Kernel\DevRender.h"
 					>
 				</File>
