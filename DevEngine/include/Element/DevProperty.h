@@ -27,7 +27,10 @@ namespace dev
       virtual ~Bool() {}
 
       void operator = (const bool& value);
-      const bool& operator () () const;
+      inline const bool& operator () () const
+      {
+        return _value;
+      }
 
     protected:
       bool _value;
@@ -42,7 +45,11 @@ namespace dev
       virtual ~Float() {}
 
       void operator = (const float& value);
-      const float& operator () () const;
+      void operator += (const float& value);
+      inline const float& operator () () const
+      {
+        return _value;
+      }
 
     protected:
       float _value;
@@ -57,7 +64,11 @@ namespace dev
       virtual ~Vector2() {}
 
       void operator = (const Vec2& value);
-      const Vec2& operator () () const;
+      void operator += (const Vec2& value);
+      inline const Vec2& operator () () const
+      {
+        return _value;
+      }
 
     protected:
       Vec2 _value;
@@ -72,7 +83,11 @@ namespace dev
       virtual ~Vector3() {}
 
       void operator = (const Vec3& value);
-      const Vec3& operator () () const;
+      void operator += (const Vec3& value);
+      inline const Vec3& operator () () const
+      {
+        return _value;
+      }
 
     protected:
       Vec3 _value;
@@ -87,7 +102,11 @@ namespace dev
       virtual ~Vector4() {}
 
       void operator = (const Vec4& value);
-      const Vec4& operator () () const;
+      void operator += (const Vec4& value);
+      inline const Vec4& operator () () const
+      {
+        return _value;
+      }
     protected:
       Vec4 _value;
     };
@@ -101,7 +120,10 @@ namespace dev
       virtual ~Path() {}
 
       void operator = (const char* value);
-      const char* operator () () const;
+      inline const char* operator () () const
+      {
+        return _value.c_str();
+      }
 
     protected:
       std::string _value;
