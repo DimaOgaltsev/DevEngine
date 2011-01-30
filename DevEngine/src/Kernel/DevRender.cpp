@@ -9,7 +9,8 @@ Render::Render() :
   _width(0),
   _height(0),
   _stopRender(false),
-  _renderThread(NULL)
+  _renderThread(NULL),
+  _scene(NULL)
 {
   _wnd = new Window();
   _hWnd = _wnd->Create(GetModuleHandle(0), CW_USEDEFAULT, CW_USEDEFAULT, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN));
@@ -26,7 +27,8 @@ Render::Render(HWND hWnd) :
   _height(0),
   _stopRender(false),
   _wnd(NULL),
-  _renderThread(NULL)
+  _renderThread(NULL),
+  _scene(NULL)
 {
 }
 
@@ -34,7 +36,8 @@ Render::Render(HINSTANCE hInstance, int PosX, int PosY, int Width, int Height) :
   _width(Width),
   _height(Height),
   _stopRender(false),
-  _renderThread(NULL)
+  _renderThread(NULL),
+  _scene(NULL)
 {
   _wnd = new Window();
   _hWnd = _wnd->Create(hInstance, PosX, PosY, Width, Height);
@@ -76,7 +79,7 @@ bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMod
       return false;
     }
 
-  ZeroMemory(&_display ,sizeof(_display));
+  ZeroMemory(&_display, sizeof(_display));
   if (FAILED(_directX->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &_display)))
   {
     Log::GetLog()->WriteToLog("Failed init DisplayMode (DevRender.cpp)");
@@ -161,9 +164,8 @@ void Render::Run()
 
 void Render::startRender(LPVOID param)
 {
-  Render* _render = (Render*)param;
-  if (_render)
-    _render->runRender();
+  Render* _render = static_cast<Render*>(param);
+  _render->runRender();
 }
 
 void Render::runRender()

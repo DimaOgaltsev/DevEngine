@@ -231,8 +231,7 @@ void Input::StopInputThread()
 void Input::inputThreadRun(LPVOID param)
 {
   Input* input = (Input*)param;
-  if (input)
-    input->inputThread();
+  input->inputThread();
 }
 
 void Input::inputThread()

@@ -191,19 +191,18 @@ void MainWindow::LoadScene()
 
 void MainWindow::Func(LPVOID param, double deltaTime)
 {
-  MainWindow* mw = (MainWindow*)param;
-  if (mw)
-    mw->InputFunc(deltaTime);
+  MainWindow* mw = static_cast<MainWindow*>(param);
+  mw->InputFunc(deltaTime);
 }
 
 void MainWindow::InputFunc(double deltaTime)
 {
-  float sens = 0.2f;
-  float speed = 0.3f;
+  float sens = 0.02f * (float)deltaTime;
+  float speed = 0.03f * (float)deltaTime;
 
-  float mouseX = (float)_input->GetMouseDeltaX() * sens;
-  float mouseY = (float)_input->GetMouseDeltaY() * sens;
-  float mouseZ = (float)_input->GetMouseDeltaY();
+  float mouseX = (float)ToRadian(_input->GetMouseDeltaX()) * sens;
+  float mouseY = (float)ToRadian(_input->GetMouseDeltaY()) * sens;
+  float mouseZ = (float)ToRadian(_input->GetMouseDeltaZ());
 
   if (mouseX)
     _camera->SetDirection(dev::Matrix::Rotate(_camera->GetUp(), mouseX) * _camera->GetDirection());

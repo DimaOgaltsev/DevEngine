@@ -29,7 +29,7 @@ namespace dev
     void  Run();
 
   protected:
-    static void  startRender(LPVOID param);
+    static void startRender(LPVOID param);
     void  runRender();
     void  stopRender();
 
