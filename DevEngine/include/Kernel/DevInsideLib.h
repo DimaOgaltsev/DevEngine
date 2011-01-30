@@ -2,11 +2,21 @@
 #define DEV_INSIDE_LIB_H
 
 #include <Kernel/DevTimer.h>
+#include <Kernel/DevSync.h>
 
 namespace dev
 {
-  class SystemTimer :
-    public Timer
+  class SystemCS
+  {
+  public:
+    static CriticalSection* Get()
+    {
+      static CriticalSection cs;
+      return &cs;
+    }
+  };
+
+  class SystemTimer
   {
   public:
     static Timer* GetTimer()
