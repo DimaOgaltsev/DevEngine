@@ -53,10 +53,10 @@ void Timer::init()
       _startTime[i] = _startTime[0];
     }
 
-    memcpy(_tickTime,      _startTime, 256);
-    memcpy(_prevTickTime,  _tickTime,  256);
-    memcpy(_deltaTime,     _startTime, 256);
-    memcpy(_prevDeltaTime, _deltaTime, 256);
+    memcpy(_tickTime,      _startTime, 256 * sizeof(double));
+    memcpy(_prevTickTime,  _tickTime,  256 * sizeof(double));
+    memcpy(_deltaTime,     _startTime, 256 * sizeof(double));
+    memcpy(_prevDeltaTime, _deltaTime, 256 * sizeof(double));
   }
   else
   {
@@ -72,11 +72,12 @@ void Timer::Reset(byte numTimer)
   QueryPerformanceCounter(&_counter);
   SetThreadAffinityMask(_thread, oldMask);
 
+  _tickTime[numTimer]       = (double)_counter.QuadPart - _startTime[numTimer];
   _startTime[numTimer]      = (double)_counter.QuadPart;
-  _tickTime[numTimer]       = _startTime[numTimer];
+  
   _prevTickTime[numTimer]   = _tickTime[numTimer];
-  _deltaTime[numTimer]      = _startTime[numTimer];
-  _prevDeltaTime[numTimer]  = _deltaTime[numTimer];
+  _deltaTime[numTimer]      = _tickTime[numTimer];
+  _prevDeltaTime[numTimer]  = _tickTime[numTimer];
 }
 
 double Timer::GetTimeNS(byte numTimer)
