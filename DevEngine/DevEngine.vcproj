@@ -307,6 +307,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\Math\DevQuat.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\Math\DevVec2.h"
 					>
 				</File>

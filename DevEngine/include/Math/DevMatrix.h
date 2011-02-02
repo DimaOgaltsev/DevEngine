@@ -4,6 +4,7 @@
 #include <Math/DevVec2.h>
 #include <Math/DevVec3.h>
 #include <Math/DevVec4.h>
+#include <Math/DevQuat.h>
 
 namespace dev
 {
@@ -200,8 +201,40 @@ namespace dev
       out.MakeTranslate(x, y, z);
       return out;
     }
+
+    inline Vec3 GetTranslate()
+    {
+      return Vec3(m30, m31, m33);
+    }
     
     //rotation
+    inline void MakeRotate(const Quat& quat)
+    {
+      float xx = pow(quat.x, 2);
+      float xy = quat.x * quat.y;
+      float xz = quat.x * quat.z;
+      float xw = quat.x * quat.w;
+
+      float yy = pow(quat.y, 2);
+      float yz = quat.y * quat.z;
+      float yw = quat.y * quat.w;
+
+      float zz = pow(quat.z, 2);
+      float zw = quat.z * quat.w;
+
+      ROW(0,  1 - 2 * (yy + zz),        2 * (xy - zw),      2 * (xz + yw), 0);
+      ROW(1,      2 * (xy + zw),    1 - 2 * (xx + zz),      2 * (yz - xw), 0);
+      ROW(2,      2 * (xz - yw),        2 * (yz + xw),  1 - 2 * (xx + yy), 0);
+      ROW(3,                  0,                    0,                  0, 1);
+    }
+
+    inline static Matrix Rotate(const Quat& quat)
+    {
+      Matrix out;
+      out.MakeRotate(quat);
+      return out;
+    }
+
     inline void MakeRotate(const Vec3& anglesEuler)
     {
       MakeRotate(anglesEuler.x, anglesEuler.y, anglesEuler.z);
@@ -265,6 +298,67 @@ namespace dev
       return out;
     }
 
+    inline Quat GetRotate() const
+    {
+      Quat q;
+
+      float s;
+      float tq[4];
+      int   i = 0, j = 0;
+
+      tq[0] = 1 + m00 + m11 + m22;
+      tq[1] = 1 + m00 - m11 - m22;
+      tq[2] = 1 - m00 + m11 - m22;
+      tq[3] = 1 - m00 - m11 + m22;
+
+      for(i = 1; i < 4; i++) 
+        j = (tq[i] > tq[j]) ?  i : j;
+
+      switch (j)
+      {
+      case 0:
+        {
+          q.w = tq[0];
+          q.x = m12 - m21;
+          q.y = m20 - m02;
+          q.z = m01 - m10;
+          break;
+        }
+      case 1:
+        {
+          q.w = m12 - m21;
+          q.x = tq[1];
+          q.y = m01 - m10;
+          q.z = m20 + m02;
+          break;
+        }
+      case 2:
+        {
+          q.w = m20 - m02;
+          q.x = m01 - m10;
+          q.y = tq[2];
+          q.z = m12 + m21;
+          break;
+        }
+      default:
+        {
+          q.w = m01 - m10;
+          q.x = m20 + m02; 
+          q.y = m12 + m21;
+          q.z = tq[3];
+          break;
+        }
+      }
+
+      s = sqrtf(0.25f / tq[j]);
+      q.w *= s;
+      q.x *= s;
+      q.y *= s;
+      q.z *= s;
+
+      return q;
+    }
+
     //scale
     inline void MakeScale(const Vec3& scale)
     {
@@ -291,6 +385,14 @@ namespace dev
       Matrix out;
       out.MakeScale(x, y, z);
       return out;
+    }
+
+    inline Vec3 GetScale() const
+    {
+      float xScale = sqrt(pow(m00, 2) + pow(m10, 2) + pow(m20, 2));
+      float yScale = sqrt(pow(m01, 2) + pow(m11, 2) + pow(m21, 2));
+      float zScale = sqrt(pow(m02, 2) + pow(m12, 2) + pow(m22, 2));
+      return Vec3(xScale, yScale, zScale); 
     }
 
     //Transform

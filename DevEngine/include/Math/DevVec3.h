@@ -116,14 +116,16 @@ namespace dev
 
     inline const Vec3 operator / (const float& scalar) const
     {
-      return Vec3(x / scalar, y / scalar, z / scalar);
+      float div = 1.0f / scalar;
+      return Vec3(x * div, y * div, z * div);
     }
 
     inline Vec3& operator /= (const float& scalar)
     {
-      x /= scalar;
-      y /= scalar;
-      z /= scalar;
+      float div = 1.0f / scalar;
+      x *= div;
+      y *= div;
+      z *= div;
       return *this;
     }
 

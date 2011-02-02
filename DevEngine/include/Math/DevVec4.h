@@ -106,15 +106,17 @@ namespace dev
 
     inline const Vec4 operator / (const float& scalar) const
     {
-      return Vec4(x / scalar, y / scalar, z / scalar, w / scalar);
+      float div = 1.0f / scalar;
+      return Vec4(x * div, y * div, z * div, w * div);
     }
 
     inline Vec4& operator /= (const float& scalar)
     {
-      x /= scalar;
-      y /= scalar;
-      z /= scalar;
-      w /= scalar;
+      float div = 1.0f / scalar;
+      x *= div;
+      y *= div;
+      z *= div;
+      w *= div;
       return *this;
     }
 

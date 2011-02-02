@@ -85,13 +85,15 @@ namespace dev
 
     inline const Vec2 operator / (const float& scalar) const
     {
-      return Vec2(x / scalar, y / scalar);
+      float div = 1.0f / scalar;
+      return Vec2(x * div, y * div);
     }
 
     inline Vec2& operator /= (const float& scalar)
     {
-      x /= scalar;
-      y /= scalar;
+      float div = 1.0f / scalar;
+      x *= div;
+      y *= div;
       return *this;
     }
 
