@@ -177,7 +177,7 @@ void MainWindow::LoadScene()
 
   _camera = 
     new dev::Camera(dev::Vec3(0, 0, -10), dev::Vec3(0, 0, 0), dev::Vec3(0, 1, 0), 
-    dev::PI_4, (float)_width/_height, 1.0f, 250.0f);
+    PI_4, (float)_width/_height, 1.0f, 250.0f);
 
   _scene = new dev::Scene(_camera);
   _render->SetScene(_scene);

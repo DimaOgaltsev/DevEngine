@@ -10,7 +10,7 @@ dev::Camera::Camera() :
   SetPosition(Vec3(0, 0, -10));
   SetLook(Vec3(0, 0, 0));
   SetUp(Vec3(0, 1, 0));
-  SetNewProjection(dev::PI_4, 1.333f, 1.0f, 250.0f);
+  SetNewProjection(PI_4, 1.333f, 1.0f, 250.0f);
 }
 
 Camera::Camera(Vec3 position, Vec3 look, Vec3 up, 
