@@ -72,9 +72,9 @@ void Timer::Reset(byte numTimer)
   QueryPerformanceCounter(&_counter);
   SetThreadAffinityMask(_thread, oldMask);
 
-  _tickTime[numTimer]       = (double)_counter.QuadPart - _startTime[numTimer];
   _startTime[numTimer]      = (double)_counter.QuadPart;
   
+  _tickTime[numTimer]       = getTime(numTimer);
   _prevTickTime[numTimer]   = _tickTime[numTimer];
   _deltaTime[numTimer]      = _tickTime[numTimer];
   _prevDeltaTime[numTimer]  = _tickTime[numTimer];
@@ -82,22 +82,22 @@ void Timer::Reset(byte numTimer)
 
 double Timer::GetTimeNS(byte numTimer)
 {
-  return getTime(numTimer, 1e9);
+  return getTime(numTimer) * 1e9;
 }
 
 double Timer::GetTimeMkS(byte numTimer)
 {
-  return getTime(numTimer, 1e6);
+  return getTime(numTimer) * 1e6;
 }
 
 double Timer::GetTimeMS(byte numTimer)
 {
-  return getTime(numTimer, 1e3);
+  return getTime(numTimer) * 1e3;
 }
 
 double Timer::GetTimeS(byte numTimer)
 {
-  return getTime(numTimer, 1);
+  return getTime(numTimer);
 }
 
 double Timer::GetDeltaTimeNS(byte numTimer)
@@ -106,7 +106,7 @@ double Timer::GetDeltaTimeNS(byte numTimer)
     return 0;
 
   _prevTickTime[numTimer] = _tickTime[numTimer];
-  _tickTime[numTimer] = getTime(numTimer, 1e9);
+  _tickTime[numTimer] = getTime(numTimer) * 1e9;
 
   return (_tickTime[numTimer] - _prevTickTime[numTimer]);
 }
@@ -117,7 +117,7 @@ double Timer::GetDeltaTimeMkS(byte numTimer)
     return 0;
 
   _prevTickTime[numTimer] = _tickTime[numTimer];
-  _tickTime[numTimer] = getTime(numTimer, 1e6);
+  _tickTime[numTimer] = getTime(numTimer) * 1e6;
 
   return (_tickTime[numTimer] - _prevTickTime[numTimer]);
 }
@@ -128,7 +128,7 @@ double Timer::GetDeltaTimeMS(byte numTimer)
     return 0;
 
   _prevTickTime[numTimer] = _tickTime[numTimer];
-  _tickTime[numTimer] = getTime(numTimer, 1e3);
+  _tickTime[numTimer] = getTime(numTimer) * 1e3;
 
   return (_tickTime[numTimer] - _prevTickTime[numTimer]);
 }
@@ -139,7 +139,7 @@ double Timer::GetDeltaTimeS(byte numTimer)
     return 0;
 
   _prevTickTime[numTimer] = _tickTime[numTimer];
-  _tickTime[numTimer] = getTime(numTimer, 1);
+  _tickTime[numTimer] = getTime(numTimer);
 
   return (_tickTime[numTimer] - _prevTickTime[numTimer]);
 }
@@ -149,7 +149,7 @@ bool Timer::GetEventTimeNS(byte numTimer, double factor)
   if (!_freq)
     return 0;
 
-  _deltaTime[numTimer] = getTime(numTimer, 1e9);
+  _deltaTime[numTimer] = getTime(numTimer) * 1e9;
 
   if (_deltaTime[numTimer] - _prevDeltaTime[numTimer] < factor)
     return false;
@@ -164,7 +164,7 @@ bool Timer::GetEventTimeMkS(byte numTimer, double factor)
   if (!_freq)
     return 0;
 
-  _deltaTime[numTimer] = getTime(numTimer, 1e6);
+  _deltaTime[numTimer] = getTime(numTimer) * 1e6;
 
   if (_deltaTime[numTimer] - _prevDeltaTime[numTimer] < factor)
     return false;
@@ -179,7 +179,7 @@ bool Timer::GetEventTimeMS(byte numTimer, double factor)
   if (!_freq)
     return 0;
 
-  _deltaTime[numTimer] = getTime(numTimer, 1e3);
+  _deltaTime[numTimer] = getTime(numTimer) * 1e3;
 
   if (_deltaTime[numTimer] - _prevDeltaTime[numTimer] < factor)
     return false;
@@ -194,7 +194,7 @@ bool Timer::GetEventTimeS(byte numTimer, double factor)
   if (!_freq)
     return 0;
 
-  _deltaTime[numTimer] = getTime(numTimer, 1);
+  _deltaTime[numTimer] = getTime(numTimer);
 
   if (_deltaTime[numTimer] - _prevDeltaTime[numTimer] < factor)
     return false;
@@ -204,7 +204,7 @@ bool Timer::GetEventTimeS(byte numTimer, double factor)
   return true;
 }
 
-double Timer::getTime(byte numTimer, double factor)
+double Timer::getTime(byte numTimer)
 {
   if (!_freq)
     return 0;
@@ -213,5 +213,5 @@ double Timer::getTime(byte numTimer, double factor)
   QueryPerformanceCounter(&_counter);
   SetThreadAffinityMask(_thread, oldMask);
 
-  return factor * double(_counter.QuadPart - _startTime[numTimer]) * _freq;
+  return double(_counter.QuadPart - _startTime[numTimer]) * _freq;
 }

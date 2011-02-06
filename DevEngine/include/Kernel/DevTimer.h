@@ -34,7 +34,7 @@ namespace dev
 
     void   init();
 
-    double getTime(byte numTimer, double factor);
+    double getTime(byte numTimer);
 
     HANDLE        _thread;
     
