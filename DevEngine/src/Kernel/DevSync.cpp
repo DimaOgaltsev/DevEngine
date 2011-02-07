@@ -58,7 +58,7 @@ void Mutex::UnLock()
 
 Event::Event(const char* nameEvent)
 {
-  _event = CreateEvent(0, true, false, nameEvent);
+  _event = CreateEvent(0, false, false, nameEvent);
 }
 
 Event::~Event()

@@ -105,7 +105,7 @@ bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMod
       _height = height;
     }
 
-  ZeroMemory(&_parametersD3D ,sizeof(_parametersD3D));
+  ZeroMemory(&_parametersD3D, sizeof(_parametersD3D));
   if (FullScreenMode)
   {
     if (RefreshHz > 0) 
@@ -159,7 +159,7 @@ void Render::Run()
       TranslateMessage(&msg);
       DispatchMessage(&msg);
     }
-  } 
+  }
 }
 
 void Render::startRender(LPVOID param)
