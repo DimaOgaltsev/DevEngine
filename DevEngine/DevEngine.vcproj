@@ -256,6 +256,10 @@
 			Name="DevModel"
 			>
 			<File
+				RelativePath=".\src\Model\DevFileModel.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Model\DevMesh.cpp"
 				>
 			</File>
@@ -266,6 +270,10 @@
 			<Filter
 				Name="include"
 				>
+				<File
+					RelativePath=".\include\Model\DevFileModel.h"
+					>
+				</File>
 				<File
 					RelativePath=".\include\Model\DevMesh.h"
 					>

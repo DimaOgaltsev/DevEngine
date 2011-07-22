@@ -22,7 +22,7 @@ Mesh::~Mesh()
 
 void Mesh::SetVertices(LPVOID vertices, int numberVertex, Vertex::VertexType VT_Type)
 {
-  _vertices = new Vertex::ArrayVertices(vertices, numberVertex, GetSizeVertex(VT_Type), Vertex::Declaration::GetDeclaration(VT_Type));
+  _vertices = new Vertex::ArrayVertices(vertices, numberVertex, VT_Type);
 }
 
 void Mesh::SetIndexes(LPVOID indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX)

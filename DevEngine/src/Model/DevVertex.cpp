@@ -13,13 +13,13 @@ ArrayVertices::ArrayVertices() :
 {
 }
 
-ArrayVertices::ArrayVertices(LPVOID vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration) :
+ArrayVertices::ArrayVertices(LPVOID vertices, int numberVertex, VertexType VT_Type) :
   _declaration(NULL),
   _bufferVertices(NULL),
   _numberVertices(NULL),
   _sizeVertices(NULL)
 {
-  SetVertices(vertices, numberVertex, sizeVertex, declaration);
+  SetVertices(vertices, numberVertex, VT_Type);
 }
 
 ArrayVertices::~ArrayVertices()
@@ -42,12 +42,15 @@ void ArrayVertices::Destroy()
   }
 }
 
-void ArrayVertices::SetVertices(LPVOID vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration)
+void ArrayVertices::SetVertices(LPVOID vertices, int numberVertex, VertexType VT_Type)
 {
   Destroy();
+
+  int sizeVertex = GetSizeVertex(VT_Type);
+
   if (!_deviceDX ||
        _deviceDX->CreateVertexBuffer(numberVertex * sizeVertex, 0, 0, D3DPOOL_MANAGED, &_bufferVertices, NULL) != D3D_OK ||
-       _deviceDX->CreateVertexDeclaration(declaration, &_declaration) != D3D_OK)
+       _deviceDX->CreateVertexDeclaration(Declaration::GetDeclaration(VT_Type), &_declaration) != D3D_OK)
   {
     Log::GetLog()->WriteToLog("Array vertices not created!");
     return;
@@ -59,6 +62,30 @@ void ArrayVertices::SetVertices(LPVOID vertices, int numberVertex, int sizeVerte
   _bufferVertices->Unlock();
 
   _numberVertices = numberVertex;
+  _sizeVertices   = sizeVertex;
+}
+
+void ArrayVertices::SetVerticesFromFile(HANDLE hFile, int fileSize, VertexType VT_Type)
+{
+  Destroy();
+
+  int sizeVertex = GetSizeVertex(VT_Type);
+
+  if (!_deviceDX ||
+    _deviceDX->CreateVertexBuffer(fileSize, 0, 0, D3DPOOL_MANAGED, &_bufferVertices, NULL) != D3D_OK ||
+    _deviceDX->CreateVertexDeclaration(Declaration::GetDeclaration(VT_Type), &_declaration) != D3D_OK)
+  {
+    Log::GetLog()->WriteToLog("Array vertices not created!");
+    return;
+  }
+
+  LPVOID buffer;
+  DWORD ReadValue;
+  _bufferVertices->Lock(0, 0, (LPVOID*)&buffer, 0);
+  ReadFile(hFile, buffer, fileSize, &ReadValue, 0);
+  _bufferVertices->Unlock();
+
+  _numberVertices = fileSize / sizeVertex;
   _sizeVertices   = sizeVertex;
 }
 
@@ -200,3 +227,4 @@ D3DVERTEXELEMENT9* Declaration::GetDeclaration(VertexType VT_type)
 
   return NULL;
 }
+

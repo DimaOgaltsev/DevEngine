@@ -59,12 +59,14 @@ namespace dev
       public Object
     {
     public:
-      ArrayVertices(LPVOID vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration);
+      ArrayVertices(LPVOID vertices, int numberVertex, VertexType VT_Type);
       ArrayVertices();
       virtual ~ArrayVertices();
       void Destroy();
 
-      void SetVertices(LPVOID vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration);
+      void SetVertices(LPVOID vertices, int numberVertex, VertexType VT_Type);
+      void SetVerticesFromFile(HANDLE hFile, int fileSize, VertexType VT_Type);
+
       void SetAsSource();
       inline int GetNumberVertices() const
       {
