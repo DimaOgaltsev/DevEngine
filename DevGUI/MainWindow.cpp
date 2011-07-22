@@ -202,8 +202,8 @@ void MainWindow::InputFunc(double deltaTime)
   float sens = 0.1f;
   float speed = 0.01f * (float)deltaTime;
 
-  float dx = ToRadian(_input->GetMouseDeltaX());
-  float dy = ToRadian(_input->GetMouseDeltaY());
+  float dx = ToRadian((float)_input->GetMouseDeltaX());
+  float dy = ToRadian((float)_input->GetMouseDeltaY());
   _mouseX += (float) dx * sens;
   _mouseY += (float) dy * sens;
   if (_mouseY > PI_2 - Degree * 0.1f)
