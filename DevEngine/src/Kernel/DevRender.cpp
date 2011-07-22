@@ -55,6 +55,7 @@ Render::~Render()
 
 void Render::Destroy()
 {
+  _hWnd = NULL;
   stopRender();
   if (_renderThread)
   {
