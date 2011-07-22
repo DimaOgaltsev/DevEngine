@@ -12,7 +12,7 @@ Scene::Scene() :
 
 Scene::Scene(Camera* camera)
 {
-  SetActivCamera(camera);
+  SetActiveCamera(camera);
   _mainGroup = new Group();
 }
 
@@ -21,12 +21,12 @@ Scene::~Scene()
   delete _mainGroup;
 }
 
-void Scene::SetActivCamera(Camera* camera)
+void Scene::SetActiveCamera(Camera* camera)
 {
   _cameraActive = camera;
 }
 
-Camera* Scene::GetActivCamera()
+Camera* Scene::GetActiveCamera()
 {
   return _cameraActive;
 }

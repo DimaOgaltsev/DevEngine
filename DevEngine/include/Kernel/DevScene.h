@@ -16,8 +16,8 @@ namespace dev
     Scene(Camera* camera);
     virtual ~Scene();
 
-    void SetActivCamera(Camera* camera);
-    Camera* GetActivCamera();
+    void SetActiveCamera(Camera* camera);
+    Camera* GetActiveCamera();
 
     void AddElement(Element* element);
     void RemoveElement(Element* element);
