@@ -239,10 +239,10 @@ void Input::inputThreadRun(LPVOID param)
 void Input::inputThread()
 {
   timeBeginPeriod(1);
-  SystemTimer::GetTimer()->Reset(0);
+  SystemTimer::Get()->Reset(0);
   while(!_stopInputThread)
   {
-    _func(_param, SystemTimer::GetTimer()->GetDeltaTimeMS(0));
+    _func(_param, SystemTimer::Get()->GetDeltaTimeMS(0));
     WaitForSingleObject(_inputThread, _requestTime);
   }
 }

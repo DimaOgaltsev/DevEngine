@@ -8,17 +8,6 @@ namespace dev
   class Log
   {
   public:
-    Log(const char* filename)
-    {
-      _fileLog = CreateFile(filename, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, 0, 0);
-      SystemTimer::GetTimer()->Reset(1);
-    }
-    virtual ~Log()
-    {
-      if (_fileLog)
-        CloseHandle(_fileLog);
-    }
-
     static Log* GetLog()
     {
       static Log* log = new Log("devEngine.log");;
@@ -30,7 +19,7 @@ namespace dev
       if (_fileLog != INVALID_HANDLE_VALUE)
       {
         DWORD writedBytes;
-        int secs = (int)SystemTimer::GetTimer()->GetTimeS(1);
+        int secs = (int)SystemTimer::Get()->GetTimeS(1);
         int mins = secs / 60;
         int hours = mins / 60;
         secs -= mins * 60;
@@ -44,6 +33,17 @@ namespace dev
     }
 
   protected:
+    Log(const char* filename)
+    {
+      _fileLog = CreateFile(filename, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, 0, 0);
+      SystemTimer::Get()->Reset(1);
+    }
+    virtual ~Log()
+    {
+      if (_fileLog)
+        CloseHandle(_fileLog);
+    }
+
     HANDLE _fileLog;
   };
 }

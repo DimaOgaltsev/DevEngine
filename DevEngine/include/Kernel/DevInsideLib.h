@@ -6,35 +6,22 @@
 
 namespace dev
 {
-  class SystemCS
+  template<class T>
+  class Singleton
   {
   public:
-    static CriticalSection* Get()
+    static T* Get()
     {
-      static CriticalSection cs;
-      return &cs;
+      static T* element = new T();
+      return element;
     }
   };
 
-  class SystemTimer
-  {
-  public:
-    static Timer* GetTimer()
-    {
-      static Timer timer;
-      return &timer;
-    }
-  };
+  class SystemCS : public Singleton<CriticalSection>
+  {};
 
-  class SystemEvent
-  {
-  public:
-    static Event* GetEvent()
-    {
-      static Event event("systemEvent");
-      return &event;
-    }
-  };
+  class SystemTimer : public Singleton<Timer>
+  {};
 }
 
 #endif
