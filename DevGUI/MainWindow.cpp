@@ -11,7 +11,9 @@ MainWindow::MainWindow() :
   _scene(NULL),
   _mesh(NULL),
   _width(0),
-  _height(0)
+  _height(0),
+  _mouseX(0),
+  _mouseY(0)
 {
 }
 
@@ -176,7 +178,7 @@ void MainWindow::LoadScene()
   _meshCopy->SetPosition(-2, 0, 0);
 
   _camera = 
-    new dev::Camera(dev::Vec3(0, 0, -10), dev::Vec3(0, 0, 0), dev::Vec3(0, 1, 0), 
+    new dev::Camera(dev::Vec3(-5, 0, -10), dev::Vec3(-5, 0, 0), dev::Vec3(0, 1, 0), 
     PI_4, (float)_width/_height, 1.0f, 250.0f);
 
   _scene = new dev::Scene(_camera);
@@ -197,36 +199,46 @@ void MainWindow::Func(LPVOID param, double deltaTime)
 
 void MainWindow::InputFunc(double deltaTime)
 {
-  float sens = 0.02f * (float)deltaTime;
-  float speed = 0.03f * (float)deltaTime;
+  float sens = 0.1f;
+  float speed = 0.01f * (float)deltaTime;
 
-  float mouseX = (float)ToRadian(_input->GetMouseDeltaX()) * sens;
-  float mouseY = (float)ToRadian(_input->GetMouseDeltaY()) * sens;
+  float dx = ToRadian(_input->GetMouseDeltaX());
+  float dy = ToRadian(_input->GetMouseDeltaY());
+  _mouseX += (float) dx * sens;
+  _mouseY += (float) dy * sens;
+  if (_mouseY > PI_2 - Degree * 0.1f)
+    _mouseY = PI_2 - Degree * 0.1f;
+  if (_mouseY < -PI_2 + Degree *  0.1f)
+    _mouseY = -PI_2 + Degree *  0.1f;
   float mouseZ = (float)ToRadian(_input->GetMouseDeltaZ());
 
-  if (mouseX)
-    _camera->SetDirection(dev::Matrix::Rotate(_camera->GetUp(), mouseX) * _camera->GetDirection());
-  if (mouseY)
-    _camera->SetDirection(dev::Matrix::Rotate(_camera->GetRight(), mouseY) * _camera->GetDirection());
+  if (dx || dy)
+  _camera->SetDirection(dev::Matrix::Rotate(_mouseY, _mouseX, 0) * dev::Vec3(0, 0, 1));
 
+  dev::Vec3 vec(0,0,0);
   if (_input->GetKeyPressed(SC_W))
-    _camera->SetMove(_camera->GetDirection() * speed);
+    vec += _camera->GetDirection();
   if (_input->GetKeyPressed(SC_S))
-    _camera->SetMove(-_camera->GetDirection() * speed);
+    vec -= _camera->GetDirection();
   if (_input->GetKeyPressed(SC_D))
-    _camera->SetMove(_camera->GetRight() * speed);
+    vec += _camera->GetRight();
   if (_input->GetKeyPressed(SC_A))
-    _camera->SetMove(-_camera->GetRight() * speed);
+    vec -= _camera->GetRight();
   if (_input->GetKeyPressed(SC_Q))
-    _camera->SetMove(_camera->GetUp() * speed);
+    vec += _camera->GetUp();
   if (_input->GetKeyPressed(SC_Z))
-    _camera->SetMove(-_camera->GetUp() * speed);
+    vec -= _camera->GetUp();
+
+  vec.Normalize();
+  if (vec != dev::Vec3(0, 0, 0))
+    _camera->SetMove(vec * speed);
+
   if (_input->GetKeyPressed(SC_NUMPAD4))
-    _mesh->SetMove(-1, 0, 0);
+    _mesh->SetMove(-1 * speed, 0, 0);
   if (_input->GetKeyPressed(SC_NUMPAD2))
-    _mesh->SetMove(0, 0, -1);
+    _mesh->SetMove(0, 0, -1 * speed);
   if (_input->GetKeyPressed(SC_NUMPAD6))
-    _mesh->SetMove(1, 0, 0);
+    _mesh->SetMove(1 * speed, 0, 0);
   if (_input->GetKeyPressed(SC_NUMPAD8))
-    _mesh->SetMove(0, 0, 1);
+    _mesh->SetMove(0, 0, 1 * speed);
 }

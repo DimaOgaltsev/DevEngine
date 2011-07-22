@@ -45,6 +45,8 @@ namespace GUI
     int          _width;
     int          _height;
 
+    float        _mouseX;
+    float        _mouseY;
   };
 }
 
