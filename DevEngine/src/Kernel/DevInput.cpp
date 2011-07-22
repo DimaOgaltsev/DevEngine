@@ -153,6 +153,7 @@ void Input::OffInput()
     RegisterRawInputDevices(Rid, 1, sizeof(RAWINPUTDEVICE));
     ZeroMemory(&Button, 5 * sizeof(bool));
     MouseX = 0; MouseY = 0; MouseZ = 0;
+    _mouse = FALSE;
   }
   //keyboard
   if (_keyboard)
@@ -160,6 +161,7 @@ void Input::OffInput()
     Rid[0].usUsage   = HID_USAGE_GENERIC_KEYBOARD;
     RegisterRawInputDevices(Rid, 1, sizeof(RAWINPUTDEVICE));
     ZeroMemory(&Keys, 256 * sizeof(bool));
+    _keyboard = FALSE;
   }
 
   if (_hook)
