@@ -25,6 +25,16 @@ namespace dev
       return &timer;
     }
   };
+
+  class SystemEvent
+  {
+  public:
+    static Event* GetEvent()
+    {
+      static Event event("systemEvent");
+      return &event;
+    }
+  };
 }
 
 #endif
