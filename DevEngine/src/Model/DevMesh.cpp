@@ -3,37 +3,47 @@
 using namespace dev;
 
 Mesh::Mesh(const Vec3& position, const Vec3& rotation, const Vec3& scale) :
-  Element(position, rotation, scale)
+  Element(position, rotation, scale),
+  _vertices(NULL),
+  _indexes(NULL)
 {
-  _vertices = new Vertex::ArrayVertices();
-  _indexes = new Vertex::ArrayIndexes();
 }
 
 Mesh::Mesh() :
-  Element()
+  Element(),
+  _vertices(NULL),
+  _indexes(NULL)
 {
-  _vertices = new Vertex::ArrayVertices();
-  _indexes = new Vertex::ArrayIndexes();
 }
 
 Mesh::~Mesh()
 {
 }
 
-void Mesh::SetVertices(Vertex::Array vertices, int numberVertex, Vertex::VertexType VT_Type)
+void Mesh::SetVertices(LPVOID vertices, int numberVertex, Vertex::VertexType VT_Type)
 {
-  _vertices->SetVertices(vertices, numberVertex, GetSizeVertex(VT_Type), Vertex::Declaration::GetDeclaration(VT_Type));
+  _vertices = new Vertex::ArrayVertices(vertices, numberVertex, GetSizeVertex(VT_Type), Vertex::Declaration::GetDeclaration(VT_Type));
 }
 
-void Mesh::SetIndexes(Vertex::Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX)
+void Mesh::SetIndexes(LPVOID indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX)
 {
-  _indexes->SetIndexes(indexes, sizeArray, D3DFMT_INDEX);
+  _indexes = new Vertex::ArrayIndexes(indexes, sizeArray, D3DFMT_INDEX);
 }
 
 void Mesh::draw()
 {
+  if (_vertices == NULL)
+    return;
+
   Element::draw();
   _vertices->SetAsSource();
-  _indexes->SetAsSource();
-  _deviceDX->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, _vertices->GetNumberVertices(), 0, _vertices->GetNumberVertices()/3);
+  if (_indexes == NULL)
+  {
+    _deviceDX->DrawPrimitive(D3DPT_TRIANGLELIST, 0, _vertices->GetNumberVertices());
+  }
+  else
+  {
+    _indexes->SetAsSource();
+    _deviceDX->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, _vertices->GetNumberVertices(), 0, _vertices->GetNumberVertices()/3);
+  }
 }

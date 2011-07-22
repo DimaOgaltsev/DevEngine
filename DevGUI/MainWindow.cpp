@@ -160,8 +160,8 @@ void MainWindow::LoadScene()
     {0.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(  0, 255,    0)},
     {1.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(255, 255,    0)}
   };
-  _mesh->SetVertices((dev::Vertex::Array)arrayVertex, 36, dev::Vertex::VT_PC32);
-  _meshCopy->SetVertices((dev::Vertex::Array)arrayVertex, 36, dev::Vertex::VT_PC32);
+  _mesh->SetVertices((LPVOID)arrayVertex, 36, dev::Vertex::VT_PC32);
+  _meshCopy->SetVertices((LPVOID)arrayVertex, 36, dev::Vertex::VT_PC32);
 
   const unsigned short arrayIndex[] =
   {
@@ -172,8 +172,8 @@ void MainWindow::LoadScene()
     16,17,18, 18,19,16,
     20,21,22, 22,23,20
   };
-  _mesh->SetIndexes((dev::Vertex::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
-  _meshCopy->SetIndexes((dev::Vertex::Array)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
+  _mesh->SetIndexes((LPVOID)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
+  _meshCopy->SetIndexes((LPVOID)arrayIndex, sizeof(arrayIndex), D3DFMT_INDEX16);
   _mesh->SetRotation(0, 0, 45);
   _meshCopy->SetPosition(-2, 0, 0);
 

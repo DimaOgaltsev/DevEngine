@@ -13,7 +13,7 @@ ArrayVertices::ArrayVertices() :
 {
 }
 
-ArrayVertices::ArrayVertices(Array vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration) :
+ArrayVertices::ArrayVertices(LPVOID vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration) :
   _declaration(NULL),
   _bufferVertices(NULL),
   _numberVertices(NULL),
@@ -42,7 +42,7 @@ void ArrayVertices::Destroy()
   }
 }
 
-void ArrayVertices::SetVertices(Array vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration)
+void ArrayVertices::SetVertices(LPVOID vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration)
 {
   Destroy();
   if (!_deviceDX ||
@@ -74,7 +74,7 @@ ArrayIndexes::ArrayIndexes() :
 {
 }
 
-ArrayIndexes::ArrayIndexes(Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX) :
+ArrayIndexes::ArrayIndexes(LPVOID indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX) :
   _bufferIndexes(NULL)
 {
   SetIndexes(indexes, sizeArray, D3DFMT_INDEX);
@@ -94,7 +94,7 @@ void ArrayIndexes::Destroy()
   }
 }
 
-void ArrayIndexes::SetIndexes(Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX)
+void ArrayIndexes::SetIndexes(LPVOID indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX)
 {
   Destroy();
   if (!_deviceDX ||

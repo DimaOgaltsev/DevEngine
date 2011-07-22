@@ -19,8 +19,6 @@ namespace dev
       VT_PNT
     };
 
-    typedef LPVOID Array;
-
     struct VertexP
     {
       float x, y, z;
@@ -61,12 +59,12 @@ namespace dev
       public Object
     {
     public:
-      ArrayVertices(Array vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration);
+      ArrayVertices(LPVOID vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration);
       ArrayVertices();
       virtual ~ArrayVertices();
       void Destroy();
 
-      void SetVertices(Array vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration);
+      void SetVertices(LPVOID vertices, int numberVertex, int sizeVertex, D3DVERTEXELEMENT9* declaration);
       void SetAsSource();
       inline int GetNumberVertices() const
       {
@@ -84,12 +82,12 @@ namespace dev
       public Object
     {
     public:
-      ArrayIndexes(Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX);
+      ArrayIndexes(LPVOID indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX);
       ArrayIndexes();
       virtual ~ArrayIndexes();
       void Destroy();
 
-      void SetIndexes(Array indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX);
+      void SetIndexes(LPVOID indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX);
       void SetAsSource();
 
     protected:
