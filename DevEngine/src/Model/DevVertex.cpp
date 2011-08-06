@@ -9,7 +9,7 @@ ArrayVertices::ArrayVertices() :
   _declaration(NULL),
   _bufferVertices(NULL),
   _numberVertices(NULL),
-  _sizeVertices(NULL)
+  _sizeVertex(NULL)
 {
 }
 
@@ -17,7 +17,7 @@ ArrayVertices::ArrayVertices(LPVOID vertices, int numberVertex, VertexType VT_Ty
   _declaration(NULL),
   _bufferVertices(NULL),
   _numberVertices(NULL),
-  _sizeVertices(NULL)
+  _sizeVertex(NULL)
 {
   SetVertices(vertices, numberVertex, VT_Type);
 }
@@ -30,6 +30,8 @@ ArrayVertices::~ArrayVertices()
 
 void ArrayVertices::Destroy()
 {
+  _sizeVertex = NULL;
+  _numberVertices = NULL;
   if (_declaration)
   {
     _declaration->Release();
@@ -42,69 +44,72 @@ void ArrayVertices::Destroy()
   }
 }
 
-void ArrayVertices::SetVertices(LPVOID vertices, int numberVertex, VertexType VT_Type)
+void ArrayVertices::SetVertices(LPVOID vertices, int numberVertices, VertexType VT_Type)
 {
   Destroy();
 
-  int sizeVertex = GetSizeVertex(VT_Type);
+  _numberVertices = numberVertices;
+  _sizeVertex     = GetSizeVertex(VT_Type);
 
   if (!_deviceDX ||
-       _deviceDX->CreateVertexBuffer(numberVertex * sizeVertex, 0, 0, D3DPOOL_MANAGED, &_bufferVertices, NULL) != D3D_OK ||
+       _deviceDX->CreateVertexBuffer(_numberVertices * _sizeVertex, 0, 0, D3DPOOL_MANAGED, &_bufferVertices, NULL) != D3D_OK ||
        _deviceDX->CreateVertexDeclaration(Declaration::GetDeclaration(VT_Type), &_declaration) != D3D_OK)
   {
-    Log::GetLog()->WriteToLog("Array vertices not created!");
+    Log::GetLog()->WriteToLog("Array vertices not created!\r\n");
     return;
   }
 
   LPVOID buffer;
   _bufferVertices->Lock(0, 0, (LPVOID*)&buffer, 0);
-  memcpy(buffer, vertices, numberVertex * sizeVertex);
+  memcpy(buffer, vertices, _numberVertices * _sizeVertex);
   _bufferVertices->Unlock();
 
-  _numberVertices = numberVertex;
-  _sizeVertices   = sizeVertex;
 }
 
-void ArrayVertices::SetVerticesFromFile(HANDLE hFile, int fileSize, VertexType VT_Type)
+void ArrayVertices::SetVerticesFromFile(HANDLE hFile, int numberVertices, VertexType VT_Type)
 {
   Destroy();
 
-  int sizeVertex = GetSizeVertex(VT_Type);
+  _numberVertices = numberVertices;
+  _sizeVertex = GetSizeVertex(VT_Type);
 
   if (!_deviceDX ||
-    _deviceDX->CreateVertexBuffer(fileSize, 0, 0, D3DPOOL_MANAGED, &_bufferVertices, NULL) != D3D_OK ||
+    _deviceDX->CreateVertexBuffer(_sizeVertex * _numberVertices, 0, 0, D3DPOOL_MANAGED, &_bufferVertices, NULL) != D3D_OK ||
     _deviceDX->CreateVertexDeclaration(Declaration::GetDeclaration(VT_Type), &_declaration) != D3D_OK)
   {
-    Log::GetLog()->WriteToLog("Array vertices not created!");
+    Log::GetLog()->WriteToLog("Array vertices not created!\r\n");
     return;
   }
 
   LPVOID buffer;
   DWORD ReadValue;
+
   _bufferVertices->Lock(0, 0, (LPVOID*)&buffer, 0);
-  ReadFile(hFile, buffer, fileSize, &ReadValue, 0);
+  ReadFile(hFile, buffer, _sizeVertex * _numberVertices, &ReadValue, 0);
   _bufferVertices->Unlock();
 
-  _numberVertices = fileSize / sizeVertex;
-  _sizeVertices   = sizeVertex;
 }
 
 void ArrayVertices::SetAsSource()
 {
-  _deviceDX->SetStreamSource(0, _bufferVertices, 0, _sizeVertices);
+  _deviceDX->SetStreamSource(0, _bufferVertices, 0, _sizeVertex);
   _deviceDX->SetVertexDeclaration(_declaration);
 }
 
 //ArrayIndexes
 ArrayIndexes::ArrayIndexes() :
-  _bufferIndexes(NULL)
+  _bufferIndexes(NULL),
+  _sizeIndex(NULL),
+  _numberIndexes(NULL)
 {
 }
 
-ArrayIndexes::ArrayIndexes(LPVOID indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX) :
-  _bufferIndexes(NULL)
+ArrayIndexes::ArrayIndexes(LPVOID indexes, int numberIndexes, D3DFORMAT D3DFMT_INDEX) :
+  _bufferIndexes(NULL),
+  _sizeIndex(NULL),
+  _numberIndexes(NULL)
 {
-  SetIndexes(indexes, sizeArray, D3DFMT_INDEX);
+  SetIndexes(indexes, numberIndexes, D3DFMT_INDEX);
 }
 
 ArrayIndexes::~ArrayIndexes()
@@ -114,6 +119,8 @@ ArrayIndexes::~ArrayIndexes()
 
 void ArrayIndexes::Destroy()
 {
+  _sizeIndex = NULL;
+  _numberIndexes = NULL;
   if (_bufferIndexes)
   {
     _bufferIndexes->Release();
@@ -121,19 +128,45 @@ void ArrayIndexes::Destroy()
   }
 }
 
-void ArrayIndexes::SetIndexes(LPVOID indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX)
+void ArrayIndexes::SetIndexes(LPVOID indexes, int numberIndexes, D3DFORMAT D3DFMT_INDEX)
 {
   Destroy();
+
+  _sizeIndex = D3DFMT_INDEX == D3DFMT_INDEX16 ? 2 : 4;
+  _numberIndexes = numberIndexes;
+
   if (!_deviceDX ||
-       _deviceDX->CreateIndexBuffer(sizeArray, 0, D3DFMT_INDEX, D3DPOOL_MANAGED, &_bufferIndexes, NULL) != D3D_OK)
+       _deviceDX->CreateIndexBuffer(_sizeIndex * numberIndexes, 0, D3DFMT_INDEX, D3DPOOL_MANAGED, &_bufferIndexes, NULL) != D3D_OK)
   {
-    Log::GetLog()->WriteToLog("Array vertices not created!");
+    Log::GetLog()->WriteToLog("Array indexes not created!\r\n");
     return;
   }
 
   LPVOID buffer;
   _bufferIndexes->Lock(0, 0, (LPVOID*)&buffer, 0);
-  memcpy(buffer, indexes, sizeArray);
+  memcpy(buffer, indexes, _sizeIndex * numberIndexes);
+  _bufferIndexes->Unlock();
+}
+
+void ArrayIndexes::SetIndexesFromFile(HANDLE hFile, int numberIndexes, D3DFORMAT D3DFMT_INDEX)
+{
+  Destroy();
+
+  _sizeIndex = D3DFMT_INDEX == D3DFMT_INDEX16 ? 2 : 4;
+  _numberIndexes = numberIndexes;
+
+  if (!_deviceDX ||
+    _deviceDX->CreateIndexBuffer(_sizeIndex * numberIndexes, 0, D3DFMT_INDEX, D3DPOOL_MANAGED, &_bufferIndexes, NULL) != D3D_OK)
+  {
+    Log::GetLog()->WriteToLog("Array indexes not created!\r\n");
+    return;
+  }
+
+  LPVOID buffer;
+  DWORD ReadValue;
+
+  _bufferIndexes->Lock(0, 0, (LPVOID*)&buffer, 0);
+  ReadFile(hFile, buffer, _sizeIndex * numberIndexes, &ReadValue, 0);
   _bufferIndexes->Unlock();
 }
 
