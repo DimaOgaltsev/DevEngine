@@ -44,6 +44,8 @@ namespace dev
     virtual void Update();
 
   protected:
+    virtual void updateMatrix();
+
     ElementList _elements;
   };
 }

@@ -88,8 +88,22 @@ void Group::RemoveElement(unsigned int num)
 
 void Group::Update()
 {
+  if (!_visible())
+    return;
+
+  if (_updateMatrix)
+  {
+    updateMatrix();
+    _updateMatrix = false;
+  }
+
   for (unsigned int i = 0; i < _elements.size(); ++i)
     _elements[i]->Update();
+}
 
-  Element::Update();
+void Group::updateMatrix()
+{
+  Element::updateMatrix();
+  for (unsigned int i = 0; i < _elements.size(); ++i)
+    _elements[i]->UpdateWorldMatrix();
 }

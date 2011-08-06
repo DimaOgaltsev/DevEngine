@@ -54,14 +54,11 @@ namespace dev
 
     inline Matrix GetMatrix() const
     {
-      if (_parent)
-      {
-        return (_matrix * _parent->GetMatrix());
-      }
       return _matrix;
     }
 
     virtual void Update();
+    virtual void UpdateWorldMatrix();
 
   protected:
     virtual void draw();

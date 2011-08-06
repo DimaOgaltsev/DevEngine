@@ -103,4 +103,11 @@ void Element::draw()
 void Element::updateMatrix()
 {
   _matrix.MakeTransform(_position(), _rotation(), _scale());
+  UpdateWorldMatrix();
+}
+
+void Element::UpdateWorldMatrix()
+{
+  if (_parent)
+    _matrix = _matrix * _parent->GetMatrix();
 }
