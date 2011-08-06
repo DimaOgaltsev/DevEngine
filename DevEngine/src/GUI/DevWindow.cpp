@@ -44,7 +44,7 @@ HWND Window::Create(HINSTANCE hInst, int PosX, int PosY, int Width, int Height)
 
   if (!RegisterClass(&WinClass))
   {
-    Log::GetLog()->WriteToLog("Error registration window (MainWindow.cpp)");
+    Log::GetLog()->WriteToLog("Error registration window (MainWindow.cpp)\r\n");
     return FALSE;
   }
 
