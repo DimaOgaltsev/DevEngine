@@ -25,9 +25,25 @@ void Mesh::SetVertices(LPVOID vertices, int numberVertex, Vertex::VertexType VT_
   _vertices = new Vertex::ArrayVertices(vertices, numberVertex, VT_Type);
 }
 
-void Mesh::SetIndexes(LPVOID indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX)
+void Mesh::SetIndexes(LPVOID indexes, int numberIndexes, D3DFORMAT D3DFMT_INDEX)
 {
-  _indexes = new Vertex::ArrayIndexes(indexes, sizeArray, D3DFMT_INDEX);
+  _indexes = new Vertex::ArrayIndexes(indexes, numberIndexes, D3DFMT_INDEX);
+}
+
+void Mesh::SetVerticesFromFile(HANDLE file, int numberVertex, Vertex::VertexType VT_Type)
+{
+  if (_vertices == NULL)
+    _vertices = new Vertex::ArrayVertices();
+
+  _vertices->SetVerticesFromFile(file, numberVertex, VT_Type);
+}
+
+void Mesh::SetIndexesFromFile(HANDLE file, int numberIndexes, D3DFORMAT D3DFMT_INDEX)
+{
+  if (_indexes == NULL)
+    _indexes = new Vertex::ArrayIndexes();
+
+  _indexes->SetIndexesFromFile(file, numberIndexes, D3DFMT_INDEX);
 }
 
 void Mesh::draw()
@@ -36,6 +52,7 @@ void Mesh::draw()
     return;
 
   Element::draw();
+
   _vertices->SetAsSource();
   if (_indexes == NULL)
   {
@@ -44,6 +61,6 @@ void Mesh::draw()
   else
   {
     _indexes->SetAsSource();
-    _deviceDX->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, _vertices->GetNumberVertices(), 0, _vertices->GetNumberVertices()/3);
+    _deviceDX->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, _indexes->GetNumberIndexes(), 0, _indexes->GetNumberIndexes()/3);
   }
 }

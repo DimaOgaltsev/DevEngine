@@ -17,7 +17,10 @@ namespace dev
     virtual ~Mesh();
 
     void SetVertices(LPVOID vertices, int numberVertex, Vertex::VertexType VT_Type);
-    void SetIndexes(LPVOID indexes, int sizeArray, D3DFORMAT D3DFMT_INDEX);
+    void SetIndexes(LPVOID indexes, int numberIndexes, D3DFORMAT D3DFMT_INDEX);
+    
+    void SetVerticesFromFile(HANDLE file, int numberVertex, Vertex::VertexType VT_Type);
+    void SetIndexesFromFile(HANDLE file, int numberIndexes, D3DFORMAT D3DFMT_INDEX);
     
     virtual void draw();
 
