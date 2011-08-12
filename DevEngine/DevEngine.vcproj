@@ -160,6 +160,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Kernel\DevTexture.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Kernel\DevTimer.cpp"
 				>
 			</File>
@@ -196,6 +200,10 @@
 				</File>
 				<File
 					RelativePath=".\include\Kernel\DevSync.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Kernel\DevTexture.h"
 					>
 				</File>
 				<File
