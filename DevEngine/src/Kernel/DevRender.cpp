@@ -16,7 +16,7 @@ Render::Render() :
 
   if (!_hWnd)
   {
-    Log::GetLog()->WriteToLog("Not _hWnd (DevRender.cpp)\r\n");
+    Log::GetLog()->WriteToLog("Not _hWnd (DevRender.cpp)");
   }
 }
 
@@ -43,7 +43,7 @@ Render::Render(HINSTANCE hInstance, int PosX, int PosY, int Width, int Height) :
 
   if (!_hWnd)
   {
-    Log::GetLog()->WriteToLog("Not _hWnd (DevRender.cpp)\r\n");
+    Log::GetLog()->WriteToLog("Not _hWnd (DevRender.cpp)");
   }
 }
 
@@ -75,14 +75,14 @@ bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMod
   if (!_directX)
     if (!(_directX = Direct3DCreate9(D3D_SDK_VERSION)))
     {
-      Log::GetLog()->WriteToLog("Failed init Direct3D (DevRender.cpp)\r\n");
+      Log::GetLog()->WriteToLog("Failed init Direct3D (DevRender.cpp)");
       return false;
     }
 
   ZeroMemory(&_display, sizeof(_display));
   if (FAILED(_directX->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &_display)))
   {
-    Log::GetLog()->WriteToLog("Failed init DisplayMode (DevRender.cpp)\r\n");
+    Log::GetLog()->WriteToLog("Failed init DisplayMode (DevRender.cpp)");
     return false;
   }
 
@@ -128,7 +128,7 @@ bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMod
   if (FAILED(_directX->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _hWnd,
     D3DCREATE_HARDWARE_VERTEXPROCESSING, &_parametersD3D, &_deviceDX)))
   {
-    Log::GetLog()->WriteToLog("Failed device Direct3D (DirectMain.cpp)\r\n");
+    Log::GetLog()->WriteToLog("Failed device Direct3D (DirectMain.cpp)");
     return false;
   }
 

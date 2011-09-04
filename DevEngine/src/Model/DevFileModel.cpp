@@ -28,7 +28,12 @@ bool FileModel::OpenFile(const char* path)
   
   HANDLE hFile = CreateFile(path, GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
   if (hFile == INVALID_HANDLE_VALUE)
-    return FALSE;
+  {
+    std::string buffer("File not loaded: ");
+    buffer += path;
+    Log::GetLog()->WriteToLog(buffer.c_str());
+    return false;
+  }
 
   int fileSize = GetFileSize(hFile, 0) - 3 * sizeof(DWORD);
 
@@ -40,8 +45,9 @@ bool FileModel::OpenFile(const char* path)
   if (_bIndex != Index16File && _bIndex != Index32File && _bIndex != VertexFile)
   {
     CloseHandle(hFile);
-    Log::GetLog()->WriteToLog("File not loaded: ");
-    Log::GetLog()->WriteToLog(path);
+    std::string buffer("File not loaded: ");
+    buffer += path;
+    Log::GetLog()->WriteToLog(buffer.c_str());
     return false;
   }
 

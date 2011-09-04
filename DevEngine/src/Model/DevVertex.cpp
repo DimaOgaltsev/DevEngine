@@ -55,7 +55,7 @@ void ArrayVertices::SetVertices(LPVOID vertices, int numberVertices, VertexType 
        _deviceDX->CreateVertexBuffer(_numberVertices * _sizeVertex, 0, 0, D3DPOOL_MANAGED, &_bufferVertices, NULL) != D3D_OK ||
        _deviceDX->CreateVertexDeclaration(Declaration::GetDeclaration(VT_Type), &_declaration) != D3D_OK)
   {
-    Log::GetLog()->WriteToLog("Array vertices not created!\r\n");
+    Log::GetLog()->WriteToLog("Array vertices not created!");
     return;
   }
 
@@ -77,7 +77,7 @@ void ArrayVertices::SetVerticesFromFile(HANDLE hFile, int numberVertices, Vertex
     _deviceDX->CreateVertexBuffer(_sizeVertex * _numberVertices, 0, 0, D3DPOOL_MANAGED, &_bufferVertices, NULL) != D3D_OK ||
     _deviceDX->CreateVertexDeclaration(Declaration::GetDeclaration(VT_Type), &_declaration) != D3D_OK)
   {
-    Log::GetLog()->WriteToLog("Array vertices not created!\r\n");
+    Log::GetLog()->WriteToLog("Array vertices not created!");
     return;
   }
 
@@ -138,7 +138,7 @@ void ArrayIndexes::SetIndexes(LPVOID indexes, int numberIndexes, D3DFORMAT D3DFM
   if (!_deviceDX ||
        _deviceDX->CreateIndexBuffer(_sizeIndex * numberIndexes, 0, D3DFMT_INDEX, D3DPOOL_MANAGED, &_bufferIndexes, NULL) != D3D_OK)
   {
-    Log::GetLog()->WriteToLog("Array indexes not created!\r\n");
+    Log::GetLog()->WriteToLog("Array indexes not created!");
     return;
   }
 
@@ -158,7 +158,7 @@ void ArrayIndexes::SetIndexesFromFile(HANDLE hFile, int numberIndexes, D3DFORMAT
   if (!_deviceDX ||
     _deviceDX->CreateIndexBuffer(_sizeIndex * numberIndexes, 0, D3DFMT_INDEX, D3DPOOL_MANAGED, &_bufferIndexes, NULL) != D3D_OK)
   {
-    Log::GetLog()->WriteToLog("Array indexes not created!\r\n");
+    Log::GetLog()->WriteToLog("Array indexes not created!");
     return;
   }
 
