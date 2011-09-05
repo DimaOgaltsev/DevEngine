@@ -2,7 +2,8 @@
 
 #include <Kernel/DevLog.h>
 
-#include <d3dx9tex.h>
+#include <d3dx9.h>
+#pragma comment(lib, "d3dx9.lib")
 
 using namespace dev;
 
@@ -12,11 +13,12 @@ Texture::Texture(const char* path) :
 {
   //replace load texture
   //if (FAILED(_deviceDX->CreateTexture(128, 128, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &_texture, NULL)))
-  //example: http://code.google.com/p/nvidia-texture-tools/source/browse/tags/2.0.0/src/nvimage/DirectDrawSurface.cpp
+  //example png: http://code.google.com/p/nvidia-texture-tools/source/browse/tags/2.0.0/src/nvimage/DirectDrawSurface.cpp
   if (FAILED(D3DXCreateTextureFromFile(_deviceDX, path, &_texture)))
   {
-    Log::GetLog()->WriteToLog("Texture not loaded: ");
-    Log::GetLog()->WriteToLog(path);
+    std::string buf("Texture not loaded: ");
+    buf += path;
+    Log::GetLog()->WriteToLog(buf.c_str());
     Destroy();
   }
 }
