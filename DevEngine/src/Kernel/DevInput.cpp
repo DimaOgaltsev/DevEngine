@@ -142,6 +142,12 @@ void Input::OffInput()
   if (!_mouse && !_keyboard)
     return;
 
+  if (_hook)
+  {
+    UnhookWindowsHookEx(_hook);
+    _hook = NULL;
+  }
+
   RAWINPUTDEVICE Rid[1];
   Rid[0].usUsagePage = HID_USAGE_PAGE_GENERIC; 
   Rid[0].dwFlags     = RIDEV_REMOVE;   
@@ -162,12 +168,6 @@ void Input::OffInput()
     RegisterRawInputDevices(Rid, 1, sizeof(RAWINPUTDEVICE));
     ZeroMemory(&Keys, 256 * sizeof(bool));
     _keyboard = FALSE;
-  }
-
-  if (_hook)
-  {
-    UnhookWindowsHookEx(_hook);
-    _hook = NULL;
   }
 }
 
