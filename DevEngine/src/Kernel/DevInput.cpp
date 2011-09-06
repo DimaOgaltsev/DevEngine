@@ -224,6 +224,7 @@ void Input::StopInputThread()
   {
     _stopInputThread = true;
     WaitForSingleObject(_inputThread, 10000);
+    TerminateThread(_inputThread, 0);
     CloseHandle(_inputThread);
     timeEndPeriod(1);
     _inputThread = NULL;

@@ -59,6 +59,7 @@ void Render::Destroy()
   if (_renderThread)
   {
     WaitForSingleObject(_renderThread, 10000);
+    TerminateThread(_renderThread, 0);
     CloseHandle(_renderThread);
     _renderThread = NULL;
   }
