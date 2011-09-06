@@ -1,5 +1,9 @@
 #include <MainWindow.h>
 
+#include <Kernel/DevLog.h>
+#include <Manipulator/DevManipulatorWASD.h>
+#include <Model/DevVertex.h>
+
 using namespace GUI;
 
 MainWindow::MainWindow() :
@@ -181,64 +185,16 @@ void MainWindow::LoadScene()
     new dev::Camera(dev::Vec3(-5, 0, -10), dev::Vec3(-5, 0, 0), dev::Vec3(0, 1, 0), 
     PI_4, (float)_width/_height, 1.0f, 250.0f);
 
+  _camera->SetManipulator(new dev::ManipulatorWASD());
   _scene = new dev::Scene(_camera);
   _render->SetScene(_scene);
   _scene->AddElement(_mesh);
   _scene->AddElement(_meshCopy);
   
-  _input = new dev::Input(true, true);
-  _input->StartInputThread(10, MainWindow::Func, this);
   ShowCursor(FALSE);
 }
 
-void MainWindow::Func(LPVOID param, double deltaTime)
+void MainWindow::Frame()
 {
-  MainWindow* mw = static_cast<MainWindow*>(param);
-  mw->InputFunc(deltaTime);
-}
-
-void MainWindow::InputFunc(double deltaTime)
-{
-  float sens = 0.1f;
-  float speed = 0.01f * (float)deltaTime;
-
-  float dx = ToRadian((float)_input->GetMouseDeltaX());
-  float dy = ToRadian((float)_input->GetMouseDeltaY());
-  _mouseX += (float) dx * sens;
-  _mouseY += (float) dy * sens;
-  if (_mouseY > PI_2 - Degree * 0.1f)
-    _mouseY = PI_2 - Degree * 0.1f;
-  if (_mouseY < -PI_2 + Degree *  0.1f)
-    _mouseY = -PI_2 + Degree *  0.1f;
-  float mouseZ = (float)ToRadian(_input->GetMouseDeltaZ());
-
-  if (dx || dy)
-  _camera->SetDirection(dev::Matrix::Rotate(_mouseY, _mouseX, 0) * dev::Vec3(0, 0, 1));
-
-  dev::Vec3 vec(0,0,0);
-  if (_input->GetKeyPressed(SC_W))
-    vec += _camera->GetDirection();
-  if (_input->GetKeyPressed(SC_S))
-    vec -= _camera->GetDirection();
-  if (_input->GetKeyPressed(SC_D))
-    vec += _camera->GetRight();
-  if (_input->GetKeyPressed(SC_A))
-    vec -= _camera->GetRight();
-  if (_input->GetKeyPressed(SC_Q))
-    vec += _camera->GetUp();
-  if (_input->GetKeyPressed(SC_Z))
-    vec -= _camera->GetUp();
-
-  vec.Normalize();
-  if (vec != dev::Vec3(0, 0, 0))
-    _camera->SetMove(vec * speed);
-
-  if (_input->GetKeyPressed(SC_NUMPAD4))
-    _mesh->SetMove(-1 * speed, 0, 0);
-  if (_input->GetKeyPressed(SC_NUMPAD2))
-    _mesh->SetMove(0, 0, -1 * speed);
-  if (_input->GetKeyPressed(SC_NUMPAD6))
-    _mesh->SetMove(1 * speed, 0, 0);
-  if (_input->GetKeyPressed(SC_NUMPAD8))
-    _mesh->SetMove(0, 0, 1 * speed);
+  _render->Frame();
 }

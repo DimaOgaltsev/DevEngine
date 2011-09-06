@@ -5,6 +5,7 @@
 
 #include <Kernel/DevScene.h>
 #include <GUI/DevWindow.h>
+#include <Kernel/DevInput.h>
 
 namespace dev
 {
@@ -27,18 +28,12 @@ namespace dev
     }
 
     void  Run();
+    void  Frame();
 
   protected:
-    static void startRender(LPVOID param);
-    void  runRender();
-    void  stopRender();
-
     Window*               _wnd;
     HWND                  _hWnd;
     int                   _width, _height;
-
-    HANDLE                _renderThread;
-    bool                  _stopRender;
 
     D3DDISPLAYMODE        _display;
     D3DPRESENT_PARAMETERS _parametersD3D;

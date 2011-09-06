@@ -89,10 +89,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpszCmdLine, int nCmdSh
   GUI::MainWindow mainWnd;
   if (mainWnd.Create(hInstance, 0, 0, 800, 600))
   {
-    while (GetMessage(&msg, NULL, 0, 0))
+    while(true)
     {
-      TranslateMessage(&msg);
-      DispatchMessage(&msg);
+      while(PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
+      {
+        if(!GetMessage(&msg, NULL, 0, 0))
+          return (UINT)msg.wParam;
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+      }
+
+      mainWnd.Frame();
     }
   }
 

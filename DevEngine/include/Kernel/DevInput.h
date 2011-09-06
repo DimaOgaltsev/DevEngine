@@ -3,14 +3,14 @@
 
 #include <Kernel/DevInclude.h>
 #include <Kernel/DevScanCodes.h>
+#include <Kernel/DevSingleton.h>
 
 namespace dev
 {
   class Input
   {
   public:
-    Input();
-    Input(bool mouse, bool keyboard);
+    Input(bool mouse = true, bool keyboard = true);
     virtual ~Input();
 
     void OnInput(bool mouse, bool keyboard);
@@ -25,24 +25,10 @@ namespace dev
     //keyboard
     bool GetKeyPressed(byte SC_KEY) const;
 
-    typedef void (*InputFunc)(LPVOID param, double deltaTimeMS);
-
-    void StartInputThread(int time, InputFunc inputFunc, LPVOID param);
-    void StopInputThread();
-
   protected:
     bool      _mouse;
     bool      _keyboard;
     HHOOK     _hook;
-
-    static void inputThreadRun(LPVOID param);
-    void        inputThread();
-    
-    HANDLE    _inputThread;
-    int       _requestTime;
-    LPVOID    _param;
-    InputFunc _func;
-    bool      _stopInputThread;
   };
 }
 

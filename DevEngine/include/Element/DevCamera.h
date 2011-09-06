@@ -3,6 +3,7 @@
 
 #include <Kernel/DevInclude.h>
 #include <Element/DevElement.h>
+#include <Manipulator/DevManipulator.h>
 
 namespace dev
 {
@@ -83,6 +84,13 @@ namespace dev
 
     void Update();
 
+    void SetManipulator(Manipulator* manipulator);
+    inline const Manipulator& GetManipulator() const
+    {
+      return (*_manipulator);
+    }
+
+
   protected:
     void updateDirectionAndRight();
     Matrix _view, _projection;
@@ -95,6 +103,8 @@ namespace dev
 
     Vec3   _direction;
     Vec3   _right;
+    
+    Manipulator* _manipulator;
   };
 }
 

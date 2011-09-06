@@ -5,7 +5,8 @@
 using namespace dev;
 
 dev::Camera::Camera() :
-  _updateView(true)
+  _updateView(true),
+  _manipulator(false)
 {
   SetPosition(Vec3(0, 0, -10));
   SetLook(Vec3(0, 0, 0));
@@ -15,7 +16,8 @@ dev::Camera::Camera() :
 
 Camera::Camera(Vec3 position, Vec3 look, Vec3 up, 
                float fovY, float aspect, float znear, float zfar) :
-  _updateView(true)
+  _updateView(true),
+  _manipulator(false)
 {
   SetPosition(position);
   SetLook(look);
@@ -100,6 +102,9 @@ void Camera::SetNewProjection(float fovY, float aspect, float znear, float zfar)
 
 void Camera::Update()
 {
+  if (_manipulator)
+    _manipulator->Update(*this);
+
   if (_updateView)
   {
     _view = Matrix::Look(GetPosition(), GetLook(), GetUp());
@@ -108,10 +113,15 @@ void Camera::Update()
 }
 
 
-void dev::Camera::updateDirectionAndRight()
+void Camera::updateDirectionAndRight()
 {
   _direction = (_look() - _position());
   _direction.Normalize();
   _right = _up() ^ _direction;
   _right.Normalize();
+}
+
+void Camera::SetManipulator(Manipulator* manipulator)
+{
+  _manipulator = manipulator;
 }

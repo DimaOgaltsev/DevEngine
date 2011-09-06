@@ -7,8 +7,6 @@ using namespace dev;
 Render::Render() :
   _width(0),
   _height(0),
-  _stopRender(false),
-  _renderThread(NULL),
   _scene(NULL)
 {
   _wnd = new Window();
@@ -24,9 +22,7 @@ Render::Render(HWND hWnd) :
   _hWnd(hWnd),
   _width(0),
   _height(0),
-  _stopRender(false),
   _wnd(NULL),
-  _renderThread(NULL),
   _scene(NULL)
 {
 }
@@ -34,8 +30,6 @@ Render::Render(HWND hWnd) :
 Render::Render(HINSTANCE hInstance, int PosX, int PosY, int Width, int Height) :
   _width(Width),
   _height(Height),
-  _stopRender(false),
-  _renderThread(NULL),
   _scene(NULL)
 {
   _wnd = new Window();
@@ -54,14 +48,10 @@ Render::~Render()
 
 void Render::Destroy()
 {
-  _hWnd = NULL;
-  stopRender();
-  if (_renderThread)
+  if (_hWnd)
   {
-    WaitForSingleObject(_renderThread, 10000);
-    TerminateThread(_renderThread, 0);
-    CloseHandle(_renderThread);
-    _renderThread = NULL;
+    _hWnd = NULL;
+    SendMessage(_hWnd, WM_CLOSE, 0, 0);
   }
   if (_deviceDX)
     _deviceDX->Release();
@@ -145,49 +135,39 @@ bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMod
 void Render::SetScene(Scene* scene)
 {
   _scene = scene;
+  SystemTimer::Get()->Reset(0);
 }
 
 void Render::Run()
 {
-  DWORD RenderThreadID;
-  _renderThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)startRender, (LPVOID)this, 0, &RenderThreadID);
-  
   if (_wnd)
   {
     MSG msg = {0};
-    while (GetMessage(&msg, NULL, 0, 0))
+
+    while(true)
     {
-      TranslateMessage(&msg);
-      DispatchMessage(&msg);
+      while(PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
+      {
+        if(!GetMessage(&msg, NULL, 0, 0))
+          return;
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+      }
+
+      Frame();
     }
   }
 }
 
-void Render::startRender(LPVOID param)
+void Render::Frame()
 {
-  Render* _render = static_cast<Render*>(param);
-  _render->runRender();
-}
+  _deviceDX->Clear(0, 0, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(153, 153, 255), 1.0f, 0);
+  _deviceDX->BeginScene();
+  _deviceDX->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
+  _deviceDX->SetRenderState(D3DRS_LIGHTING, false);
+  
+  _scene->Update();
 
-void Render::runRender()
-{
-  if (!_deviceDX)
-    return;
-
-  while(!_stopRender)
-  {
-    _deviceDX->Clear(0, 0, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(153, 153, 255), 1.0f, 0);
-    _deviceDX->BeginScene();
-    _deviceDX->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
-    _deviceDX->SetRenderState(D3DRS_LIGHTING, false);
-    _scene->Update();
-
-    _deviceDX->EndScene();
-    _deviceDX->Present(0, 0, 0, 0);
-  }
-}
-
-void Render::stopRender()
-{
-  _stopRender = true;
+  _deviceDX->EndScene();
+  _deviceDX->Present(0, 0, 0, 0);
 }

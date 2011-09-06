@@ -74,25 +74,10 @@ LRESULT CALLBACK HookProc(int code, WPARAM wParam, LPARAM lParam)
   return CallNextHookEx(0, code, wParam , lParam); 
 };
 
-Input::Input() :
-  _hook(NULL),
-  _keyboard(FALSE),
-  _mouse(FALSE),
-  _inputThread(NULL),
-  _stopInputThread(FALSE),
-  _requestTime(0)
-{
-  Raw = new RAWINPUT();
-  SizeRaw = sizeof(RAWINPUT);
-}
-
 Input::Input(bool mouse, bool keyboard) :
   _hook(NULL),
   _keyboard(keyboard),
-  _mouse(mouse),
-  _inputThread(NULL),
-  _stopInputThread(FALSE),
-  _requestTime(0)
+  _mouse(mouse)
 {
   Raw = new RAWINPUT();
   SizeRaw = sizeof(RAWINPUT);
@@ -102,7 +87,6 @@ Input::Input(bool mouse, bool keyboard) :
 
 Input::~Input()
 {
-  StopInputThread();
   OffInput();
 }
 
@@ -204,46 +188,3 @@ bool Input::GetKeyPressed(byte SC_KEY) const
   return Keys[SC_KEY];
 }
 
-//Input thread
-void Input::StartInputThread(int requestTimeMS, InputFunc inputFunc, LPVOID param)
-{
-  if (inputFunc == 0 || requestTimeMS == 0)
-    return;
-
-  _func = inputFunc;
-  _param = param;
-  _requestTime = requestTimeMS;
-
-  DWORD InputThreadID;
-  _inputThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)inputThreadRun, this, 0, &InputThreadID);
-}
-
-void Input::StopInputThread()
-{
-  if (_inputThread)
-  {
-    _stopInputThread = true;
-    WaitForSingleObject(_inputThread, 10000);
-    TerminateThread(_inputThread, 0);
-    CloseHandle(_inputThread);
-    timeEndPeriod(1);
-    _inputThread = NULL;
-  }
-}
-
-void Input::inputThreadRun(LPVOID param)
-{
-  Input* input = (Input*)param;
-  input->inputThread();
-}
-
-void Input::inputThread()
-{
-  timeBeginPeriod(1);
-  SystemTimer::Get()->Reset(0);
-  while(!_stopInputThread)
-  {
-    _func(_param, SystemTimer::Get()->GetDeltaTimeMS(0));
-    WaitForSingleObject(_inputThread, _requestTime);
-  }
-}

@@ -199,6 +199,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\Kernel\DevSingleton.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\Kernel\DevSync.h"
 					>
 				</File>
@@ -336,6 +340,30 @@
 				</File>
 				<File
 					RelativePath=".\include\Math\DevVec4.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="DevManipulator"
+			>
+			<File
+				RelativePath=".\src\Manipulator\DevManipulator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Manipulator\DevManipulatorWASD.cpp"
+				>
+			</File>
+			<Filter
+				Name="include"
+				>
+				<File
+					RelativePath=".\include\Manipulator\DevManipulator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Manipulator\DevManipulatorWASD.h"
 					>
 				</File>
 			</Filter>

@@ -2,11 +2,8 @@
 #define MAIN_WINDOW_H
 
 #include <Windows.h>
-#include <Kernel/DevLog.h>
-#include <Kernel/DevInput.h>
 #include <Kernel/DevRender.h>
 #include <Model/DevMesh.h>
-#include <Model/DevVertex.h>
 
 namespace GUI
 {
@@ -22,7 +19,7 @@ namespace GUI
 
     void LoadScene();
 
-    void InputFunc(double deltaTime);
+    void Frame();
 
   private:
     void destroy();
