@@ -2,9 +2,6 @@
 
 #include <Kernel/DevLog.h>
 
-#include <d3dx9.h>
-#pragma comment(lib, "d3dx9.lib")
-
 using namespace dev;
 
 Texture::Texture(const char* path) :
