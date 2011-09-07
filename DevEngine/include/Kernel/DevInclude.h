@@ -22,7 +22,9 @@
 
 namespace dev
 {
-
+  static D3DXCOLOR    clearColor      =   D3DCOLOR_XRGB(153, 153, 255);
+  static const char*  logFilename     =   "devEngine.log";
+  static const char*  functionShader  =   "main";
 }
 
 #endif

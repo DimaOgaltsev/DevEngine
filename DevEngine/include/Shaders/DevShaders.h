@@ -29,7 +29,7 @@ namespace dev
       PS_3_SW
     };
 
-    Shader(const char* path, TypeShader type, const char* fuction = "main");
+    Shader(const char* path, TypeShader type, const char* fuction = functionShader);
     virtual ~Shader();
 
     virtual void CompileShader();

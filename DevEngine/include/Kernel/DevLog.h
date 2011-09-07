@@ -10,7 +10,7 @@ namespace dev
   public:
     static Log* GetLog()
     {
-      static Log* log = new Log("devEngine.log");;
+      static Log* log = new Log(logFilename);;
       return log;
     }
 
