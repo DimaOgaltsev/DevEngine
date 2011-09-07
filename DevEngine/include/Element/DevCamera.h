@@ -7,6 +7,8 @@
 
 namespace dev
 {
+  class Manipulator;
+
   class Camera
   {
   public:

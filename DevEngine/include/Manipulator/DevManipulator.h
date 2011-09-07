@@ -2,6 +2,7 @@
 #define DEV_MANIPULATOR_H
 
 #include <Kernel/DevInsideLib.h>
+#include <Element/DevCamera.h>
 
 namespace dev
 {

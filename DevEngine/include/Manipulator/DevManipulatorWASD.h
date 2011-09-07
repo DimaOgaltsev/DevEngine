@@ -2,9 +2,9 @@
 #define DEV_MANIPULATOR_WASD_H
 
 #include <Kernel/DevInclude.h>
+
 #include <Math/DevMath.h>
 #include <Manipulator/DevManipulator.h>
-#include <Element/DevCamera.h>
 
 namespace dev
 {
