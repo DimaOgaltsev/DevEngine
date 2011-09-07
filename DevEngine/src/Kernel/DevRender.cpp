@@ -113,7 +113,7 @@ bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMod
   _parametersD3D.BackBufferFormat          = _display.Format;
   _parametersD3D.EnableAutoDepthStencil    = true;
   _parametersD3D.AutoDepthStencilFormat    = D3DFMT_D24S8;
-  _parametersD3D.PresentationInterval      = D3DPRESENT_INTERVAL_ONE;
+  _parametersD3D.PresentationInterval      = D3DPRESENT_INTERVAL_IMMEDIATE;
   _parametersD3D.MultiSampleType           = D3DMULTISAMPLE_NONE;
 
   if (FAILED(_directX->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _hWnd,
