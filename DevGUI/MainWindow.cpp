@@ -3,9 +3,10 @@
 #include <Kernel/DevLog.h>
 #include <Manipulator/DevManipulatorWASD.h>
 #include <Model/DevVertex.h>
+#include <Shaders/DevShaders.h>
 
 using namespace GUI;
-
+dev::VertexShader* vs;
 MainWindow::MainWindow() :
   _hWnd(NULL),
   _hInst(NULL),
@@ -180,6 +181,10 @@ void MainWindow::LoadScene()
   _meshCopy->SetIndexes((LPVOID)arrayIndex, 36, D3DFMT_INDEX16);
   _mesh->SetRotation(0, 0, 45);
   _meshCopy->SetPosition(-2, 0, 0);
+
+  vs = new dev::VertexShader("shader.vs", dev::VertexShader::VS_2_0);
+  vs->CompileShader();
+  _mesh->SetVertexShader(vs);
 
   _camera = 
     new dev::Camera(dev::Vec3(-5, 0, -10), dev::Vec3(-5, 0, 0), dev::Vec3(0, 1, 0), 

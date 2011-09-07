@@ -5,14 +5,18 @@ using namespace dev;
 Mesh::Mesh(const Vec3& position, const Vec3& rotation, const Vec3& scale) :
   Element(position, rotation, scale),
   _vertices(NULL),
-  _indexes(NULL)
+  _indexes(NULL),
+  _vShader(NULL),
+  _pShader(NULL)
 {
 }
 
 Mesh::Mesh() :
   Element(),
   _vertices(NULL),
-  _indexes(NULL)
+  _indexes(NULL),
+  _vShader(NULL),
+  _pShader(NULL)
 {
 }
 
@@ -53,6 +57,16 @@ void Mesh::draw()
 
   Element::draw();
 
+  if (_vShader)
+    _vShader->SetShader();
+  else
+    _deviceDX->SetVertexShader(NULL);
+
+  if (_pShader)
+    _pShader->SetShader();
+  else
+    _deviceDX->SetPixelShader(NULL);
+
   _vertices->SetAsSource();
   if (_indexes == NULL)
   {
@@ -63,4 +77,14 @@ void Mesh::draw()
     _indexes->SetAsSource();
     _deviceDX->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, _indexes->GetNumberIndexes(), 0, _indexes->GetNumberIndexes()/3);
   }
+}
+
+void Mesh::SetVertexShader(VertexShader* shader)
+{
+  _vShader = shader;
+}
+
+void Mesh::SetPixelShader(PixelShader* shader)
+{
+  _pShader = shader;
 }

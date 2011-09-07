@@ -5,6 +5,7 @@
 
 #include <Element/DevElement.h>
 #include <Model/DevVertex.h>
+#include <Shaders/DevShaders.h>
 
 namespace dev
 {
@@ -24,9 +25,24 @@ namespace dev
     
     virtual void draw();
 
+    void SetVertexShader(VertexShader* shader);
+    inline const VertexShader& GetVertexShader() const
+    {
+      return *_vShader;
+    }
+
+    void SetPixelShader(PixelShader* shader);
+    inline const PixelShader& GetPixelShader() const
+    {
+      return *_pShader;
+    }
+
   protected:
     Vertex::ArrayVertices*  _vertices;
     Vertex::ArrayIndexes*   _indexes;
+
+    VertexShader*           _vShader;
+    PixelShader*            _pShader;
   };
 }
 

@@ -9,15 +9,74 @@ namespace dev
   class Shader : public Object
   {
   public:
-    enum TypeShader
+    Shader(const char* path, DWORD type, const char* fuction);
+    virtual ~Shader();
+
+    virtual void CompileShader();
+
+    inline const char* GetPath() const
+    {
+      return _path.c_str();
+    }
+
+    inline const DWORD* GetType() const
+    {
+      return &_type;
+    }
+
+    inline const char* GetFunction() const
+    {
+      return _function.c_str();
+    }
+
+    virtual void SetShader();
+
+  protected:
+
+    virtual const char* getCharType();
+    virtual bool supportTypeShader();
+
+    ID3DXConstantTable*     _constantTable;
+    ID3DXBuffer*            _shaderBuffer;
+    std::string             _path;
+    DWORD                   _type;
+    std::string             _function;
+  };
+
+  class VertexShader : public Shader
+  {
+  public:
+
+    enum TypeVertexShader
     {
       VS_1_1,
       VS_2_0,
       VS_2_a,
       VS_2_SW,
       VS_3_0,
-      VS_3_SW,
+      VS_3_SW
+    };
 
+    VertexShader(const char* path, TypeVertexShader type, const char* fuction = functionShader);
+    virtual ~VertexShader();
+
+    virtual void CompileShader();
+
+    virtual void SetShader();
+
+  protected:
+    virtual const char* getCharType();
+    virtual bool supportTypeShader();
+
+    IDirect3DVertexShader9* _shader;
+  };
+
+  class PixelShader : public Shader
+  {
+  public:
+
+    enum TypePixelShader
+    {
       PS_1_0,
       PS_1_1,
       PS_1_2,
@@ -31,36 +90,18 @@ namespace dev
       PS_3_SW
     };
 
-    Shader(const char* path, TypeShader type, const char* fuction = functionShader);
-    virtual ~Shader();
+    PixelShader(const char* path, TypePixelShader type, const char* fuction = functionShader);
+    virtual ~PixelShader();
 
     virtual void CompileShader();
 
-    inline const char* GetPath() const
-    {
-      return _path.c_str();
-    }
-
-    inline const TypeShader* GetType() const
-    {
-      return &_type;
-    }
-
-    inline const char* GetFunction() const
-    {
-      return _function.c_str();
-    }
+    virtual void SetShader();
 
   protected:
+    virtual const char* getCharType();
+    virtual bool supportTypeShader();
 
-    const char* getCharType();
-    bool supportTypeShader();
-
-    ID3DXConstantTable* _constantTable;
-    ID3DXBuffer*        _shader;
-    std::string         _path;
-    TypeShader          _type;
-    std::string         _function;
+    IDirect3DPixelShader9* _shader;
   };
 }
 
