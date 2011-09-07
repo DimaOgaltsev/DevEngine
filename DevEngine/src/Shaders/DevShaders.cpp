@@ -24,6 +24,15 @@ Shader::~Shader()
 
 void Shader::CompileShader()
 {
+  if (!supportTypeShader())
+  {
+    std::string buffer("Shader (");
+    buffer += _path;
+    buffer += "compilation error: this type of shaders not supported video card";
+    Log::GetLog()->WriteToLog(buffer.c_str());
+    return;
+  }
+
   DWORD flags = D3DXSHADER_OPTIMIZATION_LEVEL3;
   #ifdef _DEBUG
     flags = D3DXSHADER_DEBUG;
@@ -74,6 +83,8 @@ const char* Shader::getCharType()
   case VS_3_SW:
     return "vs_3_sw";
 
+  case PS_1_0:
+    return "ps_1_0";
   case PS_1_1:
     return "ps_1_1";
   case PS_1_2:
@@ -96,4 +107,41 @@ const char* Shader::getCharType()
     return "ps_3_sw";
   }
   return NULL;
+}
+
+bool Shader::supportTypeShader()
+{
+  D3DCAPS9 caps;
+  _deviceDX->GetDeviceCaps(&caps);
+
+  switch(_type)
+  {
+  case VS_1_1:
+    return caps.VertexShaderVersion >= D3DVS_VERSION(1, 1);
+  case VS_2_0:
+  case VS_2_a:
+  case VS_2_SW:
+    return caps.VertexShaderVersion >= D3DVS_VERSION(2, 0);
+  case VS_3_0:
+  case VS_3_SW:
+    return caps.VertexShaderVersion >= D3DVS_VERSION(3, 0);
+
+  case PS_1_1:
+    return caps.PixelShaderVersion >= D3DPS_VERSION(1, 1);
+  case PS_1_2:
+    return caps.PixelShaderVersion >= D3DPS_VERSION(1, 2);
+  case PS_1_3:
+    return caps.PixelShaderVersion >= D3DPS_VERSION(1, 3);
+  case PS_1_4:
+    return caps.PixelShaderVersion >= D3DPS_VERSION(1, 4);
+  case PS_2_0:
+  case PS_2_a:
+  case PS_2_b:
+  case PS_2_SW:
+    return caps.PixelShaderVersion >= D3DPS_VERSION(2, 0);
+  case PS_3_0:
+  case PS_3_SW:
+    return caps.PixelShaderVersion >= D3DPS_VERSION(3, 0);
+  }
+  return FALSE;
 }

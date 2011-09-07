@@ -2,10 +2,11 @@
 #define DEV_SHADERS_H
 
 #include <Kernel/DevInclude.h>
+#include <Element/DevElement.h>
 
 namespace dev
 {
-  class Shader
+  class Shader : public Object
   {
   public:
     enum TypeShader
@@ -17,6 +18,7 @@ namespace dev
       VS_3_0,
       VS_3_SW,
 
+      PS_1_0,
       PS_1_1,
       PS_1_2,
       PS_1_3,
@@ -52,6 +54,7 @@ namespace dev
   protected:
 
     const char* getCharType();
+    bool supportTypeShader();
 
     ID3DXConstantTable* _constantTable;
     ID3DXBuffer*        _shader;
