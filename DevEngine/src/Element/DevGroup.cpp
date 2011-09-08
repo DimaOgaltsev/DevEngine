@@ -5,16 +5,18 @@ using namespace dev;
 Group::Group(Vec3 position, Vec3 rotation, Vec3 scale) :
   Element(position, rotation, scale)
 {
+  ClearList();
 }
 
 Group::Group() :
   Element()
 {
-
+  ClearList();
 }
 
 Group::~Group()
 {
+  ClearList();
 }
 
 void Group::ClearList()
