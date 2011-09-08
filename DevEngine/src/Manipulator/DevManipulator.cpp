@@ -4,9 +4,9 @@ using namespace dev;
 
 
 Manipulator::Manipulator() :
-  _insideSpeed(0.01f),
+  _insideSpeed(defaultSpeed),
   _speed(0.0f),
-  _sens(0.1f)
+  _sens(defaultSens)
 {
   _input = SystemInput::Get();
   SystemTimer::Get()->Reset(0);

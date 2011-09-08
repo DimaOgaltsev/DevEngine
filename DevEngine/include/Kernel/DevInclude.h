@@ -25,6 +25,8 @@ namespace dev
   static D3DXCOLOR    clearColor      =   D3DCOLOR_XRGB(153, 153, 255);
   static const char*  logFilename     =   "devEngine.log";
   static const char*  functionShader  =   "main";
+  static const float  defaultSpeed    =   0.01f;
+  static const float  defaultSens     =   0.1f;
 }
 
 #endif
