@@ -8,6 +8,9 @@
 
 namespace dev
 {
+  class Mesh;
+  class Group;
+
   class Element : 
     public Object
   {
@@ -59,9 +62,20 @@ namespace dev
 
     virtual void Update();
     virtual void UpdateWorldMatrix();
+    virtual void UpdateParameters();
+    virtual void Draw();
+
+    virtual inline Mesh* AsMesh() 
+    {
+      return NULL;
+    }
+
+    virtual inline Group* AsGroup() 
+    {
+      return NULL;
+    }
 
   protected:
-    virtual void draw();
     virtual void updateMatrix();
 
     Properties::Bool    _visible;
@@ -73,6 +87,8 @@ namespace dev
     Matrix              _matrix;
     Element*            _parent;
   };
+
+  typedef std::vector<Element*> ElementList;
 }
 
 #endif

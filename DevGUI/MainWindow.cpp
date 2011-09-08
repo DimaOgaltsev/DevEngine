@@ -183,7 +183,6 @@ void MainWindow::LoadScene()
   _meshCopy->SetPosition(-2, 0, 0);
 
   vs = new dev::VertexShader("shader.vs", dev::VertexShader::VS_2_0);
-  vs->CompileShader();
   _mesh->SetVertexShader(vs);
 
   _camera = 

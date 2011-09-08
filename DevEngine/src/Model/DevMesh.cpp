@@ -50,22 +50,12 @@ void Mesh::SetIndexesFromFile(HANDLE file, int numberIndexes, D3DFORMAT D3DFMT_I
   _indexes->SetIndexesFromFile(file, numberIndexes, D3DFMT_INDEX);
 }
 
-void Mesh::draw()
+void Mesh::Draw()
 {
   if (_vertices == NULL)
     return;
 
-  Element::draw();
-
-  if (_vShader)
-    _vShader->SetShader();
-  else
-    _deviceDX->SetVertexShader(NULL);
-
-  if (_pShader)
-    _pShader->SetShader();
-  else
-    _deviceDX->SetPixelShader(NULL);
+  Element::Draw();
 
   _vertices->SetAsSource();
   if (_indexes == NULL)
@@ -81,10 +71,18 @@ void Mesh::draw()
 
 void Mesh::SetVertexShader(VertexShader* shader)
 {
+  if (!shader)
+    return;
+
   _vShader = shader;
+  _vShader->CompileShader();
 }
 
 void Mesh::SetPixelShader(PixelShader* shader)
 {
+  if (!shader)
+    return;
+
   _pShader = shader;
+  _pShader->CompileShader();
 }

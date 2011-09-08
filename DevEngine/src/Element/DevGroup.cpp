@@ -46,19 +46,31 @@ void Group::InsertElement(unsigned int num, Element* element)
     _elements.insert(_elements.begin() + num, element);
   }
   element->SetParent(this);
+
+  DevShaderManager::Get()->AddMesh(element->AsMesh());
 }
 
 void Group::SetElement(unsigned int num, Element* element)
 {
+  if (!element)
+    return;
+
   if (num < _elements.size())
   {
+    Element* oldElement = _elements[num];
     _elements[num] = element;
     element->SetParent(this);
+
+    DevShaderManager::Get()->RemoveMesh(oldElement->AsMesh());
+    DevShaderManager::Get()->AddMesh(element->AsMesh());
   }
 }
 
 void Group::ReplaceElement(Element* element, Element* newElement)
 {
+  if (!element || !newElement)
+    return;
+
   unsigned int num = GetElementNum(element);
   
   if (num != _elements.size())
@@ -66,16 +78,23 @@ void Group::ReplaceElement(Element* element, Element* newElement)
     _elements[num] = newElement;
     element->ClearParent();
     newElement->SetParent(this);
+
+    DevShaderManager::Get()->RemoveMesh(element->AsMesh());
+    DevShaderManager::Get()->AddMesh(newElement->AsMesh());
   }
 }
 
 void Group::RemoveElement(Element* element)
 {
+  if (!element)
+    return;
+
   unsigned int num = GetElementNum(element);
   if (num != _elements.size())
   {
     _elements.erase(_elements.begin() + num);
     element->ClearParent();
+    DevShaderManager::Get()->RemoveMesh(element->AsMesh());
   }
 }
 
@@ -83,8 +102,10 @@ void Group::RemoveElement(unsigned int num)
 {
   if (num < _elements.size())
   {
-    GetElement(num)->ClearParent();
+    Element* element = GetElement(num);
+    element->ClearParent();
     _elements.erase(_elements.begin() + num);
+    DevShaderManager::Get()->RemoveMesh(element->AsMesh());
   }
 }
 

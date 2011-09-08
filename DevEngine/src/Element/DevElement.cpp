@@ -91,13 +91,10 @@ void Element::Update()
     updateMatrix();
     _updateMatrix = false;
   }
-
-  draw();
 }
 
-void Element::draw()
+void Element::Draw()
 {
-  _deviceDX->SetTransform(D3DTS_WORLD, (D3DMATRIX*)&_matrix);
 }
 
 void Element::updateMatrix()
@@ -110,4 +107,9 @@ void Element::UpdateWorldMatrix()
 {
   if (_parent)
     _matrix = _matrix * _parent->GetMatrix();
+}
+
+void Element::UpdateParameters()
+{
+  _deviceDX->SetTransform(D3DTS_WORLD, (D3DMATRIX*)&_matrix);
 }

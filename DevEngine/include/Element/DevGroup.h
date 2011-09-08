@@ -3,12 +3,11 @@
 
 #include <Kernel/DevInclude.h>
 #include <Element/DevElement.h>
+#include <Shaders/DevShaderManager.h>
 
 namespace dev
 {
-  typedef std::vector<Element*> ElementList;
-  
-  class Group : 
+  class Group :
     public Element
   {
   public:
@@ -42,6 +41,11 @@ namespace dev
     }
 
     virtual void Update();
+
+    virtual inline Group* AsGroup() 
+    {
+      return this;
+    }
 
   protected:
     virtual void updateMatrix();

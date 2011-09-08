@@ -372,12 +372,20 @@
 			Name="Shaders"
 			>
 			<File
+				RelativePath=".\src\Shaders\DevShaderManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Shaders\DevShaders.cpp"
 				>
 			</File>
 			<Filter
 				Name="include"
 				>
+				<File
+					RelativePath=".\include\Shaders\DevShaderManager.h"
+					>
+				</File>
 				<File
 					RelativePath=".\include\Shaders\DevShaders.h"
 					>

@@ -1,6 +1,7 @@
 #include <Kernel/DevRender.h>
 
 #include <Kernel/DevLog.h>
+#include <Shaders/DevShaderManager.h>
 
 using namespace dev;
 
@@ -161,12 +162,14 @@ void Render::Run()
 
 void Render::Frame()
 {
+  _scene->Update();
+  
   _deviceDX->Clear(0, 0, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER, clearColor, 1.0f, 0);
   _deviceDX->BeginScene();
   _deviceDX->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
   _deviceDX->SetRenderState(D3DRS_LIGHTING, false);
-  
-  _scene->Update();
+
+  DevShaderManager::Get()->Update();
 
   _deviceDX->EndScene();
   _deviceDX->Present(0, 0, 0, 0);

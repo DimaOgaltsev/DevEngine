@@ -23,18 +23,23 @@ namespace dev
     void SetVerticesFromFile(HANDLE file, int numberVertex, Vertex::VertexType VT_Type);
     void SetIndexesFromFile(HANDLE file, int numberIndexes, D3DFORMAT D3DFMT_INDEX);
     
-    virtual void draw();
+    virtual void Draw();
 
     void SetVertexShader(VertexShader* shader);
-    inline const VertexShader& GetVertexShader() const
+    inline VertexShader* GetVertexShader() const
     {
-      return *_vShader;
+      return _vShader;
     }
 
     void SetPixelShader(PixelShader* shader);
-    inline const PixelShader& GetPixelShader() const
+    inline PixelShader* GetPixelShader() const
     {
-      return *_pShader;
+      return _pShader;
+    }
+
+    virtual inline Mesh* AsMesh() 
+    {
+      return this;
     }
 
   protected:
@@ -44,6 +49,8 @@ namespace dev
     VertexShader*           _vShader;
     PixelShader*            _pShader;
   };
+
+  typedef std::vector<Mesh*> MeshList;
 }
 
 #endif
