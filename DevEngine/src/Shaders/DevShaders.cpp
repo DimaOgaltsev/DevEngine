@@ -82,9 +82,89 @@ void Shader::SetShader()
 
 }
 
+const D3DXHANDLE Shader::CreateParametr(const char* name)
+{
+  if (!_constantTable)
+    return NULL;
+   
+  D3DXHANDLE parametr = _constantTable->GetConstantByName(0, name);
+
+  if (parametr == NULL)
+  {
+    std::string buffer("Shader (");
+    buffer += _path;
+    buffer += ") parametr not found: ";
+    buffer += name;
+    Log::GetLog()->WriteToLog(buffer.c_str());
+  }
+
+  return parametr;
+}
+
+void Shader::SetBool(const D3DXHANDLE& parametr, bool Bool)
+{
+  if (_constantTable && parametr)
+    _constantTable->SetBool(_deviceDX, parametr, Bool);
+}
+
+void Shader::SetBoolArray(const D3DXHANDLE& parametr, const bool* Bool, UINT num)
+{
+  if (_constantTable && parametr)
+    _constantTable->SetBoolArray(_deviceDX, parametr, (CONST BOOL*)Bool, num);
+}
+
+void Shader::SetInt(const D3DXHANDLE& parametr, int Int)
+{
+  if (_constantTable && parametr)
+    _constantTable->SetInt(_deviceDX, parametr, Int);
+}
+
+void Shader::SetIntArray(const D3DXHANDLE& parametr, const int* Int, UINT num)
+{
+  if (_constantTable && parametr)
+    _constantTable->SetIntArray(_deviceDX, parametr, Int, num);
+}
+
+void Shader::SetFloat(const D3DXHANDLE& parametr, float Float)
+{
+  if (_constantTable && parametr)
+    _constantTable->SetFloat(_deviceDX, parametr, Float);
+}
+
+void Shader::SetFloatArray(const D3DXHANDLE& parametr, const float* Float, UINT num)
+{
+  if (_constantTable && parametr)
+    _constantTable->SetFloatArray(_deviceDX, parametr, Float, num);
+}
+
+void Shader::SetVec4(const D3DXHANDLE& parametr, const Vec4* vec)
+{
+  if (_constantTable && parametr)
+    _constantTable->SetVector(_deviceDX, parametr, (const D3DXVECTOR4*)vec);
+}
+
+void Shader::SetVec4Array(const D3DXHANDLE& parametr, const Vec4* vec, UINT num)
+{
+  if (_constantTable && parametr)
+    _constantTable->SetVectorArray(_deviceDX, parametr, (const D3DXVECTOR4*)vec, num);
+}
+
+void Shader::SetMatrix(const D3DXHANDLE& parametr, const Matrix* matrix)
+{
+  if (_constantTable && parametr)
+    _constantTable->SetMatrix(_deviceDX, parametr, (const D3DXMATRIX*)matrix);
+}
+
+void Shader::SetMatrixArray(const D3DXHANDLE& parametr, const Matrix* matrix, UINT num)
+{
+  if (_constantTable && parametr)
+    _constantTable->SetMatrixArray(_deviceDX, parametr, (const D3DXMATRIX*)matrix, num);
+}
+
 VertexShader::VertexShader(const char* path, TypeVertexShader type, const char* fuction) :
   Shader(path, (DWORD)type, fuction),
-  _shader(NULL)
+  _shader(NULL),
+  _devWVPMatrix(NULL)
 {
 
 }
@@ -144,8 +224,7 @@ void VertexShader::SetShader()
     _deviceDX->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
     _deviceDX->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection);
     _deviceDX->SetVertexShader(_shader);
-    D3DXHANDLE hViewProjectionMatrix = _constantTable->GetConstantByName(0, "WorldViewProjection"); 
-    _constantTable->SetMatrix(_deviceDX, hViewProjectionMatrix, (const D3DXMATRIX*)&(world * view * projection));
+    SetMatrix(_devWVPMatrix, &(world * view * projection));
   }
 }
 
@@ -160,6 +239,8 @@ void VertexShader::CompileShader()
     buffer += ") compilation error: create shader failed";
     Log::GetLog()->WriteToLog(buffer.c_str());
   }
+
+  _devWVPMatrix = CreateParametr("devWVPMatrix");
 }
 
 PixelShader::PixelShader(const char* path, TypePixelShader type, const char* fuction) :

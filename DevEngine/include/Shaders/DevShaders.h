@@ -31,6 +31,19 @@ namespace dev
 
     virtual void SetShader();
 
+    const D3DXHANDLE CreateParametr(const char* name);
+
+    void SetBool(const D3DXHANDLE& parametr, bool Bool);
+    void SetBoolArray(const D3DXHANDLE& parametr, const bool* Bool, UINT num);
+    void SetInt(const D3DXHANDLE& parametr, int Int);
+    void SetIntArray(const D3DXHANDLE& parametr, const int* Int, UINT num);
+    void SetFloat(const D3DXHANDLE& parametr, float Float);
+    void SetFloatArray(const D3DXHANDLE& parametr, const float* Float, UINT num);
+    void SetVec4(const D3DXHANDLE& parametr, const Vec4* vec);
+    void SetVec4Array(const D3DXHANDLE& parametr, const Vec4* vec, UINT num);
+    void SetMatrix(const D3DXHANDLE& parametr, const Matrix* matrix);
+    void SetMatrixArray(const D3DXHANDLE& parametr, const Matrix* matrix, UINT num);
+
   protected:
 
     virtual const char* getCharType();
@@ -69,6 +82,9 @@ namespace dev
     virtual bool supportTypeShader();
 
     IDirect3DVertexShader9* _shader;
+
+    //standart parametrs
+    D3DXHANDLE _devWVPMatrix;
   };
 
   class PixelShader : public Shader

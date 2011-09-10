@@ -32,11 +32,11 @@ void ShaderManager::AddMesh(Mesh* element)
         {
           if ((*i)->GetMaterial() == element->GetMaterial())
           {
-            if ((*i)->GetPixelShader() >= element->GetPixelShader())
+            if ((*i)->GetPixelShader() <= element->GetPixelShader())
             {
               if ((*i)->GetPixelShader() == element->GetPixelShader())
               {
-                if ((*i)->GetVertexShader() >= element->GetVertexShader())
+                if ((*i)->GetVertexShader() <= element->GetVertexShader())
                 {
                   _meshes.insert(i, element);
                   return;
@@ -105,7 +105,7 @@ void ShaderManager::Update()
     if ((*i)->GetPixelShader())
       (*i)->GetPixelShader()->SetShader();
     else
-      _deviceDX->SetVertexShader(NULL);
+      _deviceDX->SetPixelShader(NULL);
 
     (*i)->Draw();
   }

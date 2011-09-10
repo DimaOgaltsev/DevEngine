@@ -6,7 +6,7 @@
 #include <Shaders/DevShaders.h>
 
 using namespace GUI;
-dev::VertexShader* vs;
+
 MainWindow::MainWindow() :
   _hWnd(NULL),
   _hInst(NULL),
@@ -182,8 +182,8 @@ void MainWindow::LoadScene()
   _mesh->SetRotation(0, 0, 45);
   _meshCopy->SetPosition(-2, 0, 0);
 
-  vs = new dev::VertexShader("shader.vs", dev::VertexShader::VS_2_0);
-  _mesh->SetVertexShader(vs);
+  _mesh->SetVertexShader(new dev::VertexShader("shader.vs", dev::VertexShader::VS_2_0));
+  //_mesh->SetPixelShader(new dev::PixelShader("shader.ps", dev::PixelShader::PS_2_0));
 
   _camera = 
     new dev::Camera(dev::Vec3(-5, 0, -10), dev::Vec3(-5, 0, 0), dev::Vec3(0, 1, 0), 
