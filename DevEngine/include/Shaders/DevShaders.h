@@ -19,9 +19,9 @@ namespace dev
       return _path.c_str();
     }
 
-    inline const DWORD* GetType() const
+    inline const DWORD& GetType() const
     {
-      return &_type;
+      return _type;
     }
 
     inline const char* GetFunction() const

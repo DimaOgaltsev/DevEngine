@@ -37,6 +37,12 @@ namespace dev
       return _pShader;
     }
 
+    void SetOrderNum(int num);
+    inline int GetOrderNum() const
+    {
+      return _orderNum;
+    }
+
     virtual inline Mesh* AsMesh() 
     {
       return this;
@@ -48,6 +54,7 @@ namespace dev
 
     VertexShader*           _vShader;
     PixelShader*            _pShader;
+    int                     _orderNum;
   };
 
   typedef std::vector<Mesh*> MeshList;

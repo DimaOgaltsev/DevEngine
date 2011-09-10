@@ -7,7 +7,8 @@ Mesh::Mesh(const Vec3& position, const Vec3& rotation, const Vec3& scale) :
   _vertices(NULL),
   _indexes(NULL),
   _vShader(NULL),
-  _pShader(NULL)
+  _pShader(NULL),
+  _orderNum(0)
 {
 }
 
@@ -16,7 +17,8 @@ Mesh::Mesh() :
   _vertices(NULL),
   _indexes(NULL),
   _vShader(NULL),
-  _pShader(NULL)
+  _pShader(NULL),
+  _orderNum(0)
 {
 }
 
@@ -85,4 +87,9 @@ void Mesh::SetPixelShader(PixelShader* shader)
 
   _pShader = shader;
   _pShader->CompileShader();
+}
+
+void Mesh::SetOrderNum(int num)
+{
+  _orderNum = num;
 }

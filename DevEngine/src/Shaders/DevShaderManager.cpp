@@ -22,6 +22,49 @@ void ShaderManager::AddMesh(Mesh* element)
   if (!element)
     return;
   
+  for (MeshList::iterator i = _meshes.begin(); i < _meshes.end(); ++i)
+  {
+    if ((*i)->GetOrderNum() >= element->GetOrderNum())
+    {
+      if ((*i)->GetOrderNum() == element->GetOrderNum())
+      {
+        //add sorting materials
+        //if ((*i)->GetMaterial() >= element->GetMaterial())
+        {
+          //if ((*i)->GetMaterial() == element->GetMaterial())
+          {
+            if ((*i)->GetPixelShader() >= element->GetPixelShader())
+            {
+              if ((*i)->GetPixelShader() == element->GetPixelShader())
+              {
+                if ((*i)->GetVertexShader() >= element->GetVertexShader())
+                {
+                  _meshes.insert(i, element);
+                  return;
+                }
+              }
+              else
+              {
+                _meshes.insert(i, element);
+                return;
+              }
+            }
+          }
+          //else
+          {
+           // _meshes.insert(i, element);
+           // return;
+          }
+        }
+      }
+      else
+      {
+        _meshes.insert(i, element);
+        return;
+      }
+    }
+  }
+
   _meshes.push_back(element);
 }
 
