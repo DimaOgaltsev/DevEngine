@@ -6,6 +6,8 @@
 #include <Element/DevElement.h>
 #include <Model/DevVertex.h>
 #include <Shaders/DevShaders.h>
+#include <Kernel/DevMaterial.h>
+#include <Kernel/DevTexture.h>
 
 namespace dev
 {
@@ -24,6 +26,7 @@ namespace dev
     void SetIndexesFromFile(HANDLE file, int numberIndexes, D3DFORMAT D3DFMT_INDEX);
     
     virtual void Draw();
+    virtual void UpdateParameters();
 
     void SetVertexShader(VertexShader* shader);
     inline VertexShader* GetVertexShader() const
@@ -48,6 +51,12 @@ namespace dev
       return this;
     }
 
+    void SetMaterial(Material* material);
+    inline Material* GetMaterial() const
+    {
+      return _material;
+    }
+
   protected:
     Vertex::ArrayVertices*  _vertices;
     Vertex::ArrayIndexes*   _indexes;
@@ -55,6 +64,9 @@ namespace dev
     VertexShader*           _vShader;
     PixelShader*            _pShader;
     int                     _orderNum;
+
+    Material*               _material;
+    std::vector<Texture*>   _texture;
   };
 
   typedef std::vector<Mesh*> MeshList;

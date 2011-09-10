@@ -148,6 +148,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Kernel\DevMaterial.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Kernel\DevRender.cpp"
 				>
 			</File>
@@ -184,6 +188,10 @@
 				</File>
 				<File
 					RelativePath=".\include\Kernel\DevLog.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Kernel\DevMaterial.h"
 					>
 				</File>
 				<File

@@ -8,8 +8,10 @@ Mesh::Mesh(const Vec3& position, const Vec3& rotation, const Vec3& scale) :
   _indexes(NULL),
   _vShader(NULL),
   _pShader(NULL),
-  _orderNum(0)
+  _orderNum(0),
+  _material(0)
 {
+  _texture.clear();
 }
 
 Mesh::Mesh() :
@@ -18,12 +20,15 @@ Mesh::Mesh() :
   _indexes(NULL),
   _vShader(NULL),
   _pShader(NULL),
-  _orderNum(0)
+  _orderNum(0),
+  _material(0)
 {
+  _texture.clear();
 }
 
 Mesh::~Mesh()
 {
+  _texture.clear();
 }
 
 void Mesh::SetVertices(LPVOID vertices, int numberVertex, Vertex::VertexType VT_Type)
@@ -87,9 +92,26 @@ void Mesh::SetPixelShader(PixelShader* shader)
 
   _pShader = shader;
   _pShader->CompileShader();
+  if (!_material)
+    _material = new Material();
 }
 
 void Mesh::SetOrderNum(int num)
 {
   _orderNum = num;
+}
+
+void Mesh::SetMaterial(Material* material)
+{
+  _material = material;
+}
+
+void Mesh::UpdateParameters()
+{
+  Element::UpdateParameters();
+  if (_material)
+  {
+    if (_pShader == NULL)
+      _deviceDX->SetMaterial(&_material->GetAsD3DMaterial());
+  }
 }

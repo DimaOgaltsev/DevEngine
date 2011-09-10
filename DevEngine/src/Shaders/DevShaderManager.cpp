@@ -28,10 +28,9 @@ void ShaderManager::AddMesh(Mesh* element)
     {
       if ((*i)->GetOrderNum() == element->GetOrderNum())
       {
-        //add sorting materials
-        //if ((*i)->GetMaterial() >= element->GetMaterial())
+        if ((*i)->GetMaterial() >= element->GetMaterial())
         {
-          //if ((*i)->GetMaterial() == element->GetMaterial())
+          if ((*i)->GetMaterial() == element->GetMaterial())
           {
             if ((*i)->GetPixelShader() >= element->GetPixelShader())
             {
@@ -50,10 +49,10 @@ void ShaderManager::AddMesh(Mesh* element)
               }
             }
           }
-          //else
+          else
           {
-           // _meshes.insert(i, element);
-           // return;
+            _meshes.insert(i, element);
+            return;
           }
         }
       }
