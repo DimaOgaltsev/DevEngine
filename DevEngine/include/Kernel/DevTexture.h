@@ -11,6 +11,9 @@ namespace dev
     public Object
   {
   public:
+
+    #define MAX_NUM_TEXTURES 8
+
     Texture(const char* path);
     virtual ~Texture();
 

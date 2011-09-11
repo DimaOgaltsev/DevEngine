@@ -57,7 +57,19 @@ namespace dev
       return _material;
     }
 
+    void SetTexture(const char* path, int num);
+    inline Texture* GetTexture(int num) const
+    {
+      if (num < MAX_NUM_TEXTURES)
+        return _texture[num];
+
+      return NULL;
+    }
+
   protected:
+
+    void dirtyTextures();
+
     Vertex::ArrayVertices*  _vertices;
     Vertex::ArrayIndexes*   _indexes;
 

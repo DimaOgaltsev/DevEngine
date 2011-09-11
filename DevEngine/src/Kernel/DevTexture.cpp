@@ -25,7 +25,7 @@ Texture::~Texture()
   Destroy();
 }
 
-void dev::Texture::Destroy()
+void Texture::Destroy()
 {
   if (_texture)
   {

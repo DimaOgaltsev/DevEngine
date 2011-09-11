@@ -4,6 +4,7 @@
 #include <Manipulator/DevManipulatorWASD.h>
 #include <Model/DevVertex.h>
 #include <Shaders/DevShaders.h>
+#include <Model/DevFileModel.h>
 
 using namespace GUI;
 
@@ -14,7 +15,6 @@ MainWindow::MainWindow() :
   _input(NULL),
   _camera(NULL),
   _scene(NULL),
-  _mesh(NULL),
   _width(0),
   _height(0),
   _mouseX(0),
@@ -131,69 +131,21 @@ LRESULT CALLBACK MainWindow::MsgProc(HWND hwnd, UINT Message, WPARAM wParam, LPA
 
 void MainWindow::LoadScene()
 {
-  _mesh = new dev::Mesh();
-  _meshCopy = new dev::Mesh();
-  dev::Vertex::VertexPC32 arrayVertex[] = 
-  {
-    {1.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(255,   0,    0)},
-    {1.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(255, 255,    0)},
-    {0.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(  0, 255,    0)},
-    {0.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(  0,   0,    0)},
-
-    {0.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(  0,   0,    0)},
-    {0.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(  0, 255,    0)},
-    {0.0f,  1.0f,  1.0f, D3DCOLOR_XRGB(  0, 255,  255)},
-    {0.0f,  0.0f,  1.0f, D3DCOLOR_XRGB(  0,   0,  255)},
-
-    {0.0f,  0.0f,  1.0f, D3DCOLOR_XRGB(  0,   0,  255)},
-    {0.0f,  1.0f,  1.0f, D3DCOLOR_XRGB(  0, 255,  255)},
-    {1.0f,  1.0f,  1.0f, D3DCOLOR_XRGB(255, 255,  255)},
-    {1.0f,  0.0f,  1.0f, D3DCOLOR_XRGB(255,   0,  255)},
-
-    {1.0f,  0.0f,  1.0f, D3DCOLOR_XRGB(255,   0,  255)},
-    {1.0f,  1.0f,  1.0f, D3DCOLOR_XRGB(255, 255,  255)},
-    {1.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(255, 255,    0)},
-    {1.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(255,   0,    0)},
-
-    {1.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(255,   0,    0)},
-    {0.0f,  0.0f,  0.0f, D3DCOLOR_XRGB(0,     0,    0)},
-    {0.0f,  0.0f,  1.0f, D3DCOLOR_XRGB(255, 255,  255)},
-    {1.0f,  0.0f,  1.0f, D3DCOLOR_XRGB(255,   0,  255)},
-
-    {1.0f,  1.0f,  1.0f, D3DCOLOR_XRGB(255, 255,  255)},
-    {0.0f,  1.0f,  1.0f, D3DCOLOR_XRGB(  0, 255,  255)},
-    {0.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(  0, 255,    0)},
-    {1.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(255, 255,    0)}
-  };
-  _mesh->SetVertices((LPVOID)arrayVertex, 24, dev::Vertex::VT_PC32);
-  _meshCopy->SetVertices((LPVOID)arrayVertex, 24, dev::Vertex::VT_PC32);
-
-  const unsigned short arrayIndex[] =
-  {
-    0,1,2,    2,3,0,
-    4,5,6,    6,7,4,
-    8,9,10,   10,11,8,
-    12,13,14, 14,15,12,
-    16,17,18, 18,19,16,
-    20,21,22, 22,23,20
-  };
-  _mesh->SetIndexes((LPVOID)arrayIndex, 36, D3DFMT_INDEX16);
-  _meshCopy->SetIndexes((LPVOID)arrayIndex, 36, D3DFMT_INDEX16);
-  _mesh->SetRotation(0, 0, 45);
-  _meshCopy->SetPosition(-2, 0, 0);
-
-  _mesh->SetVertexShader(new dev::VertexShader("shader.vs", dev::VertexShader::VS_2_0));
-  //_mesh->SetPixelShader(new dev::PixelShader("shader.ps", dev::PixelShader::PS_2_0));
-
   _camera = 
-    new dev::Camera(dev::Vec3(-5, 0, -10), dev::Vec3(-5, 0, 0), dev::Vec3(0, 1, 0), 
+    new dev::Camera(dev::Vec3(0, 5, 0), dev::Vec3(0, 5, 5), dev::Vec3(0, 1, 0), 
     PI_4, (float)_width/_height, 1.0f, 250.0f);
 
   _camera->SetManipulator(new dev::ManipulatorWASD());
+  _camera->GetManipulator()->SetSpeed(0.04f);
   _scene = new dev::Scene(_camera);
   _render->SetScene(_scene);
-  _scene->AddElement(_mesh);
-  _scene->AddElement(_meshCopy);
+  dev::FileModel* fm = new dev::FileModel("zone.dfm");
+  _scene->AddElement(fm);
+  fm->GetElement(0)->AsMesh()->SetTexture("textures/plite.jpg", 0);
+  fm->GetElement(1)->AsMesh()->SetTexture("textures/plite.jpg", 0);
+  fm->GetElement(2)->AsMesh()->SetTexture("textures/plite.jpg", 0);
+  fm->GetElement(3)->AsMesh()->SetTexture("textures/arrow.jpg", 0);
+  fm->GetElement(4)->AsMesh()->SetTexture("textures/arrow.jpg", 0);
   
   ShowCursor(FALSE);
 }

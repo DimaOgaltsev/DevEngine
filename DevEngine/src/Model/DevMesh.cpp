@@ -11,7 +11,7 @@ Mesh::Mesh(const Vec3& position, const Vec3& rotation, const Vec3& scale) :
   _orderNum(0),
   _material(0)
 {
-  _texture.clear();
+  dirtyTextures();
 }
 
 Mesh::Mesh() :
@@ -23,12 +23,12 @@ Mesh::Mesh() :
   _orderNum(0),
   _material(0)
 {
-  _texture.clear();
+  dirtyTextures();
 }
 
 Mesh::~Mesh()
 {
-  _texture.clear();
+  dirtyTextures();
 }
 
 void Mesh::SetVertices(LPVOID vertices, int numberVertex, Vertex::VertexType VT_Type)
@@ -114,4 +114,25 @@ void Mesh::UpdateParameters()
     if (_pShader == NULL)
       _deviceDX->SetMaterial(&_material->GetAsD3DMaterial());
   }
+
+  for(int i = 0; i < MAX_NUM_TEXTURES; i++)
+  {
+    if (_texture[i])
+      _texture[i]->SetTexture(i);
+    else
+      _deviceDX->SetTexture(i, NULL);
+  }
+}
+
+void Mesh::SetTexture(const char* path, int num)
+{
+  if (num < MAX_NUM_TEXTURES)
+    _texture[num] = new Texture(path);
+}
+
+void Mesh::dirtyTextures()
+{
+  _texture.clear();
+  for(int i = 0; i < MAX_NUM_TEXTURES; i++)
+    _texture.push_back(NULL);
 }

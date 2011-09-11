@@ -33,8 +33,6 @@ namespace GUI
     dev::Input*  _input;
     dev::Camera* _camera;
     dev::Scene*  _scene;
-    dev::Mesh*   _mesh;
-    dev::Mesh*   _meshCopy;
 
     HINSTANCE    _hInst;
     HWND         _hWnd;
