@@ -87,9 +87,9 @@ namespace dev
     void Update();
 
     void SetManipulator(Manipulator* manipulator);
-    inline const Manipulator& GetManipulator() const
+    inline Manipulator* GetManipulator() const
     {
-      return (*_manipulator);
+      return _manipulator;
     }
 
 
