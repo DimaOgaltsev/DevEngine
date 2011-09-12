@@ -35,6 +35,14 @@ namespace dev
     {
       return _meshNumber;
     }
+
+    inline Mesh* GetMesh(unsigned int num) const
+    {
+      if (_elements.size() > num)
+        return _elements[num]->AsMesh();
+
+      return NULL;
+    }
   
   protected:
     std::string _path;

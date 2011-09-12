@@ -141,11 +141,11 @@ void MainWindow::LoadScene()
   _render->SetScene(_scene);
   dev::FileModel* fm = new dev::FileModel("zone.dfm");
   _scene->AddElement(fm);
-  fm->GetElement(0)->AsMesh()->SetTexture("textures/plite.dds", 0);
-  fm->GetElement(1)->AsMesh()->SetTexture("textures/plite.dds", 0);
-  fm->GetElement(2)->AsMesh()->SetTexture("textures/plite.dds", 0);
-  fm->GetElement(3)->AsMesh()->SetTexture("textures/arrow.dds", 0);
-  fm->GetElement(4)->AsMesh()->SetTexture("textures/arrow.dds", 0);
+  fm->GetMesh(0)->SetTexture("textures/plite.dds", 0);
+  fm->GetMesh(1)->SetTexture("textures/plite.dds", 0);
+  fm->GetMesh(2)->SetTexture("textures/plite.dds", 0);
+  fm->GetMesh(3)->SetTexture("textures/arrow.dds", 0);
+  fm->GetMesh(4)->SetTexture("textures/arrow.dds", 0);
   
   ShowCursor(FALSE);
 }

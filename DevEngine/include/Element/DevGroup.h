@@ -47,7 +47,7 @@ namespace dev
       return this;
     }
 
-    inline int GetSize() const
+    inline unsigned int GetSize() const
     {
       return _elements.size();
     }
