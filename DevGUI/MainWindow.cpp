@@ -1,10 +1,14 @@
 #include <MainWindow.h>
 
 #include <Kernel/DevLog.h>
-#include <Manipulator/DevManipulatorWASD.h>
+#include <Kernel/DevTexture.h>
+
 #include <Model/DevVertex.h>
-#include <Shaders/DevShaders.h>
 #include <Model/DevFileModel.h>
+
+#include <Manipulator/DevManipulatorWASD.h>
+
+#include <Shaders/DevShaders.h>
 
 using namespace GUI;
 
@@ -129,6 +133,9 @@ LRESULT CALLBACK MainWindow::MsgProc(HWND hwnd, UINT Message, WPARAM wParam, LPA
   return DefWindowProc(hwnd, Message, wParam, lParam);
 }
 
+dev::Texture2D* tex1 = NULL;
+dev::Texture2D* tex2 = NULL;
+
 void MainWindow::LoadScene()
 {
   _camera = 
@@ -141,11 +148,13 @@ void MainWindow::LoadScene()
   _render->SetScene(_scene);
   dev::FileModel* fm = new dev::FileModel("zone.dfm");
   _scene->AddElement(fm);
-  fm->GetMesh(0)->SetTexture("textures/plite.dds", 0);
-  fm->GetMesh(1)->SetTexture("textures/plite.dds", 0);
-  fm->GetMesh(2)->SetTexture("textures/plite.dds", 0);
-  fm->GetMesh(3)->SetTexture("textures/arrow.dds", 0);
-  fm->GetMesh(4)->SetTexture("textures/arrow.dds", 0);
+  tex1 = new dev::Texture2D("textures/plite.dds");
+  tex2 = new dev::Texture2D("textures/arrow.dds");
+  fm->GetMesh(0)->SetTexture(tex1, 0);
+  fm->GetMesh(1)->SetTexture(tex1, 0);
+  fm->GetMesh(2)->SetTexture(tex1, 0);
+  fm->GetMesh(3)->SetTexture(tex2, 0);
+  fm->GetMesh(4)->SetTexture(tex2, 0);
   
   ShowCursor(FALSE);
 }

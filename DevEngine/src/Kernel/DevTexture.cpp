@@ -5,7 +5,25 @@
 using namespace dev;
 
 Texture::Texture(const char* path) :
-  _path(path),
+  _path(path)
+{
+}
+
+Texture::~Texture()
+{
+}
+
+void Texture::Destroy()
+{
+  _path.clear();
+}
+
+void Texture::SetTexture(int num)
+{
+}
+
+Texture2D::Texture2D(const char* path) :
+  Texture(path),
   _texture(NULL)
 {
   //replace load texture
@@ -20,22 +38,58 @@ Texture::Texture(const char* path) :
   }
 }
 
-Texture::~Texture()
+Texture2D::~Texture2D()
 {
   Destroy();
 }
 
-void Texture::Destroy()
+void Texture2D::Destroy()
 {
+  Texture::Destroy();
   if (_texture)
   {
     _texture->Release();
     _texture = NULL;
   }
-  _path = "";
 }
 
-void Texture::SetTexture(int num)
+void Texture2D::SetTexture(int num)
+{
+  _deviceDX->SetSamplerState(num, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+  _deviceDX->SetSamplerState(num, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+  _deviceDX->SetSamplerState(num, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+  _deviceDX->SetTexture(num, _texture);
+}
+
+CubeTexture::CubeTexture(const char* path) :
+  Texture(path),
+  _texture(NULL)
+{
+  if (FAILED(D3DXCreateCubeTextureFromFile(_deviceDX, path, &_texture)))
+  {
+    std::string buf("Texture not loaded: ");
+    buf += path;
+    Log::GetLog()->WriteToLog(buf.c_str());
+    Destroy();
+  }
+}
+
+CubeTexture::~CubeTexture()
+{
+  Destroy();
+}
+
+void CubeTexture::Destroy()
+{
+  Texture::Destroy();
+  if (_texture)
+  {
+    _texture->Release();
+    _texture = NULL;
+  }
+}
+
+void CubeTexture::SetTexture(int num)
 {
   _deviceDX->SetSamplerState(num, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
   _deviceDX->SetSamplerState(num, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);

@@ -124,21 +124,14 @@ void Mesh::UpdateParameters()
   }
 }
 
-void Mesh::SetTexture(const char* path, int num)
+void Mesh::SetTexture(Texture* texture, int num)
 {
   if (num < MAX_NUM_TEXTURES)
-    _texture[num] = new Texture(path);
+    _texture[num] = texture;
 }
 
 void Mesh::dirtyTextures()
 {
-  if (!_texture.empty())
-    for(int i = 0; i < MAX_NUM_TEXTURES; i++)
-    {
-      if (_texture[i])
-        delete _texture[i];
-    }
-
   _texture.clear();
   for(int i = 0; i < MAX_NUM_TEXTURES; i++)
     _texture.push_back(NULL);

@@ -5,15 +5,15 @@
 
 #include <Element/DevObject.h>
 
+#define MAX_NUM_TEXTURES 8
+
 namespace dev
 {
-  class Texture : 
+  //base class texture
+  class Texture :
     public Object
   {
   public:
-
-    #define MAX_NUM_TEXTURES 8
-
     Texture(const char* path);
     virtual ~Texture();
 
@@ -21,15 +21,47 @@ namespace dev
     {
       return _path.c_str();
     }
+    virtual void SetTexture(int num);
 
-    void SetTexture(int num);
+  protected:
+    virtual void Destroy();
+
+    std::string _path;
+  };
+
+  //class texture2D
+  class Texture2D : 
+    public Texture
+  {
+  public:
+    Texture2D(const char* path);
+    virtual ~Texture2D();
+
+    virtual void SetTexture(int num);
 
   protected:
 
-    void Destroy();
+    virtual void Destroy();
 
     std::string _path;
     LPDIRECT3DTEXTURE9 _texture;
+  };
+
+  //class CubeTexture
+  class CubeTexture :
+    public Texture
+  {
+    CubeTexture(const char* path);
+    virtual ~CubeTexture();
+
+    virtual void SetTexture(int num);
+
+  protected:
+
+    virtual void Destroy();
+
+    std::string _path;
+    LPDIRECT3DCUBETEXTURE9 _texture;
   };
 }
 

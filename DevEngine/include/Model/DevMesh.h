@@ -57,7 +57,7 @@ namespace dev
       return _material;
     }
 
-    void SetTexture(const char* path, int num);
+    void SetTexture(Texture* texture, int num);
     inline Texture* GetTexture(int num) const
     {
       if (num < MAX_NUM_TEXTURES)
