@@ -37,5 +37,8 @@ void Texture::Destroy()
 
 void Texture::SetTexture(int num)
 {
+  _deviceDX->SetSamplerState(num, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+  _deviceDX->SetSamplerState(num, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+  _deviceDX->SetSamplerState(num, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
   _deviceDX->SetTexture(num, _texture);
 }
