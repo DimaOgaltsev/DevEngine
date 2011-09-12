@@ -47,6 +47,11 @@ namespace dev
       return this;
     }
 
+    inline int GetSize() const
+    {
+      return _elements.size();
+    }
+
   protected:
     virtual void updateMatrix();
 

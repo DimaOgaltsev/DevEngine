@@ -14,7 +14,11 @@ Manipulator::Manipulator() :
 
 Manipulator::~Manipulator()
 {
-
+  if (_input)
+  {
+    delete _input;
+    _input = NULL;
+  }
 }
 
 void Manipulator::Update(Camera& camera)

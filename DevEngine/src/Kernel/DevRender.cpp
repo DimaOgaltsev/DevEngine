@@ -55,11 +55,25 @@ void Render::Destroy()
     SendMessage(_hWnd, WM_CLOSE, 0, 0);
   }
   if (_deviceDX)
+  {
     _deviceDX->Release();
+    _deviceDX = NULL;
+  }
   if (_directX)
+  {
     _directX->Release();
+    _directX = NULL;
+  }
+  if (_scene)
+  {
+    delete _scene;
+    _scene = NULL;
+  }
   if (_wnd)
+  {
     delete _wnd;
+    _wnd = NULL;
+  }
 }
 
 bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMode)

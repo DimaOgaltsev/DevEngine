@@ -6,7 +6,7 @@ using namespace dev;
 
 dev::Camera::Camera() :
   _updateView(true),
-  _manipulator(false)
+  _manipulator(NULL)
 {
   SetPosition(Vec3(0, 0, -10));
   SetLook(Vec3(0, 0, 0));
@@ -27,6 +27,11 @@ Camera::Camera(Vec3 position, Vec3 look, Vec3 up,
 
 Camera::~Camera()
 {
+  if (_manipulator)
+  {
+    delete _manipulator;
+    _manipulator = NULL;
+  }
 }
 
 void Camera::SetMove(const float& x, const float& y, const float& z)

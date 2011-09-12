@@ -132,6 +132,13 @@ void Mesh::SetTexture(const char* path, int num)
 
 void Mesh::dirtyTextures()
 {
+  if (!_texture.empty())
+    for(int i = 0; i < MAX_NUM_TEXTURES; i++)
+    {
+      if (_texture[i])
+        delete _texture[i];
+    }
+
   _texture.clear();
   for(int i = 0; i < MAX_NUM_TEXTURES; i++)
     _texture.push_back(NULL);
