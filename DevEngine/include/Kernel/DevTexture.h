@@ -43,7 +43,6 @@ namespace dev
 
     virtual void Destroy();
 
-    std::string _path;
     LPDIRECT3DTEXTURE9 _texture;
   };
 
@@ -60,7 +59,6 @@ namespace dev
 
     virtual void Destroy();
 
-    std::string _path;
     LPDIRECT3DCUBETEXTURE9 _texture;
   };
 }

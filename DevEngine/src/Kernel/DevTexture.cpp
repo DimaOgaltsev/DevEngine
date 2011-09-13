@@ -11,6 +11,7 @@ Texture::Texture(const char* path) :
 
 Texture::~Texture()
 {
+  Destroy();
 }
 
 void Texture::Destroy()
