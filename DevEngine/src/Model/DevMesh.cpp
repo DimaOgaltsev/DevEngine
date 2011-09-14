@@ -115,7 +115,7 @@ void Mesh::UpdateParameters()
       _deviceDX->SetMaterial(&_material->GetAsD3DMaterial());
   }
 
-  int i = 0;
+  unsigned int i = 0;
   for(; i < _textures.size(); i++)
   {
     _textures[i]->SetTexture(i);
@@ -130,7 +130,7 @@ void Mesh::UpdateParameters()
 
 void Mesh::SetTexture(const char* path, Texture::TypeTexture type)
 {
-  for (int i = 0; i < _textures.size(); i++)
+  for (unsigned int i = 0; i < _textures.size(); i++)
     if (_textures[i]->GetPath() == path)
       return;
 
@@ -139,7 +139,7 @@ void Mesh::SetTexture(const char* path, Texture::TypeTexture type)
 
 void Mesh::dirtyTextures()
 {
-  for (int i = 0; i < _textures.size(); i++)
+  for (unsigned int i = 0; i < _textures.size(); i++)
     DevTextureManager::Get()->RemoveTexture(_textures[i]->GetPath());
   _textures.clear();
 }

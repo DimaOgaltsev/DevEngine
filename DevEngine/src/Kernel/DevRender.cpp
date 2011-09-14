@@ -74,6 +74,10 @@ void Render::Destroy()
     delete _wnd;
     _wnd = NULL;
   }
+
+  SystemInput::Release();
+  SystemCS::Release();
+  SystemTimer::Release();
 }
 
 bool Render::InitRender(int width, int height, int RefreshHz, bool FullScreenMode)

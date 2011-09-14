@@ -36,7 +36,8 @@ namespace dev
   };
 
   class DevTextureManager : public Singleton<TextureManager>
-  {};
+  {
+  };
 }
 
 #endif

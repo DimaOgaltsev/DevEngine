@@ -19,6 +19,8 @@ Scene::Scene(Camera* camera)
 Scene::~Scene()
 {
   delete _mainGroup;
+  DevShaderManager::Release();
+  DevTextureManager::Release();
 }
 
 void Scene::SetActiveCamera(Camera* camera)

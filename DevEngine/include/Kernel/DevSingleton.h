@@ -9,10 +9,25 @@ namespace dev
   public:
     static T* Get()
     {
-      static T* element = new T();
-      return element;
+      if(!_element)
+        _element = new T();
+      return _element;
     }
+
+    static void Release()
+    { 
+      if(_element)
+      {
+        delete _element;
+        _element = 0;
+      }
+    }
+  private:
+    static T* _element;
   };
+  
+  template<class T>
+  T* Singleton<T>::_element = 0;
 }
 
 #endif

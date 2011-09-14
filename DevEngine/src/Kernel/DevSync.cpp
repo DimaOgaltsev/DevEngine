@@ -9,6 +9,7 @@ CriticalSection::CriticalSection()
 
 CriticalSection::~CriticalSection()
 {
+  UnLock();
   DeleteCriticalSection(&_cs);
 }
 
@@ -36,8 +37,10 @@ Mutex::Mutex(const char* nameMutex)
 
 Mutex::~Mutex()
 {
+  UnLock();
   CloseHandle(_mutex);
   _mutex = NULL;
+  _name = "";
 }
 
 bool Mutex::Lock()
@@ -63,7 +66,9 @@ Event::Event(const char* nameEvent)
 
 Event::~Event()
 {
+  ResetEvent(_event);
   CloseHandle(_event);
+  _event = NULL;
 }
 
 BOOL Event::Set()
@@ -88,6 +93,7 @@ Semaphore::Semaphore(long numberRequests, const char* nameSemaphore)
 
 Semaphore::~Semaphore()
 {
+  UnLock();
   CloseHandle(_semaphore);
 }
 
