@@ -188,3 +188,8 @@ void Render::Frame()
   _deviceDX->EndScene();
   _deviceDX->Present(0, 0, 0, 0);
 }
+
+void Render::Release()
+{
+  delete this;
+}

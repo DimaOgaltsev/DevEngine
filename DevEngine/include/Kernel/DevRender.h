@@ -29,6 +29,7 @@ namespace dev
 
     void  Run();
     void  Frame();
+    void  Release();
 
   protected:
     Window*               _wnd;

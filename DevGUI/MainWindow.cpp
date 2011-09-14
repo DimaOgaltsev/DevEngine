@@ -32,9 +32,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::destroy()
 {
-  delete _render;
+  if (_render)
+  {
+    _render->Release();
+    _render = NULL;
+  }
   CloseWindow(_hWnd);
-  _render = NULL;
   _hWnd = NULL;
 }
 
