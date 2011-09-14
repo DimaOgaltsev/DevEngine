@@ -56,13 +56,16 @@ void Texture2D::Destroy()
 
 void Texture2D::SetTexture(int num)
 {
-  _deviceDX->SetSamplerState(num, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-  _deviceDX->SetSamplerState(num, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-  _deviceDX->SetSamplerState(num, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
-  _deviceDX->SetTexture(num, _texture);
+  if (num < MAX_NUM_TEXTURES)
+  {
+    _deviceDX->SetSamplerState(num, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+    _deviceDX->SetSamplerState(num, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+    _deviceDX->SetSamplerState(num, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+    _deviceDX->SetTexture(num, _texture);
+  }
 }
 
-CubeTexture::CubeTexture(const char* path) :
+TextureCube::TextureCube(const char* path) :
   Texture(path),
   _texture(NULL)
 {
@@ -75,12 +78,12 @@ CubeTexture::CubeTexture(const char* path) :
   }
 }
 
-CubeTexture::~CubeTexture()
+TextureCube::~TextureCube()
 {
   Destroy();
 }
 
-void CubeTexture::Destroy()
+void TextureCube::Destroy()
 {
   Texture::Destroy();
   if (_texture)
@@ -90,10 +93,14 @@ void CubeTexture::Destroy()
   }
 }
 
-void CubeTexture::SetTexture(int num)
+void TextureCube::SetTexture(int num)
 {
-  _deviceDX->SetSamplerState(num, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-  _deviceDX->SetSamplerState(num, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-  _deviceDX->SetSamplerState(num, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
-  _deviceDX->SetTexture(num, _texture);
+  if (num < MAX_NUM_TEXTURES)
+  {
+    _deviceDX->SetSamplerState(num, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+    _deviceDX->SetSamplerState(num, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+    _deviceDX->SetSamplerState(num, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+    _deviceDX->SetTexture(num, _texture);
+
+  }
 }

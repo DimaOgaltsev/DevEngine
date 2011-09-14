@@ -7,7 +7,7 @@
 #include <Model/DevVertex.h>
 #include <Shaders/DevShaders.h>
 #include <Kernel/DevMaterial.h>
-#include <Kernel/DevTexture.h>
+#include <Kernel/DevTextureManager.h>
 
 namespace dev
 {
@@ -57,13 +57,10 @@ namespace dev
       return _material;
     }
 
-    void SetTexture(Texture* texture, int num);
-    inline Texture* GetTexture(int num) const
+    void SetTexture(const char* path, Texture::TypeTexture type = Texture::TEX_2D);
+    inline const TextureList& GetTextureList() const
     {
-      if (num < MAX_NUM_TEXTURES)
-        return _texture[num];
-
-      return NULL;
+      return _textures;
     }
 
   protected:
@@ -78,7 +75,7 @@ namespace dev
     int                     _orderNum;
 
     Material*               _material;
-    std::vector<Texture*>   _texture;
+    TextureList             _textures;
   };
 
   typedef std::vector<Mesh*> MeshList;

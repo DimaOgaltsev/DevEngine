@@ -16,7 +16,7 @@ Group::Group() :
 
 Group::~Group()
 {
-  for (ElementList::iterator i = _elements.begin(); i < _elements.end(); ++i)
+  for (ElementList::iterator i = _elements.begin(); i != _elements.end(); ++i)
     delete (*i);
   ClearList();
 }

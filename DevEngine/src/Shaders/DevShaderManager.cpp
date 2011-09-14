@@ -4,15 +4,15 @@ using namespace dev;
 
 ShaderManager::ShaderManager()
 {
-  ClearList();
+  clearList();
 }
 
 ShaderManager::~ShaderManager()
 {
-  ClearList();
+  clearList();
 }
 
-void ShaderManager::ClearList()
+void ShaderManager::clearList()
 {
   _meshes.clear();
 }
@@ -22,7 +22,7 @@ void ShaderManager::AddMesh(Mesh* element)
   if (!element)
     return;
   
-  for (MeshList::iterator i = _meshes.begin(); i < _meshes.end(); ++i)
+  for (MeshList::iterator i = _meshes.begin(); i != _meshes.end(); ++i)
   {
     if ((*i)->GetOrderNum() >= element->GetOrderNum())
     {
@@ -93,7 +93,7 @@ void ShaderManager::RemoveMesh(Mesh* element)
 
 void ShaderManager::Update()
 {
-  for (MeshList::iterator i = _meshes.begin(); i < _meshes.end(); ++i)
+  for (MeshList::iterator i = _meshes.begin(); i != _meshes.end(); ++i)
   {
     (*i)->UpdateParameters();
 

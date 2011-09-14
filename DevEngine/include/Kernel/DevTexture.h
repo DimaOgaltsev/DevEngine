@@ -14,6 +14,13 @@ namespace dev
     public Object
   {
   public:
+
+    enum TypeTexture
+    {
+      TEX_2D,
+      TEX_CUBE
+    };
+
     Texture(const char* path);
     virtual ~Texture();
 
@@ -47,11 +54,12 @@ namespace dev
   };
 
   //class CubeTexture
-  class CubeTexture :
+  class TextureCube :
     public Texture
   {
-    CubeTexture(const char* path);
-    virtual ~CubeTexture();
+  public:
+    TextureCube(const char* path);
+    virtual ~TextureCube();
 
     virtual void SetTexture(int num);
 
@@ -61,6 +69,8 @@ namespace dev
 
     LPDIRECT3DCUBETEXTURE9 _texture;
   };
+
+  typedef std::vector<Texture*> TextureList;
 }
 
 #endif

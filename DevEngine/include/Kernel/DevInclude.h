@@ -19,6 +19,7 @@
 //STL
 #include <string>
 #include <vector>
+#include <map>
 
 namespace dev
 {

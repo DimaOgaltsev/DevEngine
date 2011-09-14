@@ -13,7 +13,6 @@ namespace dev
     ShaderManager();
     virtual ~ShaderManager();
 
-    void ClearList();
     void AddMesh(Mesh* element);
     void ReplaceMesh(Mesh* element, Mesh* newElement);
     void RemoveMesh(Mesh* element);
@@ -21,6 +20,8 @@ namespace dev
     void Update();
 
   protected:
+    void clearList();
+
     inline unsigned int getMeshNum(Mesh* element) const
     {
       for (unsigned int i = 0; i < _meshes.size(); ++i)
