@@ -56,6 +56,9 @@ rollout expmesh "Export Mesh" width:377 height:67
 			if (classOf obj != BoneGeometry) and (classOf obj != Biped_Object) and (canConvertTo obj TriMeshGeometry) then
 			(
 				mesh = copy obj
+				writeLong file (obj.name.count + 1)
+				writeString file obj.name
+				writeByte file 0
 				convertToMesh mesh
 				
 				writeLong file mesh.numVerts
@@ -73,7 +76,7 @@ rollout expmesh "Export Mesh" width:377 height:67
 						if (bN == 1) then
 						(  
 							n = (getNormal mesh i)
-	                     		writeFloat file n.x
+	                     	writeFloat file n.x
 	                        writeFloat file n.z                    
 	                        writeFloat file n.y  
 						)

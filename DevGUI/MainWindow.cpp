@@ -148,11 +148,11 @@ void MainWindow::LoadScene()
   dev::FileModel* fm = new dev::FileModel("zone.dfm");
   _scene->AddElement(fm);
 
-  fm->GetMesh(0)->SetTexture("textures/plite.dds");
-  fm->GetMesh(1)->SetTexture("textures/plite.dds");
-  fm->GetMesh(2)->SetTexture("textures/plite.dds");
-  fm->GetMesh(3)->SetTexture("textures/arrow.dds");
-  fm->GetMesh(4)->SetTexture("textures/arrow.dds");
+  fm->GetMesh("Plane")->SetTexture("textures/plite.dds");
+  fm->GetMesh("Jump1")->SetTexture("textures/plite.dds");
+  fm->GetMesh("Jump2")->SetTexture("textures/plite.dds");
+  fm->GetMesh("Border1")->SetTexture("textures/arrow.dds");
+  fm->GetMesh("Border2")->SetTexture("textures/arrow.dds");
   
   ShowCursor(FALSE);
 }

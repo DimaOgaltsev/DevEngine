@@ -36,7 +36,19 @@ namespace dev
       return _meshNumber;
     }
 
-    inline Mesh* GetMesh(unsigned int num) const
+    inline Mesh* GetMesh(const char* name) const
+    {
+      for(unsigned int i = 0; i < _elements.size(); i++)
+      {
+        Mesh* mesh = _elements[i]->AsMesh();
+        if (mesh && !strcmp(mesh->GetName(), name))
+          return mesh;
+      }
+
+      return NULL;
+    }
+
+    inline Mesh* GetMeshByNum(unsigned int num) const
     {
       if (_elements.size() > num)
         return _elements[num]->AsMesh();

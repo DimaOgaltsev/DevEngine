@@ -4,8 +4,9 @@
 
 using namespace dev;
 
-Mesh::Mesh(const Vec3& position, const Vec3& rotation, const Vec3& scale) :
+Mesh::Mesh(const char* name, const Vec3& position, const Vec3& rotation, const Vec3& scale) :
   Element(position, rotation, scale),
+  _name(name),
   _vertices(NULL),
   _indexes(NULL),
   _vShader(NULL),
@@ -16,8 +17,9 @@ Mesh::Mesh(const Vec3& position, const Vec3& rotation, const Vec3& scale) :
   dirtyTextures();
 }
 
-Mesh::Mesh() :
+Mesh::Mesh(const char* name) :
   Element(),
+  _name(name),
   _vertices(NULL),
   _indexes(NULL),
   _vShader(NULL),

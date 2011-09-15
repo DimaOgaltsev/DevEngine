@@ -15,8 +15,8 @@ namespace dev
     public Element
   {
   public:
-    Mesh(const Vec3& position, const Vec3& rotation, const Vec3& scale);
-    Mesh();
+    Mesh(const char* name, const Vec3& position, const Vec3& rotation, const Vec3& scale);
+    Mesh(const char* name);
     virtual ~Mesh();
 
     void SetVertices(LPVOID vertices, int numberVertex, Vertex::VertexType VT_Type);
@@ -64,9 +64,16 @@ namespace dev
       return _textures;
     }
 
+    inline const char* GetName() const
+    {
+      return _name.c_str();
+    }
+
   protected:
 
     void dirtyTextures();
+
+    std::string             _name;
 
     Vertex::ArrayVertices*  _vertices;
     Vertex::ArrayIndexes*   _indexes;

@@ -56,12 +56,17 @@ bool FileModel::OpenFile(const char* path)
 
   for (DWORD i = 0; i < _meshNumber; i++)
   {
+    DWORD strLen;
+    ReadFile(hFile, &strLen,  sizeof(DWORD), &ReadValue, 0);
+    char* name = new char[strLen];
+    ReadFile(hFile, name, strLen, &ReadValue, 0);
+
     DWORD _vNumber;
     DWORD _fNumber;
     ReadFile(hFile, &_vNumber,  sizeof(DWORD), &ReadValue, 0);
     ReadFile(hFile, &_fNumber,  sizeof(DWORD), &ReadValue, 0);
 
-    Mesh* mesh = new Mesh();
+    Mesh* mesh = new Mesh(name);
 
     if (_bIndex == VertexFile)
       _vNumber = _fNumber * 3;
