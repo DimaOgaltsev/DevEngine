@@ -180,7 +180,8 @@ void Render::Run()
 
 void Render::Frame()
 {
-  _scene->Update();
+  if (_scene)
+    _scene->Update();
   
   _deviceDX->Clear(0, 0, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER, clearColor, 1.0f, 0);
   _deviceDX->BeginScene();
