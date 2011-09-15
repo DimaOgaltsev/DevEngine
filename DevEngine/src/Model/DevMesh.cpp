@@ -1,5 +1,7 @@
 #include <Model/DevMesh.h>
 
+#include <Shaders/DevShaderManager.h>
+
 using namespace dev;
 
 Mesh::Mesh(const Vec3& position, const Vec3& rotation, const Vec3& scale) :
@@ -20,8 +22,8 @@ Mesh::Mesh() :
   _indexes(NULL),
   _vShader(NULL),
   _pShader(NULL),
-  _orderNum(0),
-  _material(0)
+  _material(NULL),
+  _orderNum(0)
 {
   dirtyTextures();
 }
@@ -29,6 +31,11 @@ Mesh::Mesh() :
 Mesh::~Mesh()
 {
   dirtyTextures();
+  if (_material)
+  {
+    delete _material;
+    _material = NULL;
+  }
 }
 
 void Mesh::SetVertices(LPVOID vertices, int numberVertex, Vertex::VertexType VT_Type)
@@ -76,23 +83,23 @@ void Mesh::Draw()
   }
 }
 
-void Mesh::SetVertexShader(VertexShader* shader)
+void Mesh::SetVertexShader(const char* path, VertexShader::TypeVertexShader type, const char* funcName)
 {
-  if (!shader)
-    return;
-
-  _vShader = shader;
-  _vShader->CompileShader();
+  if (_vShader)
+    DevShaderManager::Get()->RemoveVertexShader(_vShader);
+  
+  _vShader = DevShaderManager::Get()->GetVertexShader(path, type, funcName);
 }
 
-void Mesh::SetPixelShader(PixelShader* shader)
+void Mesh::SetPixelShader(const char* path, PixelShader::TypePixelShader type, const char* funcName)
 {
-  if (!shader)
-    return;
 
-  _pShader = shader;
-  _pShader->CompileShader();
-  if (!_material)
+  if (_pShader)
+    DevShaderManager::Get()->RemovePixelShader(_pShader);
+
+  _pShader = DevShaderManager::Get()->GetPixelShader(path, type, funcName);
+
+  if (_pShader && !_material)
     _material = new Material();
 }
 

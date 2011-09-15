@@ -5,11 +5,22 @@ using namespace dev;
 ShaderManager::ShaderManager()
 {
   clearList();
+  clearShadersLists();
 }
 
 ShaderManager::~ShaderManager()
 {
   clearList();
+
+  if (!_vertexShaders.empty())
+    for(ShaderMap::iterator i = _vertexShaders.begin(); i != _vertexShaders.end(); i++)
+      delete (*i).second.vertexShader;
+
+  if (!_pixelShaders.empty())
+    for(ShaderMap::iterator i = _pixelShaders.begin(); i != _pixelShaders.end(); i++)
+      delete (*i).second.pixelShader;
+
+  clearShadersLists();
 }
 
 void ShaderManager::clearList()
@@ -109,4 +120,97 @@ void ShaderManager::Update()
 
     (*i)->Draw();
   }
+}
+
+void ShaderManager::clearShadersLists()
+{
+  _vertexShaders.clear();
+  _pixelShaders.clear();
+}
+
+VertexShader* ShaderManager::GetVertexShader(const char* path, VertexShader::TypeVertexShader type, const char* funcName)
+{
+  int hash = getHash(path, type, funcName);
+  ShaderMap::iterator i = _vertexShaders.find(hash);
+  if (i == _vertexShaders.end())
+  {
+    ShaderStruct buffer;
+    buffer.vertexShader = new VertexShader(path, type, funcName);
+    if (!buffer.vertexShader->CompileShader())
+    {
+      delete buffer.vertexShader;
+      return NULL;
+    }
+    buffer.count = 1;
+    _vertexShaders[hash] = buffer;
+    return buffer.vertexShader;
+  }
+
+  (*i).second.count++;
+  return (*i).second.vertexShader;
+}
+
+PixelShader* ShaderManager::GetPixelShader(const char* path, PixelShader::TypePixelShader type, const char* funcName)
+{
+  int hash = getHash(path, type, funcName);
+  ShaderMap::iterator i = _pixelShaders.find(hash);
+  if (i == _pixelShaders.end())
+  {
+    ShaderStruct buffer;
+    buffer.pixelShader = new PixelShader(path, type, funcName);
+    if (!buffer.pixelShader->CompileShader())
+    {
+      delete buffer.pixelShader;
+      return NULL;
+    }
+    buffer.count = 1;
+    _pixelShaders[hash] = buffer;
+    return buffer.pixelShader;
+  }
+  
+  (*i).second.count++;
+  return (*i).second.pixelShader;
+}
+
+void ShaderManager::RemoveVertexShader(VertexShader* shader)
+{
+  for (ShaderMap::iterator i = _vertexShaders.begin(); i != _vertexShaders.end(); ++i)
+  {
+    if ((*i).second.vertexShader == shader)
+    {
+      (*i).second.count--;
+      if ((*i).second.count < 1)
+      {
+        delete (*i).second.vertexShader;
+        _vertexShaders.erase(i);
+      }
+      return;
+    }
+  }
+}
+
+void ShaderManager::RemovePixelShader(PixelShader* shader)
+{
+  for (ShaderMap::iterator i = _pixelShaders.begin(); i != _pixelShaders.end(); ++i)
+  {
+    if ((*i).second.pixelShader == shader)
+    {
+      (*i).second.count--;
+      if ((*i).second.count < 1)
+      {
+        delete (*i).second.pixelShader;
+        _pixelShaders.erase(i);
+      }
+      return;
+    }
+  }
+}
+
+unsigned int ShaderManager::getHash(const char* path, DWORD type, const char* funcName)
+{
+  unsigned int hash = 0;
+  unsigned int len = strlen(funcName);
+  for(unsigned int i = 0; i < strlen(path); i++)
+    hash += (path[i] + i + type + (funcName[i % len])) << (i % 32);
+  return hash;
 }

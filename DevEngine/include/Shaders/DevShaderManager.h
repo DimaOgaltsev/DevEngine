@@ -33,6 +33,33 @@ namespace dev
     }
 
     MeshList _meshes;
+
+  //init Shaders
+  public:
+    void clearShadersLists();
+
+    VertexShader* GetVertexShader(const char* path, VertexShader::TypeVertexShader type, const char* funcName);
+    PixelShader* GetPixelShader(const char* path, PixelShader::TypePixelShader type, const char* funcName);
+    void RemoveVertexShader(VertexShader* shader);
+    void RemovePixelShader(PixelShader* shader);
+
+  protected:
+
+    struct ShaderStruct
+    {
+      union
+      {
+        VertexShader*   vertexShader;
+        PixelShader*    pixelShader;
+      };
+      int       count;
+    };
+
+    unsigned int getHash(const char* path, DWORD type, const char* funcName);
+
+    typedef std::map<unsigned int, ShaderStruct> ShaderMap;
+    ShaderMap _vertexShaders;
+    ShaderMap _pixelShaders;
   };
 
   class DevShaderManager : public Singleton<ShaderManager>

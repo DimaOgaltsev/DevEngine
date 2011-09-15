@@ -12,7 +12,7 @@ namespace dev
     Shader(const char* path, DWORD type, const char* fuction);
     virtual ~Shader();
 
-    virtual void CompileShader();
+    virtual bool CompileShader();
 
     inline const char* GetPath() const
     {
@@ -70,10 +70,10 @@ namespace dev
       VS_3_SW
     };
 
-    VertexShader(const char* path, TypeVertexShader type, const char* fuction = functionShader);
+    VertexShader(const char* path, TypeVertexShader type, const char* fuction);
     virtual ~VertexShader();
 
-    virtual void CompileShader();
+    virtual bool CompileShader();
 
     virtual void SetShader();
 
@@ -106,10 +106,10 @@ namespace dev
       PS_3_SW
     };
 
-    PixelShader(const char* path, TypePixelShader type, const char* fuction = functionShader);
+    PixelShader(const char* path, TypePixelShader type, const char* fuction);
     virtual ~PixelShader();
 
-    virtual void CompileShader();
+    virtual bool CompileShader();
 
     virtual void SetShader();
 

@@ -28,13 +28,13 @@ namespace dev
     virtual void Draw();
     virtual void UpdateParameters();
 
-    void SetVertexShader(VertexShader* shader);
+    void SetVertexShader(const char* path, VertexShader::TypeVertexShader type, const char* funcName = functionShader);
     inline VertexShader* GetVertexShader() const
     {
       return _vShader;
     }
 
-    void SetPixelShader(PixelShader* shader);
+    void SetPixelShader(const char* path, PixelShader::TypePixelShader type, const char* funcName = functionShader);
     inline PixelShader* GetPixelShader() const
     {
       return _pShader;
@@ -57,6 +57,7 @@ namespace dev
       return _material;
     }
 
+    void RemoveTexture(const char* path);
     void SetTexture(const char* path, Texture::TypeTexture type = Texture::TEX_2D);
     inline const TextureList& GetTextureList() const
     {

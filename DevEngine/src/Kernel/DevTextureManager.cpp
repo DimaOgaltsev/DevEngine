@@ -11,32 +11,38 @@ TextureManager::TextureManager()
 
 TextureManager::~TextureManager()
 {
-  for(TextureMap::iterator i = _textures.begin(); i != _textures.end(); i++)
-    delete (*i).second.texture;
-  _textures.clear();
+  if (!_textures.empty())
+  {
+    for(TextureMap::iterator i = _textures.begin(); i != _textures.end(); i++)
+      delete (*i).second.texture;
+    _textures.clear();
+  }
 }
 
 Texture* TextureManager::GetTexture(const char* path, Texture::TypeTexture type)
 {
   int hash = getHash(path);
-  if (!_textures[hash].texture)
+
+  TextureMap::iterator i = _textures.find(hash);
+  if (i == _textures.end())
   {
     TextureStruct buffer;
     switch(type)
     {
-      case Texture::TEX_2D:
-        buffer.texture = new Texture2D(path);
-        break;
-      case Texture::TEX_CUBE:
-        buffer.texture = new TextureCube(path);
-        break;
+    case Texture::TEX_2D:
+      buffer.texture = new Texture2D(path);
+      break;
+    case Texture::TEX_CUBE:
+      buffer.texture = new TextureCube(path);
+      break;
     }
     buffer.count = 1;
     _textures[hash] = buffer;
+    return buffer.texture;
   }
-  else
-    _textures[hash].count++;
-  return _textures[hash].texture;
+
+  (*i).second.count++;
+  return (*i).second.texture;
 }
 
 void dev::TextureManager::RemoveTexture(const char* path)
@@ -49,7 +55,8 @@ void dev::TextureManager::RemoveTexture(const char* path)
     {
       delete _textures[hash].texture;
       _textures.erase(hash);
-    }
+    }      
+    return;
   }
 }
 
@@ -65,13 +72,14 @@ void TextureManager::RemoveTexture(Texture* texture)
         delete (*i).second.texture;
         _textures.erase(i);
       }
+      return;
     }
   }
 }
 
 unsigned int TextureManager::getHash(const char* path)
 {
-  int hash = 0;
+  unsigned int hash = 0;
   for(unsigned int i = 0; i < strlen(path); i++)
     hash += (path[i] + i) << (i % 32);
   return hash;

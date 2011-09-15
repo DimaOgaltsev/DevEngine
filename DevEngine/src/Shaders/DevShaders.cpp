@@ -22,7 +22,7 @@ Shader::~Shader()
     _constantTable->Release();
 }
 
-void Shader::CompileShader()
+bool Shader::CompileShader()
 {
   if (!supportTypeShader())
   {
@@ -30,7 +30,7 @@ void Shader::CompileShader()
     buffer += _path;
     buffer += ") compilation error: this type of shaders not supported video card";
     Log::GetLog()->WriteToLog(buffer.c_str());
-    return;
+    return false;
   }
 
   DWORD flags = D3DXSHADER_NO_PRESHADER;
@@ -51,20 +51,22 @@ void Shader::CompileShader()
       buffer += (char*)_errorBuffer->GetBufferPointer();
       Log::GetLog()->WriteToLog(buffer.c_str());
       _errorBuffer->Release();
-      return;
+      return false;
     }
     
     if (type == NULL)
     {
       buffer += "Unknown shader type";
       Log::GetLog()->WriteToLog(buffer.c_str());
-      return;
+      return false;
     }
 
      buffer += "Unknown error";
      Log::GetLog()->WriteToLog(buffer.c_str());
-     return;
+     return false;
   }
+
+  return true;
 }
 
 const char* Shader::getCharType()
@@ -228,7 +230,7 @@ void VertexShader::SetShader()
   }
 }
 
-void VertexShader::CompileShader()
+bool VertexShader::CompileShader()
 {
   Shader::CompileShader();
   if (_shaderBuffer == NULL || 
@@ -238,9 +240,11 @@ void VertexShader::CompileShader()
     buffer += _path;
     buffer += ") compilation error: create shader failed";
     Log::GetLog()->WriteToLog(buffer.c_str());
+    return false;
   }
 
   _devWVPMatrix = CreateParametr("devWVPMatrix");
+  return true;
 }
 
 PixelShader::PixelShader(const char* path, TypePixelShader type, const char* fuction) :
@@ -320,7 +324,7 @@ void PixelShader::SetShader()
   }
 }
 
-void PixelShader::CompileShader()
+bool PixelShader::CompileShader()
 {
   Shader::CompileShader();
   if (FAILED(_deviceDX->CreatePixelShader((DWORD*)_shaderBuffer->GetBufferPointer(), &_shader)))
@@ -329,6 +333,9 @@ void PixelShader::CompileShader()
     buffer += _path;
     buffer += ") compilation error: create shader failed";
     Log::GetLog()->WriteToLog(buffer.c_str());
+    return false;
   }
+
+  return true;
 }
 
