@@ -20,6 +20,7 @@ namespace dev
 
     Texture* GetTexture(const char* path, Texture::TypeTexture type);
     void RemoveTexture(const char* path);
+    void RemoveTexture(Texture* texture);
 
   protected:
 

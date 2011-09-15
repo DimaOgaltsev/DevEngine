@@ -53,6 +53,22 @@ void dev::TextureManager::RemoveTexture(const char* path)
   }
 }
 
+void TextureManager::RemoveTexture(Texture* texture)
+{
+  for (TextureMap::iterator i = _textures.begin(); i != _textures.end(); ++i)
+  {
+    if ((*i).second.texture == texture)
+    {
+      (*i).second.count--;
+      if ((*i).second.count < 1)
+      {
+        delete (*i).second.texture;
+        _textures.erase(i);
+      }
+    }
+  }
+}
+
 unsigned int TextureManager::getHash(const char* path)
 {
   int hash = 0;

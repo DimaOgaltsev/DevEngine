@@ -128,6 +128,18 @@ void Mesh::UpdateParameters()
   }
 }
 
+void Mesh::RemoveTexture(const char* path)
+{
+  for (TextureList::iterator i = _textures.begin(); i != _textures.end(); i++)
+  {
+    if ((*i)->GetPath() == path)
+    {
+      DevTextureManager::Get()->RemoveTexture((*i)->GetPath());
+      _textures.erase(i);
+    }
+  }
+}
+
 void Mesh::SetTexture(const char* path, Texture::TypeTexture type)
 {
   for (unsigned int i = 0; i < _textures.size(); i++)
@@ -140,6 +152,6 @@ void Mesh::SetTexture(const char* path, Texture::TypeTexture type)
 void Mesh::dirtyTextures()
 {
   for (unsigned int i = 0; i < _textures.size(); i++)
-    DevTextureManager::Get()->RemoveTexture(_textures[i]->GetPath());
+    DevTextureManager::Get()->RemoveTexture(_textures[i]);
   _textures.clear();
 }
