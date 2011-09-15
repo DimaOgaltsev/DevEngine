@@ -119,6 +119,8 @@ void ShaderManager::Update()
       _deviceDX->SetPixelShader(NULL);
 
     (*i)->Draw();
+
+    (*i)->ReturnParameters();
   }
 }
 

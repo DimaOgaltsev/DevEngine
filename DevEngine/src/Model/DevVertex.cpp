@@ -185,12 +185,16 @@ int dev::Vertex::GetSizeVertex(VertexType VT_type)
     return sizeof(VertexPC32);
   case VT_PC128:
     return sizeof(VertexPC128);
-  case VT_PT:
-    return sizeof(VertexPT);
+  case VT_PT2:
+    return sizeof(VertexPT2);
+  case VT_PT3:
+    return sizeof(VertexPT3);
   case VT_PN:
     return sizeof(VertexPN);
-  case VT_PNT:
-    return sizeof(VertexPNT);
+  case VT_PNT2:
+    return sizeof(VertexPNT2);
+  case VT_PNT3:
+    return sizeof(VertexPNT3);
   }
 
   return 0;
@@ -218,10 +222,17 @@ static D3DVERTEXELEMENT9 vertexPC128[] =
   D3DDECL_END()
 };
 
-static D3DVERTEXELEMENT9 vertexPT[] =
+static D3DVERTEXELEMENT9 vertexPT2[] =
 {
   {0, 0,  D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
   {0, 12, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0},
+  D3DDECL_END()
+};
+
+static D3DVERTEXELEMENT9 vertexPT3[] =
+{
+  {0, 0,  D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
+  {0, 12, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0},
   D3DDECL_END()
 };
 
@@ -232,11 +243,19 @@ static D3DVERTEXELEMENT9 vertexPN[] =
   D3DDECL_END()
 };
 
-static D3DVERTEXELEMENT9 vertexPNT[] =
+static D3DVERTEXELEMENT9 vertexPNT2[] =
 {
   {0, 0,  D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
   {0, 12, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,   0},
-  {0, 24, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,   0},
+  {0, 24, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0},
+  D3DDECL_END()
+};
+
+static D3DVERTEXELEMENT9 vertexPNT3[] =
+{
+  {0, 0,  D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
+  {0, 12, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,   0},
+  {0, 24, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0},
   D3DDECL_END()
 };
 
@@ -250,12 +269,16 @@ D3DVERTEXELEMENT9* Declaration::GetDeclaration(VertexType VT_type)
     return vertexPC32;
   case VT_PC128:
     return vertexPC128;
-  case VT_PT:
-    return vertexPT;
+  case VT_PT2:
+    return vertexPT2;
+  case VT_PT3:
+    return vertexPT3;
   case VT_PN:
     return vertexPN;
-  case VT_PNT:
-    return vertexPNT;
+  case VT_PNT2:
+    return vertexPNT2;
+  case VT_PNT3:
+    return vertexPNT3;
   }
 
   return NULL;

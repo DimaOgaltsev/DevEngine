@@ -4,6 +4,7 @@
 
 #include <Model/DevVertex.h>
 #include <Model/DevFileModel.h>
+#include <Model/DevSkyBox.h>
 
 #include <Manipulator/DevManipulatorWASD.h>
 
@@ -153,6 +154,11 @@ void MainWindow::LoadScene()
   fm->GetMesh("Jump2")->SetTexture("textures/plite.dds");
   fm->GetMesh("Border1")->SetTexture("textures/arrow.dds");
   fm->GetMesh("Border2")->SetTexture("textures/arrow.dds");
+
+  dev::SkyBox* sb = new dev::SkyBox();
+  sb->SetTexture("textures/city.dds", dev::Texture::TEX_CUBE);
+  sb->SetCamera(_camera);
+  _scene->AddElement(sb);
   
   ShowCursor(FALSE);
 }

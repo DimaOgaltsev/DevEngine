@@ -11,12 +11,14 @@ namespace dev
   {
     enum VertexType
     {
-      VT_P = 1,
-      VT_PT = 3,
-      VT_PN = 5,
-      VT_PNT = 7,
-      VT_PC32 = 9,
-      VT_PC128 = 17
+      VT_P      = 1,
+      VT_PT2    = 3,
+      VT_PN     = 5,
+      VT_PNT2   = 7,
+      VT_PC32   = 9,
+      VT_PC128  = 17,
+      VT_PT3    = 33,
+      VT_PNT3   = 65,
     };
 
     struct VertexP
@@ -36,10 +38,16 @@ namespace dev
       D3DCOLORVALUE color;
     };
 
-    struct VertexPT
+    struct VertexPT2
     {
       float x, y, z;
       float tu, tv;
+    };
+
+    struct VertexPT3
+    {
+      float x, y, z;
+      float tu, tv, tw;
     };
 
     struct VertexPN
@@ -48,12 +56,20 @@ namespace dev
       float nx, ny, nz;
     };
 
-    struct VertexPNT
+    struct VertexPNT2
     {
       float x, y, z;
       float nx, ny, nz;
       float tu, tv;
     };
+
+    struct VertexPNT3
+    {
+      float x, y, z;
+      float nx, ny, nz;
+      float tu, tv, tw;
+    };
+
 
     class ArrayVertices :
       public Object

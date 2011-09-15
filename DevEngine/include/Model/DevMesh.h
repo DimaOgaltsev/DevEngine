@@ -27,6 +27,7 @@ namespace dev
     
     virtual void Draw();
     virtual void UpdateParameters();
+    virtual void ReturnParameters();
 
     void SetVertexShader(const char* path, VertexShader::TypeVertexShader type, const char* funcName = functionShader);
     inline VertexShader* GetVertexShader() const

@@ -292,6 +292,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Model\DevSkyBox.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Model\DevVertex.cpp"
 				>
 			</File>
@@ -304,6 +308,10 @@
 				</File>
 				<File
 					RelativePath=".\include\Model\DevMesh.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\Model\DevSkyBox.h"
 					>
 				</File>
 				<File
