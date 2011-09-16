@@ -1,7 +1,5 @@
 #include <Model/DevFileModel.h>
 
-#include <Kernel/DevLog.h>
-
 using namespace dev;
 
 FileModel::FileModel(const char* path, const Vec3& position, const Vec3& rotation, const Vec3& scale) :

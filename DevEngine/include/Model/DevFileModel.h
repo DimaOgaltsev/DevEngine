@@ -5,6 +5,7 @@
 
 #include <Element/DevGroup.h>
 #include <Model/DevMesh.h>
+#include <Kernel/DevLog.h>
 
 namespace dev
 {
@@ -44,6 +45,10 @@ namespace dev
         if (mesh && !strcmp(mesh->GetName(), name))
           return mesh;
       }
+
+      std::string buf("Mesh not found: ");
+      buf += name;
+      Log::GetLog()->WriteToLog(buf.c_str());
 
       return NULL;
     }
